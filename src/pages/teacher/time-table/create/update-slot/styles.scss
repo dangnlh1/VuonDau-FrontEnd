@@ -1,0 +1,12 @@
+/**
+ * @app VuonDau
+ * @author phutruongck
+ */
+
+@import '../../../../../assets/css/global.scss';
+
+.teacher__create__course__container {
+  flex-direction: column;
+  padding: 16px;
+  display: flex;
+}

@@ -1,0 +1,144 @@
+/**
+ * @app VuonDau
+ * @author phutruongck
+ */
+
+@import '../../assets/css/global.scss';
+
+.global-theme {
+  margin: 16px;
+}
+
+.site-layout .site-layout-background {
+  background: $white-color;
+  height: 55px !important;
+  flex-direction: row;
+  align-items: center;
+  display: flex;
+  padding: 0;
+}
+
+.ant-layout-footer,
+.ant-layout-sider,
+.ant-layout-sider-trigger,
+.navbar-style {
+  background: #ffe6cd !important;
+}
+
+.ant-layout-sider-children {
+  margin-top: -4px !important;
+}
+
+.ant-menu-submenu-title {
+  padding-left: 10px !important;
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+}
+
+.ant-menu-dark .ant-menu-inline.ant-menu-sub {
+  background: transparent !important;
+}
+
+.nav-area {
+  flex-direction: row;
+  margin: 0 16px;
+  display: flex;
+  flex: 1;
+  @media (max-width: 332px) {
+    justify-content: flex-end;
+  }
+
+  .nav-left {
+    justify-content: center;
+    flex-direction: row;
+    margin: 8px 0;
+    display: flex;
+    @media (max-width: 332px) {
+      display: none;
+    }
+  }
+
+  .nav-right {
+    justify-content: flex-end;
+    flex-direction: row;
+    margin: 5px 0;
+    display: flex;
+    flex: 1;
+  }
+}
+
+.user-area {
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  cursor: pointer;
+  display: flex;
+
+  .user-avatar {
+    height: 100%;
+    width: 50px;
+  }
+}
+
+.user-item {
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  display: flex;
+
+  .user-item-title {
+    margin-left: 10px;
+  }
+}
+
+.nav-title {
+  letter-spacing: 1px;
+  font-weight: bold;
+  margin-left: 16px;
+  font-size: 20px;
+}
+
+.nav-icon {
+  background: transparent !important;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  display: flex;
+}
+
+.footer-style {
+  padding: 13px 50px !important;
+  color: $white-color !important;
+  text-align: center;
+}
+
+.ant-layout-header {
+  background-color: #ffdbb7 !important;
+  line-height: normal !important;
+}
+
+.ant-layout-sider-collapsed {
+  flex: 0 0 40px !important;
+  max-width: 40px !important;
+  min-width: 40px !important;
+  width: 40px !important;
+}
+
+.ant-layout-sider-collapsed > .ant-layout-sider-trigger {
+  width: 40px !important;
+}
+
+.navbar-style {
+  background-color: #ffe6cd !important;
+}
+
+.button--color {
+  background-color: #0a7700;
+  padding: 5px 10px;
+}
+
+@media (max-width: 1000px) {
+  .input--search > .input--base {
+    width: 100px;
+  }
+}

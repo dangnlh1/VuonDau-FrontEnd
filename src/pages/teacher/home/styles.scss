@@ -1,0 +1,46 @@
+/**
+ * @app VuonDau
+ * @author phutruongck
+ */
+
+@import '../../../assets/css/global.scss';
+
+.teacher__page__container {
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  margin-left: -10px;
+  padding: 16px;
+  display: flex;
+  flex: 1;
+}
+
+.teacher__page__container > a {
+  text-decoration: none;
+  color: #000;
+}
+
+.teacher__item__container {
+  font-family: $font-family;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 4px;
+  position: relative;
+  margin-left: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  padding: 50px;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  overflow: hidden;
+  box-shadow: rgb(31 31 31 / 12%) 0px 1px 6px, rgb(31 31 31 / 12%) 0px 1px 4px;
+  cursor: pointer;
+}
+
+.teacher__item__container:hover {
+  -webkit-box-shadow: 0 3px 10px rgb(31 31 31 / 16%),
+    0 3px 10px rgb(31 31 31 / 23%);
+  box-shadow: 0 3px 10px rgb(31 31 31 / 16%), 0 3px 10px rgb(31 31 31 / 23%);
+  border-radius: 4px;
+}

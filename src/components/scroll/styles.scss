@@ -1,0 +1,35 @@
+/**
+ * @app VuonDau
+ * @author phutruongck
+ */
+
+@import '../../assets/css/global.scss';
+
+.all__course__scroll__container
+  .react-horizontal-scrolling-menu--inner-wrapper {
+  position: relative;
+}
+
+.all__course__scroll__container .react-horizontal-scrolling-menu--arrow-left,
+.all__course__scroll__container .react-horizontal-scrolling-menu--arrow-right {
+  position: absolute;
+}
+
+.all__course__scroll__container .react-horizontal-scrolling-menu--arrow-left {
+  left: 10px;
+}
+
+.all__course__scroll__container .react-horizontal-scrolling-menu--arrow-right {
+  right: 10px;
+}
+
+.scroll__icon__container {
+  background: $primary-color;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  padding: 10px;
+  z-index: 1;
+}

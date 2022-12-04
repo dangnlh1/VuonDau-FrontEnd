@@ -1,0 +1,54 @@
+/**
+ * @app VuonDau
+ * @author phutruongck
+ */
+
+@import '../../../../../assets/css/global.scss';
+
+.time__table__container .react-horizontal-scrolling-menu--inner-wrapper {
+  display: flex;
+}
+
+.time__table__item__container {
+  flex-direction: column;
+  background: #fff;
+  display: flex;
+  width: 200px;
+
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+.time__table__item__information__container {
+  flex-direction: column;
+  display: flex;
+  padding: 10px;
+}
+
+.time__table__item__content {
+  font-family: $font-family;
+  align-items: center;
+  font-weight: 500;
+  color: #1a1d24;
+  font-size: 16px;
+  display: flex;
+}
+
+.time__table__item__action {
+  border-top: 1px solid $black-opacity-1;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  display: flex;
+}
+
+.time__table__item__delete {
+  font-family: $font-family;
+  align-items: center;
+  font-weight: 500;
+  color: #1a1d24;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+}

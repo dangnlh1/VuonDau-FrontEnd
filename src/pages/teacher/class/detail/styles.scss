@@ -1,0 +1,57 @@
+/**
+ * @app VuonDau
+ * @author phutruongck
+ */
+
+@import '../../../../assets/css/global.scss';
+
+.class__detail__container {
+  flex-direction: column;
+  display: flex;
+  padding: 16px;
+}
+
+.class__detail__heading {
+  font-family: $font-family;
+  font-weight: 600;
+  font-size: 24px;
+  color: #000;
+}
+
+.class__detail__number__of__student {
+  font-family: $font-family;
+  font-weight: 500;
+  font-size: 14px;
+  color: #000;
+}
+
+.class__detail__student__container {
+  margin-top: 20px;
+}
+
+.class__detail__table__header {
+  font-family: $font-family;
+  font-weight: 700;
+  font-size: 16px;
+  color: #000;
+}
+
+.class__detail__table__student__name {
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  display: flex;
+}
+
+.class__detail__table__student__name img {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
+
+.class__detail__student__name {
+  font-family: $font-family;
+  margin-left: 10px;
+  font-weight: 700;
+  font-size: 16px;
+}

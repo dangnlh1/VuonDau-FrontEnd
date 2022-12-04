@@ -1,0 +1,85 @@
+/**
+ * @app VuonDau
+ * @author phutruongck
+ */
+
+@import '../../assets/css/global.scss';
+
+a.course__item__container {
+  text-decoration: none;
+  color: #1a1d24;
+}
+
+.course__item__container {
+  flex-direction: column;
+  cursor: pointer;
+  display: flex;
+  max-width: 400px;
+
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+}
+
+.course__item__thumbnail__container {
+  display: flex;
+  height: 200px;
+}
+
+.course__item__thumbnail__container img {
+  width: 100%;
+}
+
+.course__item__detail__container {
+  justify-content: space-between;
+  flex-direction: column;
+  background: #fff;
+  padding: 10px;
+  display: flex;
+  height: 150px;
+}
+
+.course__item__information__container {
+  flex-direction: column;
+  display: flex;
+}
+
+.course__item__name {
+  -webkit-box-orient: vertical;
+  font-family: $font-family;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  font-weight: bold;
+  overflow: hidden;
+  font-size: 24px;
+  color: #1a1d24;
+}
+
+.course__item__author {
+  -webkit-box-orient: vertical;
+  font-family: $font-family;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  font-weight: 500;
+  overflow: hidden;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #1a1d24;
+}
+
+.course__item__subject__container {
+  display: flex;
+}
+
+.course__item__subject__heading {
+  font-family: $font-family;
+  background: #9b59b6;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  color: #fff;
+  padding: 5px;
+}

@@ -1,0 +1,12 @@
+{
+  "realm": "vuondau-application",
+  "auth-server-url": "http://vuondau-keycloak.amazingtech.vn/auth/",
+  "ssl-required": "none",
+  "resource": "vuondau",
+  "verify-token-audience": true,
+  "credentials": {
+    "secret": "KDT4OhAzuAzzFOhepYT7l1MmTHdr9o9D"
+  },
+  "use-resource-role-mappings": true,
+  "confidential-port": 0
+}

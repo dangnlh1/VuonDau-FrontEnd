@@ -1,0 +1,121 @@
+/**
+ * @app VuonDau
+ * @author phutruongck
+ */
+
+@import '../../../../../assets/css/global.scss';
+
+a.course__subject__item__container {
+  text-decoration: none;
+  color: #1a1d24;
+}
+
+.course__subject__scroll__container {
+  display: flex;
+  overflow: hidden;
+}
+
+.course__subject__container .react-horizontal-scrolling-menu--inner-wrapper {
+  display: flex;
+}
+
+.course__subject__scroll__item {
+  overflow-x: hidden;
+}
+
+.course__subject__item__container.selected {
+  border: 1px solid #ff5e57;
+  border-radius: 4px;
+}
+
+.course__subject__item__container {
+  flex-direction: column;
+  max-width: 400px;
+  cursor: pointer;
+  display: flex;
+
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+.course__subject__scroll__container {
+  .react-horizontal-scrolling-menu--arrow-left,
+  .react-horizontal-scrolling-menu--arrow-right {
+    padding-top: 100px;
+  }
+}
+
+.course__subject__item__thumbnail__container {
+  display: flex;
+  height: 200px;
+}
+
+.course__subject__item__thumbnail__container img {
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  width: 100%;
+}
+
+.course__subject__item__detail__container {
+  justify-content: space-between;
+  flex-direction: column;
+  background: #fff;
+  padding: 10px;
+  display: flex;
+}
+
+.course__subject__item__information__container {
+  flex-direction: column;
+  display: flex;
+}
+
+.course__subject__item__name {
+  -webkit-box-orient: vertical;
+  font-family: $font-family;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  font-weight: bold;
+  overflow: hidden;
+  font-size: 20px;
+  color: #1a1d24;
+}
+
+.course__subject__item__author {
+  -webkit-box-orient: vertical;
+  font-family: $font-family;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  font-weight: 500;
+  overflow: hidden;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #1a1d24;
+}
+
+.course__subject__item__subject__container {
+  display: flex;
+}
+
+.course__subject__item__subject__heading {
+  font-family: $font-family;
+  background: #9b59b6;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  color: #fff;
+  padding: 5px;
+}
+
+.course__subject__scroll__item .react-horizontal-scrolling-menu--item {
+  &:not(:last-child) {
+    margin-right: 30px;
+  }
+}
+
+.course__subject__item {
+  width: 300px;
+}

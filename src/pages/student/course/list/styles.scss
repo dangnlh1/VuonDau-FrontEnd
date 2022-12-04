@@ -1,0 +1,41 @@
+/**
+ * @app VuonDau
+ * @author phutruongck
+ */
+
+.list__course__section {
+  display: flex;
+  flex-direction: column;
+}
+
+.list__course__container {
+  padding: 20px 16px;
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.list__course__item__container {
+  margin-bottom: 20px;
+  width: calc(20% - 20px);
+}
+
+.list__course__paginate {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.list__course__item__container {
+  transition: box-shadow 0.25s ease, -webkit-transform 0.25s ease;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  transition: box-shadow 0.25s ease, transform 0.25s ease,
+    -webkit-transform 0.25s ease;
+}
+
+.list__course__item__container:hover {
+  box-shadow: 0 6px 1rem rgba(33, 37, 41, 0.1),
+    0 0.5rem 1rem -0.75rem rgba(33, 37, 41, 0.1) !important;
+  border-radius: 5px;
+  -webkit-transform: translate3d(0, -3px, 0);
+  transform: translate3d(0, -3px, 0);
+}

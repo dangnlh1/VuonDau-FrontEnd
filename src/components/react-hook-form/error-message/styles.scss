@@ -1,0 +1,14 @@
+/**
+ * @app VietDangDental
+ * @author TruongTV
+ */
+
+@import '../../../assets/css/global.scss';
+
+.error-message {
+  font-family: $font-family;
+  color: $error-color;
+  font-weight: bold;
+  text-align: left;
+  font-size: 14px;
+}

@@ -1,0 +1,38 @@
+/**
+ * @app VuonDau
+ * @author phutruongck
+ */
+
+@import '../../../../assets/css/global.scss';
+
+.teacher__list__class__container {
+  flex-direction: column;
+  display: flex;
+  padding: 16px;
+}
+
+.teacher__list__filter {
+  justify-content: space-between;
+  margin-bottom: 50px;
+  display: flex;
+}
+
+.teacher__list__content {
+  flex-direction: column;
+  display: flex;
+}
+
+.teacher__list__heading {
+  font-family: $font-family;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.class__content__container {
+  margin-top: 20px;
+  display: flex;
+}
+
+.teacher__list__button {
+  display: flex;
+}

@@ -1,0 +1,27 @@
+/**
+ * @app VietDangDental
+ * @author TruongTV
+ */
+
+@import '../../assets/css/global.scss';
+
+.ant-pagination-item:hover,
+.ant-pagination-item:focus-visible,
+.ant-pagination-item-active,
+.ant-pagination-item-active:hover,
+.ant-pagination-item-active:focus-visible {
+  border-color: #f68b1e !important;
+}
+
+.ant-pagination-item a {
+  font-family: $font-family;
+  font-weight: bold;
+}
+
+.ant-pagination-item-active a,
+.ant-pagination-item:hover a,
+.ant-pagination-item:focus-visible a,
+.ant-pagination-item-active:hover a,
+.ant-pagination-item-active:focus-visible a {
+  color: #f68b1e !important;
+}
