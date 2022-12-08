@@ -16,7 +16,7 @@ export function WhyUs({ whyUsList }: WhyUsProps) {
       {Array.isArray(whyUsList) &&
         whyUsList.length > 0 &&
         whyUsList.map((item, idx) => (
-          <Box key={idx} sx={{ width: { xs: '100%', md: 1 / 3, height: '100%' } }}>
+          <Box key={idx} sx={{ width: { xs: '100%', md: 1 / 3 } }}>
             <Box sx={{ p: 2 }}>
               <Box
                 boxShadow={3}
