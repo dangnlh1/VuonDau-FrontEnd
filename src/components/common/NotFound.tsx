@@ -8,7 +8,7 @@ export function NotFound() {
       justifyContent="center"
       sx={{
         width: '100%',
-        height: (theme) => `calc(100vh - ${theme.mixins.toolbar.minHeight} - 10px)`,
+        height: '100%',
       }}
     >
       <Typography variant="h6">404 | Page not found</Typography>

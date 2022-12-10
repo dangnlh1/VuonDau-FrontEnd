@@ -16,6 +16,7 @@ import { Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { NotFound } from '@/components/common/NotFound'
 import { MainLayout } from '@/components/layout/MainLayout'
+import { TeacherRegister } from './features/TeacherRegister/TeacherRegister'
 
 export default function App() {
   let theme = createTheme()
@@ -27,8 +28,9 @@ export default function App() {
       <MainLayout>
         <Suspense fallback={<LinearProgress />}>
           <Routes>
-            <Route path="/" element={<Navigate to="home" />} />
-            <Route path="home" element={<Home />} />
+            <Route path="/" element={<Navigate to="trang-chu" />} />
+            <Route path="trang-chu" element={<Home />} />
+            <Route path="giao-vien" element={<TeacherRegister />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

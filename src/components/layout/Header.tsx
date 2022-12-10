@@ -1,24 +1,30 @@
 import { NavPayload, RegisterPayload } from '@/models/navMenu'
 import { Search, SearchIconWrapper, StyledInputBase } from '@/styles/Search'
 import SearchIcon from '@mui/icons-material/Search'
-import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material'
+import { alpha, AppBar, Box, Button, Toolbar, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
 export interface HeaderProps {
   firstNavList?: NavPayload[]
   registerList?: RegisterPayload[]
+  lastNavList?: NavPayload[]
+  onRegisterClick?: (value: string) => void
 }
 
-export function Header({ firstNavList, registerList }: HeaderProps) {
+export function Header({ firstNavList, registerList, lastNavList, onRegisterClick }: HeaderProps) {
   return (
     <AppBar
       position="sticky"
       color="inherit"
       sx={{
-        '.sign-up button': {
+        '.sign-up': {
           height: 38.5,
           bgcolor: (theme) => theme.palette.common.black,
           color: (theme) => theme.palette.common.white,
+
+          '&:hover': {
+            bgcolor: (theme) => alpha(theme.palette.common.black, 0.7),
+          },
         },
       }}
     >
@@ -59,21 +65,32 @@ export function Header({ firstNavList, registerList }: HeaderProps) {
           </Search>
         </Box>
 
-        {Array.isArray(registerList) &&
-          registerList.length > 0 &&
-          registerList.map((item, idx) => (
-            <NavLink to={item.link} key={idx} className={item.link === '/sign-up' ? 'sign-up' : ''}>
-              <Button
-                color="inherit"
-                variant={item.variant}
-                sx={{
-                  ml: 1,
-                  textTransform: 'none',
-                }}
-              >
+        {Array.isArray(lastNavList) &&
+          lastNavList.length > 0 &&
+          lastNavList.map((item, idx) => (
+            <NavLink to={item.link} key={idx}>
+              <Button color="inherit" sx={{ textTransform: 'none' }}>
                 {item.label}
               </Button>
             </NavLink>
+          ))}
+
+        {Array.isArray(registerList) &&
+          registerList.length > 0 &&
+          registerList.map((item, idx) => (
+            <Button
+              key={idx}
+              className={idx === 1 ? 'sign-up' : ''}
+              color="inherit"
+              variant="outlined"
+              sx={{
+                ml: 1,
+                textTransform: 'none',
+              }}
+              onClick={() => onRegisterClick?.(item.value)}
+            >
+              {item.label}
+            </Button>
           ))}
       </Toolbar>
     </AppBar>
