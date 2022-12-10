@@ -11,6 +11,8 @@ import { CourseList } from '../components/CourseList'
 import { title } from 'process'
 import { CourseData } from '@/components/common/CourseCard'
 import { useBanner } from '@/hooks/banner'
+import { useNavigate } from 'react-router-dom'
+import { Course } from '@/models/course'
 
 const whyUsList: WhyUsPayload[] = [
   {
@@ -34,12 +36,15 @@ export function HomePage() {
     size: 10,
   })
 
+  const navigate = useNavigate()
+
   const { courseList, pagination } = useCourse(params)
   const { bannerList } = useBanner()
 
   useEffect(() => {
     if (Array.isArray(courseList) && courseList.length > 0) {
       const newCourseList: CourseData[] = courseList.map((item) => ({
+        id: item.id,
         title: item.courseTitle,
         name: item.courseName,
         teacher: item.teacherName || 'Hoàng Minh',
@@ -53,6 +58,10 @@ export function HomePage() {
     setNewCourseList([])
   }, [courseList])
 
+  function handleCardClick(courseId: number) {
+    navigate(`/trang-chu/${courseId}`)
+  }
+
   return (
     <Box>
       <Container>
@@ -65,7 +74,7 @@ export function HomePage() {
         </Box>
 
         <Box sx={{ my: 2 }}>
-          <CourseList courseList={newCourseList} />
+          <CourseList courseList={newCourseList} onCardClick={handleCardClick} />
         </Box>
       </Container>
     </Box>

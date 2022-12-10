@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material'
+import { Box, InputLabel, TextField, Typography } from '@mui/material'
 import { DatePicker, DateTimePicker } from '@mui/x-date-pickers'
 import { Control, useController } from 'react-hook-form'
 
@@ -29,25 +29,26 @@ export function DateTimePickerField({
   const format = withTime ? 'DD/MM/YYYY HH:mm' : 'DD/MM/YYYY'
 
   return (
-    <Component
-      label={label}
-      value={value}
-      onChange={(date) => {
-        onChange?.(date)
-        controllerOnChange(date)
-      }}
-      inputFormat={format}
-      renderInput={(params: any) => (
-        <TextField
-          {...params}
-          margin="normal"
-          fullWidth
-          size="small"
-          onBlur={onBlur}
-          error={invalid}
-          helperText={error?.message}
-        />
-      )}
-    />
+    <Box>
+      <InputLabel>{label}</InputLabel>
+      <Component
+        value={value}
+        onChange={(date) => {
+          onChange?.(date)
+          controllerOnChange(date)
+        }}
+        inputFormat={format}
+        renderInput={(params: any) => (
+          <TextField
+            {...params}
+            fullWidth
+            size="small"
+            onBlur={onBlur}
+            error={invalid}
+            helperText={error?.message}
+          />
+        )}
+      />
+    </Box>
   )
 }

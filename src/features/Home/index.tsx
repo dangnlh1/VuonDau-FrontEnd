@@ -7,7 +7,9 @@ export function Home() {
   return (
     <Routes>
       <Route index element={<HomePage />} />
-      <Route path="detail" element={<HomeDetail />} />
+      <Route path=":courseId" element={<HomeDetail />} />
     </Routes>
   )
 }
+
+export default Home

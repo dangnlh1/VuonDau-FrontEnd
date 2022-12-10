@@ -1,9 +1,11 @@
 import { NavPayload, RegisterPayload } from '@/models/navMenu'
-import { Box, Stack } from '@mui/material'
+import { Box, Stack, Toolbar } from '@mui/material'
 import { useKeycloak } from '@react-keycloak/web'
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
+import { PageLoading } from '../common/PageLoading'
 import { Footer } from './Footer'
 import { Header } from './Header'
+import { SideBar } from './SideBar'
 
 export interface MainLayoutProps {
   children?: ReactNode
@@ -47,6 +49,8 @@ const registerList: RegisterPayload[] = [
 ]
 
 export function MainLayout({ children }: MainLayoutProps) {
+  const [showDrawer, setShowDrawer] = useState(false)
+
   const { keycloak, initialized } = useKeycloak()
 
   function handleRegisterClick(value: string) {
@@ -57,6 +61,10 @@ export function MainLayout({ children }: MainLayoutProps) {
     }
   }
 
+  function handleToggleDrawer() {
+    setShowDrawer((x) => !x)
+  }
+
   return (
     <Stack width="100%" height="100vh">
       <Header
@@ -64,9 +72,20 @@ export function MainLayout({ children }: MainLayoutProps) {
         registerList={registerList}
         lastNavList={lastNavList}
         onRegisterClick={handleRegisterClick}
+        onToggleDrawer={handleToggleDrawer}
+      />
+      <Toolbar />
+
+      <SideBar
+        navList={[...firstNavList, ...lastNavList]}
+        registerList={registerList}
+        onClose={() => setShowDrawer(false)}
+        onRegisterClick={handleRegisterClick}
+        open={showDrawer}
       />
       <Box flexGrow={1}>{children}</Box>
       <Footer />
+      <PageLoading />
     </Stack>
   )
 }

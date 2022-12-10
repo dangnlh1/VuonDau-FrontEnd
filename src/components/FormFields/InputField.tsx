@@ -1,5 +1,4 @@
-import { TextField, TextFieldProps, InputLabel, FormControl } from '@mui/material'
-import * as React from 'react'
+import { Box, FormControl, InputLabel, TextField, TextFieldProps } from '@mui/material'
 import { InputHTMLAttributes } from 'react'
 import { Control, useController } from 'react-hook-form'
 
@@ -35,24 +34,25 @@ export function InputField({
   })
 
   return (
-    <TextField
-      fullWidth
-      size="small"
-      margin="normal"
-      value={value || ''}
-      onChange={onChange}
-      onBlur={onBlur}
-      inputRef={ref}
-      label={label}
-      variant="outlined"
-      error={invalid}
-      multiline={multiline}
-      rows={rows}
-      InputLabelProps={InputLabelProps}
-      InputProps={InputProps}
-      helperText={error?.message}
-      inputProps={inputProps}
-      {...otherTextFieldProps}
-    />
+    <Box>
+      <InputLabel>{label}</InputLabel>
+      <TextField
+        fullWidth
+        size="small"
+        value={value || ''}
+        onChange={onChange}
+        onBlur={onBlur}
+        inputRef={ref}
+        variant="outlined"
+        error={invalid}
+        multiline={multiline}
+        rows={rows}
+        InputLabelProps={InputLabelProps}
+        InputProps={InputProps}
+        helperText={error?.message}
+        inputProps={inputProps}
+        {...otherTextFieldProps}
+      />
+    </Box>
   )
 }

@@ -5,8 +5,10 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { alpha, Box, Button, CardActionArea, Chip, Rating, Stack } from '@mui/material'
 import { truncateText } from '@/utils/common'
+import { RatingCustom } from './RatingCustom'
 
 export interface CourseData {
+  id: number
   imageUrl?: string
   title?: string
   name?: string
@@ -55,12 +57,7 @@ export function CourseCard({ course }: CourseCardProps) {
           Giáo viên: {course?.teacher}
         </Typography>
 
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <Typography variant="h6" color="text.secondary">
-            4.5
-          </Typography>{' '}
-          <Rating value={4.5} precision={0.5} name="read-only" readOnly />
-        </Stack>
+        <RatingCustom rating={4.5} />
 
         <Box>
           <Chip label={course?.subject} color="primary" sx={{ borderRadius: 1 }} />

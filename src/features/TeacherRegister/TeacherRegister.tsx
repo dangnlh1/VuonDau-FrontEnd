@@ -18,3 +18,5 @@ export function TeacherRegister() {
     </Box>
   )
 }
+
+export default TeacherRegister
