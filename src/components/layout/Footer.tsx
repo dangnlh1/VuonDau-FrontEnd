@@ -118,7 +118,7 @@ export function Footer() {
             spacing={0.5}
           >
             <CopyrightIcon />
-            <Typography variant="body2">{`${new Date().getFullYear()} Copyright. Aright services.`}</Typography>
+            <Typography variant="body2">{`${new Date().getFullYear()}. All rights reserved.`}</Typography>
           </Stack>
         </Box>
       </Container>
