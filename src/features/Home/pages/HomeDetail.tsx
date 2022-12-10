@@ -17,8 +17,6 @@ export function HomeDetail() {
   const defaultImage = 'https://img-c.udemycdn.com/course/240x135/658286_99b2_2.jpg'
 
   useEffect(() => {
-    console.log('data: ', data)
-
     if (data) {
       const bannerData: BannerPayload = {
         title: data.name,
