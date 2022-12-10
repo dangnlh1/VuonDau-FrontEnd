@@ -7,7 +7,7 @@ export const classApi = {
     return axiosClient.get('/class', { params })
   },
 
-  get(id: number): Promise<ListResponse<ClassPayload>> {
+  get(id: number): Promise<ClassPayload> {
     return axiosClient.get(`/class/${id}/class-detail`)
   },
 }

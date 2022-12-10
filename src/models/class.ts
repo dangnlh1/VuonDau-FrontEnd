@@ -1,5 +1,5 @@
 import { LayoutType } from './common'
-import { Course } from './course'
+import { CoursePayload } from './course'
 
 export interface ClassType {
   id: number
@@ -33,6 +33,19 @@ export interface Teacher {
   genderResponse: GenderResponse
 }
 
+export interface Module {
+  id: number
+  name: string
+  type: string
+  url: string
+}
+
+export interface Resource {
+  id: number
+  name?: string
+  modules?: Module[]
+}
+
 export interface ClassPayload {
   id: number
   name: string
@@ -43,8 +56,9 @@ export interface ClassPayload {
   endDate: string
   numberStudent: number
   maxNumberStudent: number
-  course: Course
+  course: CoursePayload
   unitPrice: number
   finalPrice: number
   teacher: Teacher
+  resources: Resource
 }

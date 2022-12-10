@@ -1,13 +1,14 @@
 import { FilterParams, ListResponse } from '@/models/common'
-import { Course } from '@/models/course'
+import { CoursePayload } from '@/models/course'
+
 import axiosClient from './axiosClient'
 
 export const courseApi = {
-  getAll(params: FilterParams): Promise<ListResponse<Course>> {
+  getAll(params: FilterParams): Promise<ListResponse<CoursePayload>> {
     return axiosClient.get('/courses/get-all-course', { params })
   },
 
-  get(id: number): Promise<ListResponse<Course>> {
+  get(id: number): Promise<ListResponse<CoursePayload>> {
     return axiosClient.get(`/courses/${id}`)
   },
 }

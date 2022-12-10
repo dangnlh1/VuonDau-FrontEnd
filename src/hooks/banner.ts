@@ -9,6 +9,6 @@ export function useBanner() {
   return {
     isLoading,
     error,
-    bannerList: data?.data,
+    bannerList: data,
   }
 }

@@ -1,6 +1,4 @@
 import { BannerPayload } from '@/models/banner'
-import { ListResponse } from '@/models/common'
-import { Course } from '@/models/course'
 import axiosClient from './axiosClient'
 
 interface BannerResponse {

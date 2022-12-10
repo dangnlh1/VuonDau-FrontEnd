@@ -25,10 +25,7 @@ axiosClient.interceptors.request.use(function (config) {
 // Add a response interceptor
 axiosClient.interceptors.response.use(
   function (response) {
-    // for single response: get data
-    // for plural response: get data + meta
-    const axiosData = response.data
-    return axiosData
+    return response.data.data
   },
   function (error) {
     // Clean up token if 401

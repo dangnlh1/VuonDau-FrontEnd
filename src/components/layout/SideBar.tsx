@@ -16,7 +16,7 @@ export function SideBar({ navList, open, onClose, registerList, onRegisterClick 
       open={open}
       onClose={() => onClose?.()}
       sx={{
-        '.MuiPaper-root': { width: '40%' },
+        '.MuiPaper-root': { width: '70%' },
         '& a': {
           width: '100%',
         },

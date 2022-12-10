@@ -1,16 +1,16 @@
-import { courseApi } from '@/api/courseApi'
+import { classApi } from '@/api/classApi'
 import { FilterParams, Pagination } from '@/models/common'
 import { useQuery, useQueryClient } from 'react-query'
 
-export function useCourse(params: FilterParams) {
-  const queryKey = ['/course', params]
+export function useClasses(params: FilterParams) {
+  const queryKey = ['/classes', params]
   const queryClient = useQueryClient()
-  const { data, isLoading, error } = useQuery(queryKey, () => courseApi.getAll(params))
+  const { data, isLoading, error } = useQuery(queryKey, () => classApi.getAll(params))
 
   return {
     isLoading,
     error,
-    courseList: data?.items,
+    classList: data?.items,
     pagination: {
       page: data?.currentPage,
       size: data?.pageSize,
