@@ -19,6 +19,7 @@ import { ComingSoon } from './components/common/ComingSoon'
 
 const Home = lazy(() => import('@/features/Home'))
 const TeacherRegister = lazy(() => import('@/features/TeacherRegister/TeacherRegister'))
+const Course = lazy(() => import('@/features/Course/CourseFeature'))
 
 export default function App() {
   let theme = createTheme({
@@ -43,7 +44,7 @@ export default function App() {
             <Route path="trang-chu/*" element={<Home />} />
             <Route path="giao-vien" element={<TeacherRegister />} />
             <Route path="gioi-thieu" element={<ComingSoon />} />
-            <Route path="khoa-hoc" element={<ComingSoon />} />
+            <Route path="khoa-hoc/*" element={<Course />} />
             <Route path="hoc-sinh" element={<ComingSoon />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
