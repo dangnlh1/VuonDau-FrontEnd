@@ -34,7 +34,7 @@ export function SelectField({
 
   return (
     <React.Fragment>
-      <InputLabel sx={{ fontWeight: 'bold', fontSize: 11 }}>{label}</InputLabel>
+      <InputLabel sx={{ fontWeight: 'bold', fontSize: 13 }}>{label}</InputLabel>
       <FormControl fullWidth size="small" error={invalid}>
         <Select
           value={value || ''}

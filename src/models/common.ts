@@ -23,3 +23,7 @@ export interface Pagination {
 }
 
 export type LayoutType = 'STUDENT' | 'ADMIN' | 'TEACHER' | 'BLANK'
+
+export interface City {
+  name: string
+}

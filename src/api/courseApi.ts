@@ -8,7 +8,7 @@ export const courseApi = {
     return axiosClient.get('/courses/get-all-course', { params })
   },
 
-  get(id: number): Promise<ListResponse<CoursePayload>> {
+  get(id: number): Promise<CoursePayload> {
     return axiosClient.get(`/courses/${id}`)
   },
 }

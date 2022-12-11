@@ -1,20 +1,27 @@
+import { CheckboxField } from '@/components/FormFields/CheckboxField'
 import { DateTimePickerField } from '@/components/FormFields/DateTimePickerField'
 import { InputField } from '@/components/FormFields/InputField'
+import { UploadCardImage } from '@/components/FormFields/UploadCardImageField'
 import { SelectField } from '@/components/FormFields/SelectField'
-import { cityList, genderList, voiceList } from '@/constants/info'
+import { classLevelList, genderList, voiceList } from '@/constants/info'
+import { SelectOption } from '@/models/option'
 import { TeacherRegisterPayload } from '@/models/teacherRegister'
 import { dateFormatting } from '@/utils/dateFormating'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Box, Button, FormHelperText, IconButton, InputAdornment, Stack } from '@mui/material'
-import { red } from '@mui/material/colors'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 const helperText = 'Lưu ý: Sử dụng email và mật khẩu này để đăng nhập!.'
 export interface RegisterFormProps {
+  subjectList?: SelectOption[]
+  cityList?: SelectOption[]
   onFormSubmit?: (formValues: TeacherRegisterPayload) => void
+  onUploadAvatar?: (file: File) => void
+  onUploadIdCard?: (file: File) => void
+  onUploadCertificationCard?: (file: File) => void
 }
 
 const schema = yup.object({
@@ -42,29 +49,52 @@ const schema = yup.object({
       .required('Vui lòng nhập lại mật khẩu.')
       .oneOf([yup.ref('password'), null], 'Nhập lại mật khẩu không trùng.'),
   }),
+
+  subjects: yup.array().required('Vui lòng chọn các môn học!'),
+  classLevels: yup.array().required('Vui lòng chọn trình độ giảng dạy!'),
 })
 
-export function RegisterForm({ onFormSubmit }: RegisterFormProps) {
+export function RegisterForm({
+  cityList,
+  subjectList,
+  onFormSubmit,
+  onUploadAvatar,
+  onUploadCertificationCard,
+  onUploadIdCard,
+}: RegisterFormProps) {
   const [showPassword, setShowPassword] = React.useState(false)
+  const [hasAvatarFile, setHasAvatarFile] = useState(false)
+  const [hasCertificationCardFile, setHasCertificationCardFile] = useState(false)
+  const [hasIdCardFile, setHasIdCardFile] = useState(false)
 
-  const { control, handleSubmit } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { isDirty, isValid },
+  } = useForm({
     defaultValues: {
       firstName: '',
       lastName: '',
       birthDay: '',
       email: '',
+      password: '',
+      passwordConfirmation: '',
+
       phone: '',
       gender: 'MALE',
+
       domicile: '',
-      voice: 'mien-nam',
-      teachingProvince: 'ho-chi-minh',
+      voice: 'Miền Nam',
+      teachingProvince: 'Thành phố Hồ Chí Minh',
       currentAddress: '',
       idCard: '',
+
       trainingSchoolName: '',
       majors: '',
       level: '',
-      password: '',
-      passwordConfirmation: '',
+
+      subjects: [],
+      classLevels: [],
     },
 
     resolver: yupResolver(schema),
@@ -79,13 +109,16 @@ export function RegisterForm({ onFormSubmit }: RegisterFormProps) {
   }
 
   function handleFormSubmit(formValues: TeacherRegisterPayload) {
-    const data = {
+    const data: TeacherRegisterPayload = {
       ...formValues,
-      birthday: dateFormatting(formValues.birthDay as string),
+      birthDay: new Date(formValues.birthDay).toISOString(),
     }
-    console.log({ data })
-    onFormSubmit?.(formValues)
+
+    onFormSubmit?.(data)
   }
+
+  const invalid =
+    !isDirty || !isValid || !hasAvatarFile || !hasCertificationCardFile || !hasIdCardFile
 
   return (
     <Stack spacing={2} component="form" onSubmit={handleSubmit(handleFormSubmit)} noValidate>
@@ -151,7 +184,7 @@ export function RegisterForm({ onFormSubmit }: RegisterFormProps) {
         }}
       />
 
-      <FormHelperText sx={{ color: red[500] }}>{helperText}</FormHelperText>
+      <FormHelperText>{helperText}</FormHelperText>
 
       <InputField control={control} name="phone" label="Số điện thoại" />
       <InputField control={control} name="domicile" label="Địa chỉ thường trú" />
@@ -177,8 +210,91 @@ export function RegisterForm({ onFormSubmit }: RegisterFormProps) {
         </Box>
       </Stack>
 
-      <Button type="submit" variant="contained">
-        Submit
+      <Stack direction="row" alignItems="flex-start" spacing={2}>
+        <Box sx={{ width: 1 / 2 }}>
+          <CheckboxField
+            control={control}
+            name="subjects"
+            label="Môn học"
+            optionList={subjectList || []}
+          />
+        </Box>
+
+        <Box sx={{ width: 1 / 2 }}>
+          <CheckboxField
+            control={control}
+            name="classLevels"
+            label="Lớp"
+            optionList={classLevelList}
+          />
+        </Box>
+      </Stack>
+
+      <Stack direction="row" flexWrap="wrap" alignItems="flex-start" sx={{ mx: -1 }}>
+        <Box sx={{ width: { xs: '100%', sm: 1 / 3, md: 1 / 3 } }}>
+          <Box sx={{ p: 1 }}>
+            <UploadCardImage
+              width={'100%'}
+              height={200}
+              name="avatar"
+              label="Ảnh đại diện"
+              onChange={(file) => {
+                onUploadAvatar?.(file)
+                setHasAvatarFile(true)
+              }}
+            />
+            {!hasAvatarFile && (
+              <FormHelperText error={!hasAvatarFile}>
+                Upload ảnh đại diện là trường bắt buộc!
+              </FormHelperText>
+            )}
+          </Box>
+        </Box>
+
+        <Box sx={{ width: { xs: '100%', sm: 1 / 3, md: 1 / 3 } }}>
+          <Box sx={{ p: 1 }}>
+            <UploadCardImage
+              width={'100%'}
+              height={200}
+              name="id-card"
+              label="Ảnh CMND/CCCD"
+              onChange={(file) => {
+                onUploadIdCard?.(file)
+                setHasIdCardFile(true)
+              }}
+            />
+
+            {!hasIdCardFile && (
+              <FormHelperText error={!hasIdCardFile}>
+                Upload CMND/CCCD là trường bắt buộc!
+              </FormHelperText>
+            )}
+          </Box>
+        </Box>
+
+        <Box sx={{ width: { xs: '100%', sm: 1 / 3, md: 1 / 3 } }}>
+          <Box sx={{ p: 1 }}>
+            <UploadCardImage
+              width={'100%'}
+              height={200}
+              name="certification"
+              label="Ảnh chứng nhận/ bằng tốt nghiệp"
+              onChange={(file) => {
+                onUploadCertificationCard?.(file)
+                setHasCertificationCardFile(true)
+              }}
+            />
+            {!hasCertificationCardFile && (
+              <FormHelperText error={!hasCertificationCardFile}>
+                Upload bằng cấp là trường bắt buộc!
+              </FormHelperText>
+            )}
+          </Box>
+        </Box>
+      </Stack>
+
+      <Button type="submit" variant="contained" disabled={invalid}>
+        Đăng ký
       </Button>
     </Stack>
   )

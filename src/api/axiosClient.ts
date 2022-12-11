@@ -25,7 +25,8 @@ axiosClient.interceptors.request.use(function (config) {
 // Add a response interceptor
 axiosClient.interceptors.response.use(
   function (response) {
-    return response.data.data
+    const data = response.data.data
+    return data ? data : response.data
   },
   function (error) {
     // Clean up token if 401

@@ -1,15 +1,30 @@
 export const voiceList = [
   {
     label: 'Miền Nam',
-    value: 'mien-nam',
+    value: 'Miền Nam',
   },
   {
     label: 'Miền Trung',
-    value: 'mien-trung',
+    value: 'Miền Trung',
   },
   {
     label: 'Miền Bắc',
-    value: 'mien-bac',
+    value: 'Miền Bắc',
+  },
+]
+
+export const classLevelList = [
+  {
+    label: 'Lớp 10',
+    value: 10,
+  },
+  {
+    label: 'Lớp 11',
+    value: 11,
+  },
+  {
+    label: 'Lớp 12',
+    value: 12,
   },
 ]
 

@@ -1,5 +1,4 @@
 import { classApi } from '@/api/classApi'
-import { ClassPayload } from '@/models/class'
 import { useQuery } from 'react-query'
 
 export function useClass(id: number) {

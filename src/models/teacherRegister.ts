@@ -15,4 +15,6 @@ export interface TeacherRegisterPayload {
   level: string
   password: string
   passwordConfirmation: string
+  subjects: any[]
+  classLevels: any[]
 }

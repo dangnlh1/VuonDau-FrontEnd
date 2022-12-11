@@ -1,9 +1,4 @@
-export interface Subject {
-  id: number
-  code: string
-  name: string
-  courseIds: number[]
-}
+import { Subject } from './subject'
 
 export interface CoursePayload {
   id: number
