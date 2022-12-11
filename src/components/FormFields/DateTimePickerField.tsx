@@ -30,7 +30,7 @@ export function DateTimePickerField({
 
   return (
     <Box>
-      <InputLabel>{label}</InputLabel>
+      <InputLabel sx={{ fontWeight: 'bold', fontSize: 11 }}>{label}</InputLabel>
       <Component
         value={value}
         onChange={(date) => {

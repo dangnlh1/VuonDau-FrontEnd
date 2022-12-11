@@ -1,6 +1,7 @@
 import { NavPayload, RegisterPayload } from '@/models/navMenu'
-import { Divider, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material'
+import { Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Stack } from '@mui/material'
 import { NavLink } from 'react-router-dom'
+import { Logo } from '../common/Logo'
 
 export interface SideBarProps {
   navList?: NavPayload[]
@@ -26,7 +27,36 @@ export function SideBar({ navList, open, onClose, registerList, onRegisterClick 
         },
       }}
     >
-      <List>
+      <List
+        sx={{
+          '.active': {
+            '.MuiButtonBase-root': {
+              bgcolor: 'primary.main',
+              color: 'white',
+            },
+          },
+        }}
+      >
+        <Stack alignItems="center" width="100%" sx={{ my: 3 }}>
+          <Logo />
+        </Stack>
+
+        <Divider />
+
+        {Array.isArray(navList) &&
+          navList.length > 0 &&
+          navList.map((item, idx) => (
+            <ListItem key={idx} onClick={() => onClose?.()}>
+              <NavLink to={item.link} className={({ isActive }) => (isActive ? 'active' : '')}>
+                <ListItemButton>
+                  <ListItemText primary={item.label} />
+                </ListItemButton>
+              </NavLink>
+            </ListItem>
+          ))}
+
+        <Divider />
+
         {Array.isArray(registerList) &&
           registerList.length > 0 &&
           registerList.map((item, idx) => (
@@ -39,20 +69,6 @@ export function SideBar({ navList, open, onClose, registerList, onRegisterClick 
               >
                 <ListItemText primary={item.label} />
               </ListItemButton>
-            </ListItem>
-          ))}
-
-        <Divider />
-
-        {Array.isArray(navList) &&
-          navList.length > 0 &&
-          navList.map((item, idx) => (
-            <ListItem key={idx} onClick={() => onClose?.()}>
-              <NavLink to={item.link}>
-                <ListItemButton>
-                  <ListItemText primary={item.label} />
-                </ListItemButton>
-              </NavLink>
             </ListItem>
           ))}
       </List>
