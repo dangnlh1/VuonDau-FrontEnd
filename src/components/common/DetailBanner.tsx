@@ -34,19 +34,6 @@ export function DetailBanner({ sx, data }: DetailBannerProps) {
 
               <Typography variant="h6">{data?.description}</Typography>
 
-              <Stack direction="row" spacing={2}>
-                {data?.status && (
-                  <Box>
-                    <Chip
-                      label={data?.status}
-                      sx={{ color: 'white', borderRadius: 1, bgcolor: 'primary.light' }}
-                    />
-                  </Box>
-                )}
-
-                <RatingCustom rating={data?.rating || 0} sx={{ color: 'white' }} />
-              </Stack>
-
               <Typography
                 variant="body1"
                 component="a"
@@ -60,18 +47,28 @@ export function DetailBanner({ sx, data }: DetailBannerProps) {
                 Giáo viên: <strong>{data?.teacher}</strong>
               </Typography>
 
-              <Typography
-                variant="body1"
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
+              <Stack direction="row" spacing={2}>
+                {data?.status && (
+                  <Box>
+                    <Chip label={data?.status} sx={{ color: 'white', bgcolor: 'primary.light' }} />
+                  </Box>
+                )}
 
-                  '& strong': { ml: 1 },
-                }}
-              >
-                <NewReleasesIcon sx={{ mr: 1 }} />
-                Ngày update: <strong>{dateFormatting(data?.updatedAt as string)}</strong>
-              </Typography>
+                {/* <RatingCustom rating={data?.rating || 0} sx={{ color: 'white' }} /> */}
+
+                <Typography
+                  variant="body1"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+
+                    '& strong': { ml: 1 },
+                  }}
+                >
+                  <NewReleasesIcon sx={{ mr: 1 }} />
+                  Update lần cuối: <strong>{dateFormatting(data?.updatedAt as string)}</strong>
+                </Typography>
+              </Stack>
 
               <Stack spacing={2} sx={{ display: { xs: 'flex', lg: 'none' } }}>
                 <Typography variant="body1" sx={{ textDecorationLine: 'line-through' }}>
@@ -83,7 +80,7 @@ export function DetailBanner({ sx, data }: DetailBannerProps) {
                 </Typography>
 
                 <Box>
-                  <Button variant="outlined">Mua ngay</Button>
+                  <Button variant="contained">Mua ngay</Button>
                 </Box>
               </Stack>
             </Stack>

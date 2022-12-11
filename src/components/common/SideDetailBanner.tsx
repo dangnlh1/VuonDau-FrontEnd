@@ -5,6 +5,7 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload'
 import AllInclusiveIcon from '@mui/icons-material/AllInclusive'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
 import CardMembershipIcon from '@mui/icons-material/CardMembership'
+
 export interface SideDetailBannerProps {
   sx?: SxProps<Theme>
   finalPrice?: number

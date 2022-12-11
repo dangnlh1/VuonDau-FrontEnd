@@ -48,7 +48,9 @@ export function HomePage() {
         teacher: `${item?.teacher?.firstName || ''} ${item?.teacher?.lastName || ''}`,
         subject: item?.course?.subject?.name,
         imageUrl: item?.course?.image,
-        price: item.unitPrice,
+        unitPrice: item.unitPrice,
+        finalPrice: item.finalPrice,
+        studentMaxNumber: item.maxNumberStudent,
       }))
 
       setNewCourseList(newCourseList)

@@ -1,3 +1,4 @@
+import { formatCurrency } from '@/utils/common'
 import { Box, Chip, Stack } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { RatingCustom } from './RatingCustom'
@@ -12,8 +13,9 @@ export interface CourseData {
   subject?: string
   number?: string
   teacher?: string
-  price?: number
-  maxCount?: string
+  finalPrice?: number
+  unitPrice?: number
+  studentMaxNumber?: number
   updateAt?: string
   startAt?: string
 }
@@ -51,6 +53,10 @@ export function CourseCard({ course }: CourseCardProps) {
           {course?.name}
         </Typography>
 
+        <Typography variant="body1" color="text.secondary" fontStyle="italic">
+          Giá: <strong>{formatCurrency(course?.finalPrice || 0)}</strong>
+        </Typography>
+
         <Typography gutterBottom variant="body1" sx={{ m: 0 }}>
           {course?.title}
         </Typography>
@@ -58,12 +64,15 @@ export function CourseCard({ course }: CourseCardProps) {
         <Typography variant="body1" color="text.secondary">
           Giáo viên: <strong>{course?.teacher}</strong>
         </Typography>
+        <Typography variant="body1" color="text.secondary">
+          Số lượng học sinh: <strong>{course?.studentMaxNumber}</strong>
+        </Typography>
 
-        <RatingCustom rating={4.5} />
+        {/* <RatingCustom rating={4.5} /> */}
 
         {course?.subject && (
           <Box>
-            <Chip label={course?.subject} color="primary" sx={{ borderRadius: 1 }} />
+            <Chip label={course?.subject} color="primary" />
           </Box>
         )}
       </Stack>
