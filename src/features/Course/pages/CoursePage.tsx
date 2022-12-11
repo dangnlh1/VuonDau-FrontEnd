@@ -59,13 +59,15 @@ export function CoursePage() {
           {pageTitle}
         </Typography>
 
-        <CourseFilter />
+        <Box sx={{ my: 3 }}>
+          <CourseFilter />
+        </Box>
 
-        <Box>
+        <Box sx={{ my: 3 }}>
           <CourseList courseList={newCourseList} onCardClick={handleCardClick} />
         </Box>
 
-        <Stack spacing={2} alignItems="center">
+        <Stack spacing={2} alignItems="center" sx={{ my: 3 }}>
           <Pagination
             count={pagination?.totalPages}
             variant="outlined"
