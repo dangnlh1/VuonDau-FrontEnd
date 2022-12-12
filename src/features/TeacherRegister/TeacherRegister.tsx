@@ -40,7 +40,7 @@ export function TeacherRegister() {
     }
   }, [cityList])
 
-  async function handleFormSubmit(formValues: TeacherRegisterPayload) {
+  async function handleFormSubmit(formValues: FormData) {
     await registerTutor.mutateAsync(formValues).then((response) => {
       if (response) {
         console.log(response)
@@ -62,9 +62,9 @@ export function TeacherRegister() {
             subjectList={subjectOptionList}
             cityList={cityOptionList}
             onFormSubmit={handleFormSubmit}
-            onUploadCertificationCard={(file) => setSelectCertificationCardFile(file)}
-            onUploadAvatar={(file) => setSelectAvatarFile(file)}
-            onUploadIdCard={(file) => setSelectIdCardFile(file)}
+            // onUploadCertificationCard={(file) => setSelectCertificationCardFile(file)}
+            // onUploadAvatar={(file) => setSelectAvatarFile(file)}
+            // onUploadIdCard={(file) => setSelectIdCardFile(file)}
           />
         </Box>
       </Container>

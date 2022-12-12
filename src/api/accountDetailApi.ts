@@ -8,8 +8,12 @@ export interface UploadRegisterProfileImagePayload {
 }
 
 export const accountDetailApi = {
-  registerTutor(payload: TeacherRegisterPayload) {
-    return axiosClient.post('/account-detail/register-tutor', payload)
+  registerTutor(payload: FormData) {
+    return axiosClient.post('/account-detail/register-tutor', payload, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
   },
 
   getCityAll(): Promise<City[]> {

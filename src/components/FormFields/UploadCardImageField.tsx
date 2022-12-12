@@ -1,6 +1,5 @@
 import { Avatar, Box, InputLabel, Stack, Typography } from '@mui/material'
-import React, { ChangeEvent, InputHTMLAttributes, useState } from 'react'
-import { Control, useController } from 'react-hook-form'
+import { ChangeEvent, useState } from 'react'
 
 export interface UploadCardImageProps {
   name?: string
