@@ -22,5 +22,6 @@ export interface TeacherRegisterPayload {
   passwordConfirmation: string
   subjects: number[]
   classLevels: number[]
-  uploadFile: UploadFile[]
+  // uploadFile: UploadFile[]
+  file: any
 }

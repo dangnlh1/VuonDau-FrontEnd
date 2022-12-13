@@ -29,11 +29,11 @@ const firstNavList: NavPayload[] = [
 const lastNavList: NavPayload[] = [
   {
     label: 'Học sinh',
-    link: '/hoc-sinh',
+    link: '/dang-ky-hoc-sinh',
   },
   {
-    label: 'Giáo viên',
-    link: '/giao-vien',
+    label: 'Đăng ký giáo viên',
+    link: '/dang-ky-giao-vien',
   },
 ]
 

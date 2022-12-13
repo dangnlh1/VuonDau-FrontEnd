@@ -6,6 +6,7 @@ import { UploadCardImage } from '@/components/FormFields/UploadCardImageField'
 import { classLevelList, genderList, voiceList } from '@/constants/info'
 import { SelectOption } from '@/models/option'
 import { TeacherRegisterPayload } from '@/models/teacherRegister'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Box, Button, FormHelperText, IconButton, InputAdornment, Stack } from '@mui/material'
 import React, { useEffect, useState } from 'react'
@@ -13,6 +14,9 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 const helperText = 'Lưu ý: Sử dụng email và mật khẩu này để đăng nhập!.'
+const certificationCardHelperText = 'Upload bằng cấp là trường bắt buộc!'
+const idCardHelperText = 'Upload CMND/CCCD là trường bắt buộc!'
+const avatarHelperText = 'Upload ảnh đại diện là trường bắt buộc!'
 export interface RegisterFormProps {
   subjectList?: SelectOption[]
   cityList?: SelectOption[]
@@ -84,31 +88,32 @@ export function RegisterForm({ cityList, subjectList, onFormSubmit }: RegisterFo
 
       subjects: [] as number[],
       classLevels: [] as number[],
-      uploadFile: [] as any,
+      file: {} as File,
     },
 
-    // resolver: yupResolver(schema),
+    resolver: yupResolver(schema),
   })
   const invalid = !isDirty || !isValid || !avatarFile || !certificationCardFile || !idCardFile
 
   useEffect(() => {
     console.log('invalid', invalid)
 
-    if (!invalid) {
-      setValue('uploadFile', [
-        {
-          resourceType: 'CCCD',
-          file: idCardFile,
-        },
-        {
-          resourceType: 'DEGREE',
-          file: certificationCardFile,
-        },
-        {
-          resourceType: 'CARD_PHOTO',
-          file: avatarFile,
-        },
-      ])
+    if (!invalid && idCardFile) {
+      // setValue('uploadFile', [
+      //   {
+      //     resourceType: 'CCCD',
+      //     file: idCardFile,
+      //   },
+      //   {
+      //     resourceType: 'DEGREE',
+      //     file: certificationCardFile,
+      //   },
+      //   {
+      //     resourceType: 'CARD_PHOTO',
+      //     file: avatarFile,
+      //   },
+      // ])
+      setValue('file', idCardFile)
     }
   }, [invalid, certificationCardFile, avatarFile, idCardFile])
 
@@ -150,11 +155,14 @@ export function RegisterForm({ cityList, subjectList, onFormSubmit }: RegisterFo
       formData.append(`classLevels`, `${item}`)
     })
 
-    formValues.uploadFile.forEach((item) => {
-      formData.append(`uploadFile`, item.file)
-    })
+    formData.append(`file`, formValues.file)
+
+    // formValues.uploadFile.forEach((item) => {
+    //   formData.append(`uploadFile`, item.file.name)
+    // })
 
     console.log(formData.getAll('uploadFile'))
+    onFormSubmit?.(formData)
   }
 
   return (
@@ -273,26 +281,6 @@ export function RegisterForm({ cityList, subjectList, onFormSubmit }: RegisterFo
             <UploadCardImage
               width={'100%'}
               height={200}
-              name="avatar"
-              label="Ảnh đại diện"
-              onChange={(file) => {
-                // onUploadAvatar?.(file)
-                setAvatarFile(file)
-              }}
-            />
-            {!avatarFile && (
-              <FormHelperText error={!avatarFile}>
-                Upload ảnh đại diện là trường bắt buộc!
-              </FormHelperText>
-            )}
-          </Box>
-        </Box>
-
-        <Box sx={{ width: { xs: '100%', sm: 1 / 3, md: 1 / 3 } }}>
-          <Box sx={{ p: 1 }}>
-            <UploadCardImage
-              width={'100%'}
-              height={200}
               name="id-card"
               label="Ảnh CMND/CCCD"
               onChange={(file) => {
@@ -301,11 +289,7 @@ export function RegisterForm({ cityList, subjectList, onFormSubmit }: RegisterFo
               }}
             />
 
-            {!idCardFile && (
-              <FormHelperText error={!idCardFile}>
-                Upload CMND/CCCD là trường bắt buộc!
-              </FormHelperText>
-            )}
+            {!idCardFile && <FormHelperText error={!idCardFile}>{idCardHelperText}</FormHelperText>}
           </Box>
         </Box>
 
@@ -322,9 +306,25 @@ export function RegisterForm({ cityList, subjectList, onFormSubmit }: RegisterFo
             />
             {!certificationCardFile && (
               <FormHelperText error={!certificationCardFile}>
-                Upload bằng cấp là trường bắt buộc!
+                {certificationCardHelperText}
               </FormHelperText>
             )}
+          </Box>
+        </Box>
+
+        <Box sx={{ width: { xs: '100%', sm: 1 / 3, md: 1 / 3 } }}>
+          <Box sx={{ p: 1 }}>
+            <UploadCardImage
+              width={'100%'}
+              height={200}
+              name="avatar"
+              label="Ảnh đại diện"
+              onChange={(file) => {
+                // onUploadAvatar?.(file)
+                setAvatarFile(file)
+              }}
+            />
+            {!avatarFile && <FormHelperText error={!avatarFile}>{avatarHelperText}</FormHelperText>}
           </Box>
         </Box>
       </Stack>

@@ -1,11 +1,10 @@
 import { formatCurrency } from '@/utils/common'
-import { Box, Button, Stack, SxProps, Theme, Typography } from '@mui/material'
-import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
-import FileDownloadIcon from '@mui/icons-material/FileDownload'
 import AllInclusiveIcon from '@mui/icons-material/AllInclusive'
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
+import FileDownloadIcon from '@mui/icons-material/FileDownload'
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
-import CardMembershipIcon from '@mui/icons-material/CardMembership'
-
+import { Box, Button, Stack, SxProps, Theme, Typography } from '@mui/material'
 export interface SideDetailBannerProps {
   sx?: SxProps<Theme>
   finalPrice?: number
@@ -32,7 +31,7 @@ const courseIncludeList = [
     label: 'Truy cập trên điện thoại di động và desktop',
   },
   {
-    icon: <CardMembershipIcon />,
+    icon: <EmojiEventsIcon />,
     label: 'Giấy chứng nhận hoàn thành',
   },
 ]
