@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Stack } from '@mui/material'
 import { ReactNode } from 'react'
 import { NavLink } from 'react-router-dom'
 
@@ -12,22 +12,22 @@ export interface Menu {
 
 export interface AdminSideBarProps {
   menuList?: Menu[]
+  lastMenuList?: Menu[]
 }
 
-export function AdminSidebar({ menuList }: AdminSideBarProps) {
+export function AdminSidebar({ menuList, lastMenuList }: AdminSideBarProps) {
   return (
-    <Box
+    <Stack
+      justifyContent="space-between"
       sx={{
-        display: 'flex',
-        justifyContent: 'space-between',
-
         flexDirection: { xs: 'row', md: 'column' },
+        height: { md: '100%' },
 
         p: { xs: 1, md: 2 },
 
         '.active > div': {
           color: 'primary.main',
-          backgroundColor: 'grey.100',
+          backgroundColor: 'grey.300',
         },
       }}
     >
@@ -48,7 +48,7 @@ export function AdminSidebar({ menuList }: AdminSideBarProps) {
 
                 mb: 0.5,
                 p: 1,
-                borderRadius: '8px',
+                borderRadius: '4px',
 
                 color: 'grey.500',
                 backgroundColor: 'white',
@@ -62,6 +62,7 @@ export function AdminSidebar({ menuList }: AdminSideBarProps) {
 
               <Box
                 sx={{
+                  display: { xs: 'none', sm: 'flex' },
                   marginLeft: { md: 1.5 },
                   fontSize: { xs: 9, sm: 'inherit' },
                   mt: { xs: 0.5, md: 0 },
@@ -72,6 +73,51 @@ export function AdminSidebar({ menuList }: AdminSideBarProps) {
             </Box>
           </NavLink>
         ))}
-    </Box>
+
+      <Box sx={{ display: { xs: 'none', sm: 'flex' }, flexGrow: { xs: 0, md: 1 } }} />
+
+      {Array.isArray(lastMenuList) &&
+        lastMenuList.length > 0 &&
+        lastMenuList.map((menu, idx) => (
+          <NavLink
+            key={idx}
+            to={menu.path}
+            className={({ isActive }) => (isActive ? 'active' : '')}
+            style={{ textDecoration: 'none' }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: { xs: 'column', md: 'row' },
+
+                mb: 0.5,
+                p: 1,
+                borderRadius: '4px',
+
+                color: 'grey.500',
+                backgroundColor: 'white',
+
+                '&:hover': {
+                  backgroundColor: 'grey.50',
+                },
+              }}
+            >
+              {menu.icon}
+
+              <Box
+                sx={{
+                  display: { xs: 'none', sm: 'flex' },
+                  marginLeft: { md: 1.5 },
+                  fontSize: { xs: 9, sm: 'inherit' },
+                  mt: { xs: 0.5, md: 0 },
+                }}
+              >
+                {menu.label}
+              </Box>
+            </Box>
+          </NavLink>
+        ))}
+    </Stack>
   )
 }

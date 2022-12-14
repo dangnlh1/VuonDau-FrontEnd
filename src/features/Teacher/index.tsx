@@ -8,13 +8,18 @@ import FolderIcon from '@mui/icons-material/Folder'
 import ClassIcon from '@mui/icons-material/Class'
 import DescriptionIcon from '@mui/icons-material/Description'
 import GroupIcon from '@mui/icons-material/Group'
+import SettingsIcon from '@mui/icons-material/Settings'
 
-const menuList: Menu[] = [
+export const menuList: Menu[] = [
   { label: 'Tổng quan', path: '/giao-vien/tong-quan', icon: <HomeIcon /> },
   { label: 'Bài tập', path: '/giao-vien/bai-tap', icon: <DescriptionIcon /> },
   { label: 'Đề thi', path: '/giao-vien/de-thi', icon: <FolderIcon /> },
   { label: 'Quản lý lớp', path: '/giao-vien/quan-ly-lop', icon: <ClassIcon /> },
   { label: 'Đội nhóm', path: '/giao-vien/doi-nhom', icon: <GroupIcon /> },
+]
+
+export const lastMenuList: Menu[] = [
+  { label: 'Cài đặt', path: '/giao-vien/cai-dat', icon: <SettingsIcon /> },
 ]
 
 const TeacherDashboard = lazy(() => import('@/features/TeacherDashboard/TeacherDashboard'))
@@ -26,7 +31,7 @@ const TeacherTeams = lazy(() => import('@/features/TeacherTeams/TeacherTeams'))
 export default function Teacher() {
   return (
     <Suspense fallback={<LinearProgress />}>
-      <AdminLayout menuList={menuList}>
+      <AdminLayout menuList={menuList} lastMenuList={lastMenuList}>
         <Routes>
           <Route index element={<Navigate to="tong-quan" />} />
           <Route path="tong-quan" element={<TeacherDashboard />} />

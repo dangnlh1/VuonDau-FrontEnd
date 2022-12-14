@@ -7,9 +7,10 @@ import { AdminSidebar, Menu } from './AdminSideBar'
 export interface AdminLayoutProps {
   children?: ReactNode
   menuList?: Menu[]
+  lastMenuList?: Menu[]
 }
 
-export function AdminLayout({ children, menuList }: AdminLayoutProps) {
+export function AdminLayout({ children, menuList, lastMenuList }: AdminLayoutProps) {
   const divRef = useRef<HTMLDivElement>()
   const location = useLocation()
 
@@ -47,7 +48,7 @@ export function AdminLayout({ children, menuList }: AdminLayoutProps) {
           borderTop: { xs: `1.5px solid #e0e0e0`, md: 0 },
         }}
       >
-        <AdminSidebar menuList={menuList} />
+        <AdminSidebar menuList={menuList} lastMenuList={lastMenuList} />
       </Box>
 
       <Box
