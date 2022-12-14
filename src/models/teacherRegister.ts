@@ -1,5 +1,5 @@
 export interface UploadFile {
-  resourceType: 'CCCD' | 'DEGREE' | 'CARD_PHOTO'
+  resourceType: 'CCCD' | 'DEGREE' | 'CARTPHOTO'
   file: File
 }
 
@@ -22,6 +22,4 @@ export interface TeacherRegisterPayload {
   passwordConfirmation: string
   subjects: number[]
   classLevels: number[]
-  // uploadFile: UploadFile[]
-  file: any
 }

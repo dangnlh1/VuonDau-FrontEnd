@@ -2,17 +2,18 @@ import { useCity } from '@/hooks/city'
 import { useSubject } from '@/hooks/subject'
 import { useTeacherRegister } from '@/hooks/teacherRegister'
 import { SelectOption } from '@/models/option'
-import { TeacherRegisterPayload } from '@/models/teacherRegister'
+import { TeacherRegisterPayload, UploadFile } from '@/models/teacherRegister'
 import { Box, Container, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { RegisterForm } from './components/RegisterForm'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { FormDataPayload, RegisterForm } from './components/RegisterForm'
 
 export function TeacherRegister() {
   const [subjectOptionList, setSubjectOptionList] = useState<SelectOption[]>([])
   const [cityOptionList, setCityOptionList] = useState<SelectOption[]>([])
-  const [selectAvatarFile, setSelectAvatarFile] = useState<File>()
-  const [selectIdCardFile, setSelectIdCardFile] = useState<File>()
-  const [selectCertificationCardFile, setSelectCertificationCardFile] = useState<File>()
+
+  const navigate = useNavigate()
 
   const { subjectList } = useSubject()
   const { cityList } = useCity()
@@ -40,12 +41,83 @@ export function TeacherRegister() {
     }
   }, [cityList])
 
-  async function handleFormSubmit(formValues: FormData) {
-    await registerTutor.mutateAsync(formValues).then((response) => {
-      if (response) {
-        console.log(response)
-      }
-    })
+  async function handleFormSubmit(formValues: FormDataPayload) {
+    const formData: TeacherRegisterPayload = {
+      firstName: formValues.firstName,
+      lastName: formValues.lastName,
+      birthDay: new Date(formValues.birthDay).toISOString(),
+      email: formValues.email,
+      password: formValues.password,
+      passwordConfirmation: formValues.passwordConfirmation,
+
+      phone: formValues.phone,
+      gender: formValues.gender,
+      domicile: formValues.domicile,
+      voice: formValues.voice,
+      teachingProvince: formValues.teachingProvince,
+      currentAddress: formValues.currentAddress,
+      idCard: formValues.idCard,
+
+      trainingSchoolName: formValues.trainingSchoolName,
+      majors: formValues.majors,
+      level: formValues.level,
+      classLevels: formValues.classLevels,
+      subjects: formValues.subjects,
+    }
+
+    const uploadFile = formValues?.uploadFile
+
+    await registerTutor
+      .mutateAsync(formData)
+      .then(async (resId) => {
+        if (resId && uploadFile) {
+          const id = resId
+
+          const idCardFormData = new FormData()
+          idCardFormData.append('resourceType', uploadFile[0].resourceType)
+          idCardFormData.append('file', uploadFile[0].file)
+
+          const degreeFormData = new FormData()
+          degreeFormData.append('resourceType', uploadFile[1].resourceType)
+          degreeFormData.append('file', uploadFile[1].file)
+
+          const avatarFormData = new FormData()
+          avatarFormData.append('resourceType', uploadFile[2].resourceType)
+          avatarFormData.append('file', uploadFile[2].file)
+
+          try {
+            const idCardResponse = await uploadProfileImage.mutateAsync({
+              id: id,
+              formData: idCardFormData,
+            })
+
+            const degreeResponse = await uploadProfileImage.mutateAsync({
+              id: id,
+              formData: degreeFormData,
+            })
+
+            const avatarResponse = await uploadProfileImage.mutateAsync({
+              id: id,
+              formData: avatarFormData,
+            })
+
+            if (idCardResponse && degreeResponse && avatarResponse) {
+              toast.success('Đăng ký thành công!')
+
+              navigate('/')
+              return
+            }
+
+            toast.error('Đăng ký không thành công!')
+          } catch (error) {
+            console.log(error)
+            toast.error('Đăng ký không thành công!')
+          }
+        }
+      })
+      .catch((error) => {
+        toast.error(error.err_message)
+      })
   }
 
   return (
@@ -62,9 +134,6 @@ export function TeacherRegister() {
             subjectList={subjectOptionList}
             cityList={cityOptionList}
             onFormSubmit={handleFormSubmit}
-            // onUploadCertificationCard={(file) => setSelectCertificationCardFile(file)}
-            // onUploadAvatar={(file) => setSelectAvatarFile(file)}
-            // onUploadIdCard={(file) => setSelectIdCardFile(file)}
           />
         </Box>
       </Container>

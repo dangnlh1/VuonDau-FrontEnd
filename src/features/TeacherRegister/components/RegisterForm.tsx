@@ -5,7 +5,7 @@ import { SelectField } from '@/components/FormFields/SelectField'
 import { UploadCardImage } from '@/components/FormFields/UploadCardImageField'
 import { classLevelList, genderList, voiceList } from '@/constants/info'
 import { SelectOption } from '@/models/option'
-import { TeacherRegisterPayload } from '@/models/teacherRegister'
+import { TeacherRegisterPayload, UploadFile } from '@/models/teacherRegister'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Box, Button, FormHelperText, IconButton, InputAdornment, Stack } from '@mui/material'
@@ -17,10 +17,14 @@ const helperText = 'Lưu ý: Sử dụng email và mật khẩu này để đăn
 const certificationCardHelperText = 'Upload bằng cấp là trường bắt buộc!'
 const idCardHelperText = 'Upload CMND/CCCD là trường bắt buộc!'
 const avatarHelperText = 'Upload ảnh đại diện là trường bắt buộc!'
+
+export interface FormDataPayload extends TeacherRegisterPayload {
+  uploadFile?: UploadFile[]
+}
 export interface RegisterFormProps {
   subjectList?: SelectOption[]
   cityList?: SelectOption[]
-  onFormSubmit?: (formValues: FormData) => void
+  onFormSubmit?: (formValues: FormDataPayload) => void
 }
 
 const schema = yup.object({
@@ -63,6 +67,7 @@ export function RegisterForm({ cityList, subjectList, onFormSubmit }: RegisterFo
     control,
     handleSubmit,
     setValue,
+    reset,
     formState: { isDirty, isValid },
   } = useForm({
     defaultValues: {
@@ -88,7 +93,7 @@ export function RegisterForm({ cityList, subjectList, onFormSubmit }: RegisterFo
 
       subjects: [] as number[],
       classLevels: [] as number[],
-      file: {} as File,
+      uploadFile: [] as UploadFile[],
     },
 
     resolver: yupResolver(schema),
@@ -96,24 +101,21 @@ export function RegisterForm({ cityList, subjectList, onFormSubmit }: RegisterFo
   const invalid = !isDirty || !isValid || !avatarFile || !certificationCardFile || !idCardFile
 
   useEffect(() => {
-    console.log('invalid', invalid)
-
     if (!invalid && idCardFile) {
-      // setValue('uploadFile', [
-      //   {
-      //     resourceType: 'CCCD',
-      //     file: idCardFile,
-      //   },
-      //   {
-      //     resourceType: 'DEGREE',
-      //     file: certificationCardFile,
-      //   },
-      //   {
-      //     resourceType: 'CARD_PHOTO',
-      //     file: avatarFile,
-      //   },
-      // ])
-      setValue('file', idCardFile)
+      setValue('uploadFile', [
+        {
+          resourceType: 'CCCD',
+          file: idCardFile,
+        },
+        {
+          resourceType: 'DEGREE',
+          file: certificationCardFile,
+        },
+        {
+          resourceType: 'CARTPHOTO',
+          file: avatarFile,
+        },
+      ])
     }
   }, [invalid, certificationCardFile, avatarFile, idCardFile])
 
@@ -125,43 +127,12 @@ export function RegisterForm({ cityList, subjectList, onFormSubmit }: RegisterFo
     event.preventDefault()
   }
 
-  function handleFormSubmit(formValues: TeacherRegisterPayload) {
-    const formData = new FormData()
+  function handleFormSubmit(formValues: FormDataPayload) {
+    const formData: FormDataPayload = {
+      ...formValues,
+      birthDay: new Date(formValues.birthDay).toISOString(),
+    }
 
-    formData.append('firstName', formValues.firstName)
-    formData.append('lastName', formValues.lastName)
-    formData.append('birthDay', new Date(formValues.birthDay).toISOString())
-    formData.append('email', formValues.email)
-    formData.append('password', formValues.password)
-    formData.append('passwordConfirmation', formValues.passwordConfirmation)
-
-    formData.append('phone', formValues.phone)
-    formData.append('gender', formValues.gender)
-    formData.append('domicile', formValues.domicile)
-    formData.append('voice', formValues.voice)
-    formData.append('teachingProvince', formValues.teachingProvince)
-    formData.append('currentAddress', formValues.currentAddress)
-    formData.append('idCard', formValues.idCard)
-
-    formData.append('trainingSchoolName', formValues.trainingSchoolName)
-    formData.append('majors', formValues.majors)
-    formData.append('level', formValues.level)
-
-    formValues.subjects.forEach((item) => {
-      formData.append(`subjects`, `${item}`)
-    })
-
-    formValues.classLevels.forEach((item) => {
-      formData.append(`classLevels`, `${item}`)
-    })
-
-    formData.append(`file`, formValues.file)
-
-    // formValues.uploadFile.forEach((item) => {
-    //   formData.append(`uploadFile`, item.file.name)
-    // })
-
-    console.log(formData.getAll('uploadFile'))
     onFormSubmit?.(formData)
   }
 

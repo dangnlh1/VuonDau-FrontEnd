@@ -21,7 +21,7 @@ export function FullLogo() {
           textDecoration: 'none',
         }}
       >
-        VƯỜN DÂU
+        VƯỜN ĐẬU
       </Typography>
     </Stack>
   )

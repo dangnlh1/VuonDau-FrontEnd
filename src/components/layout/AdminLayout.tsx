@@ -41,7 +41,7 @@ export function AdminLayout({ children, menuList, lastMenuList }: AdminLayoutPro
       </Box>
 
       <Box
-        boxShadow={1}
+        boxShadow={3}
         sx={{
           gridArea: 'sidebar',
           borderRight: { xs: 0, md: `1.5px solid #e0e0e0` },
