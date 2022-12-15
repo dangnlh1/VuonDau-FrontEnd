@@ -1,4 +1,5 @@
-export interface ResponseData<T> {
+export interface ListResponse<T> {
+  items: T[]
   pageItemSize?: number
   currentPage?: number
   totalPages?: number
@@ -6,12 +7,6 @@ export interface ResponseData<T> {
   pageSize?: number
   first?: boolean
   last?: boolean
-  items: T[]
-}
-
-export interface ListResponse<T> {
-  data?: ResponseData<T>
-  status: string
 }
 
 export interface FilterParams {
@@ -28,3 +23,7 @@ export interface Pagination {
 }
 
 export type LayoutType = 'STUDENT' | 'ADMIN' | 'TEACHER' | 'BLANK'
+
+export interface City {
+  name: string
+}

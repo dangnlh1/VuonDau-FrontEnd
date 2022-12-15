@@ -1,6 +1,7 @@
 import CopyrightIcon from '@mui/icons-material/Copyright'
 import { Box, Container, Divider, Stack, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
+import { FullLogo } from '../common/Logo'
 
 const firstNavList = [
   {
@@ -53,26 +54,9 @@ export function Footer() {
       <Container>
         <Box>
           <Stack direction="row" flexWrap="wrap" alignItems="flex-start" sx={{ py: 10 }}>
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="/home"
-              sx={{
-                flexGrow: 1,
-                minWidth: { xs: '100%', sm: 2 / 5 },
-                mr: 2,
-                mb: 5,
-
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.2rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              VƯỜN DÂU
-            </Typography>
+            <Box sx={{ flexGrow: 1, width: 2 / 5, mb: 3 }}>
+              <FullLogo />
+            </Box>
 
             <Stack sx={{ flexGrow: 1, minWidth: { xs: '100%', sm: 'auto' } }}>
               {Array.isArray(firstNavList) &&
@@ -134,7 +118,7 @@ export function Footer() {
             spacing={0.5}
           >
             <CopyrightIcon />
-            <Typography variant="body2">{`${new Date().getFullYear()} Copyright. Aright services.`}</Typography>
+            <Typography variant="body2">{`${new Date().getFullYear()}. All rights reserved.`}</Typography>
           </Stack>
         </Box>
       </Container>

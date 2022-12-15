@@ -4,6 +4,7 @@
  */
 
 import App from '@/App'
+import { LocalizationProvider } from '@mui/x-date-pickers'
 import { ReactKeycloakProvider } from '@react-keycloak/web'
 import { CookiesProvider } from 'react-cookie'
 import ReactDOM from 'react-dom'
@@ -14,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import './index.css'
 import keycloak from './keycloak'
 import * as serviceWorker from './serviceWorker'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,20 +29,22 @@ ReactDOM.render(
   <ReactKeycloakProvider authClient={keycloak}>
     <CookiesProvider>
       <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <ToastContainer
-            newestOnTop
-            closeOnClick
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            rtl={false}
-          />
-          <App />
-        </QueryClientProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <QueryClientProvider client={queryClient}>
+            <ToastContainer
+              newestOnTop
+              closeOnClick
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              rtl={false}
+            />
+            <App />
+          </QueryClientProvider>
+        </LocalizationProvider>
       </BrowserRouter>
     </CookiesProvider>
   </ReactKeycloakProvider>,

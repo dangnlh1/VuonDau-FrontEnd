@@ -10,12 +10,12 @@ export function useCourse(params: FilterParams) {
   return {
     isLoading,
     error,
-    courseList: data?.data?.items,
+    courseList: data?.items,
     pagination: {
-      page: data?.data?.currentPage,
-      size: data?.data?.pageSize,
-      totalPages: data?.data?.totalPages,
-      total: data?.data?.totalItems,
+      page: data?.currentPage,
+      size: data?.pageSize,
+      totalPages: data?.totalPages,
+      total: data?.totalItems,
     } as Pagination,
   }
 }
