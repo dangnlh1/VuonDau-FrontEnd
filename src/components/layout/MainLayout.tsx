@@ -55,17 +55,6 @@ const registerList: RegisterPayload[] = [
     value: 'signUp',
   },
 ]
-let theme = createTheme({
-  palette: {
-    primary: {
-      main: '#9c27b0',
-      light: '#d05ce3',
-      dark: '#6a0080',
-      contrastText: '#fff',
-    },
-  },
-})
-theme = responsiveFontSizes(theme)
 
 export function MainLayout({ children }: MainLayoutProps) {
   const [showDrawer, setShowDrawer] = useState(false)
@@ -85,29 +74,26 @@ export function MainLayout({ children }: MainLayoutProps) {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Stack width="100%" height="100vh">
-        <Header
-          firstNavList={firstNavList}
-          registerList={registerList}
-          lastNavList={lastNavList}
-          onRegisterClick={handleRegisterClick}
-          onToggleDrawer={handleToggleDrawer}
-        />
-        <Toolbar />
+    <Stack width="100%" height="100vh">
+      <Header
+        firstNavList={firstNavList}
+        registerList={registerList}
+        lastNavList={lastNavList}
+        onRegisterClick={handleRegisterClick}
+        onToggleDrawer={handleToggleDrawer}
+      />
+      <Toolbar />
 
-        <SideBar
-          navList={[...firstNavList, ...lastNavList]}
-          registerList={registerList}
-          onClose={() => setShowDrawer(false)}
-          onRegisterClick={handleRegisterClick}
-          open={showDrawer}
-        />
-        <Box flexGrow={1}>{children}</Box>
-        <Footer />
-        <PageLoading />
-      </Stack>
-    </ThemeProvider>
+      <SideBar
+        navList={[...firstNavList, ...lastNavList]}
+        registerList={registerList}
+        onClose={() => setShowDrawer(false)}
+        onRegisterClick={handleRegisterClick}
+        open={showDrawer}
+      />
+      <Box flexGrow={1}>{children}</Box>
+      <Footer />
+      <PageLoading />
+    </Stack>
   )
 }

@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import { FullLogo, Logo } from '../common/Logo'
+import { Link } from 'react-router-dom'
 export interface HeaderProps {
   firstNavList?: NavPayload[]
   registerList?: RegisterPayload[]
@@ -50,11 +51,15 @@ export function Header({
         </Box>
 
         <Box sx={{ display: { xs: 'none', lg: 'flex' }, mr: 2 }}>
-          <FullLogo />
+          <Link to="/trang-chu">
+            <FullLogo />
+          </Link>
         </Box>
 
         <Box sx={{ display: { lg: 'none' }, flexGrow: 1 }}>
-          <Logo />
+          <Link to="/trang-chu">
+            <Logo />
+          </Link>
         </Box>
 
         <Stack direction="row" sx={{ display: { xs: 'none', lg: 'flex' } }}>
