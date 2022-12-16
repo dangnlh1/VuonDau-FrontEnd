@@ -14,7 +14,17 @@ export interface FilterParams {
   size?: number
   sort?: string[]
 }
-
+export interface RegisterPayload {
+  account:{
+      username:string,
+      password:string,
+  }
+  firstName:string,
+  lastName:string,
+  email:string,
+  phoneNumber:string,
+  genderCode:string
+}
 export interface Pagination {
   page: number
   size: number

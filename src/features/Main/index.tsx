@@ -7,6 +7,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 const Home = lazy(() => import('@/features/Home'))
 const TeacherRegister = lazy(() => import('@/features/TeacherRegister/TeacherRegister'))
+const StudentRegister = lazy(() => import('@/features/StudentRegister/StudentRegister'))
 const Course = lazy(() => import('@/features/Course/CourseFeature'))
 
 export default function Main() {
@@ -17,6 +18,7 @@ export default function Main() {
           <Route index element={<Navigate to="trang-chu" />} />
           <Route path="trang-chu/*" element={<Home />} />
           <Route path="dang-ky-giao-vien" element={<TeacherRegister />} />
+          <Route path="dang-ky-hoc-sinh" element={<StudentRegister />} />
           <Route path="gioi-thieu" element={<ComingSoon />} />
           <Route path="khoa-hoc/*" element={<Course />} />
           <Route path="dang-ky-hoc-sinh" element={<ComingSoon />} />

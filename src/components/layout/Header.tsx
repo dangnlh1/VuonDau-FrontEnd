@@ -1,12 +1,18 @@
-import { NavPayload, RegisterPayload } from '@/models/navMenu'
-import { Search, SearchIconWrapper, StyledInputBase } from '@/styles/Search'
-import SearchIcon from '@mui/icons-material/Search'
-import { alpha, AppBar, Box, Button, IconButton, Stack, Toolbar, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
+import React from 'react'
+import { NavPayload, RegisterPayload } from '@/models/navMenu'
+
+import { Search, SearchIconWrapper, StyledInputBase } from '@/styles/Search'
+
+import { FullLogo, Logo } from '../common/Logo'
+
+import { alpha, AppBar, Box, Button, IconButton, Stack, Toolbar, Typography } from '@mui/material'
 
 import MenuIcon from '@mui/icons-material/Menu'
+import SearchIcon from '@mui/icons-material/Search'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
-import { FullLogo, Logo } from '../common/Logo'
+import DropdownNavBar from '@/components/common/DropdownNavBar'
+
 export interface HeaderProps {
   firstNavList?: NavPayload[]
   registerList?: RegisterPayload[]
@@ -85,17 +91,7 @@ export function Header({
         <Stack direction="row" sx={{ display: { xs: 'none', lg: 'flex' } }}>
           {Array.isArray(lastNavList) &&
             lastNavList.length > 0 &&
-            lastNavList.map((item, idx) => (
-              <NavLink
-                to={item.link}
-                key={idx}
-                className={({ isActive }) => (isActive ? 'active' : '')}
-              >
-                <Button color="inherit" sx={{ textTransform: 'none' }}>
-                  {item.label}
-                </Button>
-              </NavLink>
-            ))}
+            lastNavList.map((item, idx) => <DropdownNavBar item={item} key={idx} />)}
         </Stack>
 
         <IconButton color="inherit" sx={{ mr: { xs: -1, lg: 0 } }}>
