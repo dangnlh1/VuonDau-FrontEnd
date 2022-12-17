@@ -1,8 +1,5 @@
 import { AdminLayout } from '@/components/layout/AdminLayout'
 import { Menu } from '@/components/layout/AdminSideBar'
-import { useGetAccountDetailAfterLogin } from '@/hooks/accountDetailAfterLogin'
-import keycloak from '@/keycloak'
-import { LayoutType } from '@/models/role'
 import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined'
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined'
 import FolderOpenOutlinedIcon from '@mui/icons-material/FolderOpenOutlined'
@@ -16,8 +13,7 @@ import {
   responsiveFontSizes,
   ThemeProvider,
 } from '@mui/material'
-import { useKeycloak } from '@react-keycloak/web'
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 
 let theme = createTheme({
@@ -34,9 +30,9 @@ theme = responsiveFontSizes(theme)
 
 export const menuList: Menu[] = [
   { label: 'Tổng quan', path: '/giao-vien/tong-quan', icon: <HomeOutlinedIcon /> },
+  { label: 'Quản lý lớp', path: '/giao-vien/quan-ly-lop', icon: <ClassOutlinedIcon /> },
   { label: 'Bài tập', path: '/giao-vien/bai-tap', icon: <DescriptionOutlinedIcon /> },
   { label: 'Đề thi', path: '/giao-vien/de-thi', icon: <FolderOpenOutlinedIcon /> },
-  { label: 'Quản lý lớp', path: '/giao-vien/quan-ly-lop', icon: <ClassOutlinedIcon /> },
   { label: 'Đội nhóm', path: '/giao-vien/doi-nhom', icon: <GroupOutlinedIcon /> },
 ]
 
