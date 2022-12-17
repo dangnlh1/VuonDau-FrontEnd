@@ -33,12 +33,11 @@ export function ClassList({
       field: 'numberStudent',
       headerName: 'Sĩ số lớp',
       flex: 1,
-      minWidth: 300,
     },
     {
       field: '',
       headerName: 'Năm học',
-      width: 150,
+      flex: 1,
       valueGetter: ({ row }) => {
         const startYear = new Date(row.startDate).getFullYear()
         const endYear = new Date(row.endDate).getFullYear()

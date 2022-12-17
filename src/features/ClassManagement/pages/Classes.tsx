@@ -24,12 +24,12 @@ const actionList: Action[] = [
     variant: 'contained',
   },
 
-  {
-    label: 'Tạo lớp mới',
-    value: 'attendance',
-    icon: <FactCheckIcon />,
-    variant: 'outlined',
-  },
+  // {
+  //   label: 'Tạo lớp mới',
+  //   value: 'attendance',
+  //   icon: <FactCheckIcon />,
+  //   variant: 'outlined',
+  // },
 ]
 
 export interface ClassManagementProps {}
