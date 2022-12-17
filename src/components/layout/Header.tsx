@@ -1,17 +1,13 @@
-import { NavLink } from 'react-router-dom'
-import React from 'react'
 import { NavPayload, RegisterPayload } from '@/models/navMenu'
-
+import { NavLink } from 'react-router-dom'
 import { Search, SearchIconWrapper, StyledInputBase } from '@/styles/Search'
-
 import { FullLogo, Logo } from '../common/Logo'
-
-import { alpha, AppBar, Box, Button, IconButton, Stack, Toolbar, Typography } from '@mui/material'
-
+import { alpha, AppBar, Box, Button, IconButton, Stack, Toolbar } from '@mui/material'
+import DropdownNavBar from '@/components/common/DropdownNavBar'
 import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
-import DropdownNavBar from '@/components/common/DropdownNavBar'
+import { Link } from 'react-router-dom'
 
 export interface HeaderProps {
   firstNavList?: NavPayload[]
@@ -56,18 +52,22 @@ export function Header({
         </Box>
 
         <Box sx={{ display: { xs: 'none', lg: 'flex' }, mr: 2 }}>
-          <FullLogo />
+          <Link to="/trang-chu">
+            <FullLogo />
+          </Link>
         </Box>
 
         <Box sx={{ display: { lg: 'none' }, flexGrow: 1 }}>
-          <Logo />
+          <Link to="/trang-chu">
+            <Logo />
+          </Link>
         </Box>
 
         <Stack direction="row" sx={{ display: { xs: 'none', lg: 'flex' } }}>
           {Array.isArray(firstNavList) &&
             firstNavList.length > 0 &&
             firstNavList.map((item, idx) => (
-              <NavLink to={item.link} key={idx}>
+              <NavLink to={item.link as string} key={idx}>
                 <Button color="inherit" sx={{ textTransform: 'none' }}>
                   {item.label}
                 </Button>

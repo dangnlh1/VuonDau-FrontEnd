@@ -10,6 +10,16 @@ export interface TeacherRegisterPayload {
   email: string
   phone: string
   gender: string
+  domicile: string
+  voice: string
+  teachingProvince: string
+  currentAddress: string
+  idCard: string
+  trainingSchoolName: string
+  majors: string
+  level: string
   password: string
-  username: string
+  passwordConfirmation: string
+  subjects: number[]
+  classLevels: number[]
 }

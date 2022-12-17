@@ -50,7 +50,7 @@ export function AdminSidebar({ menuList, lastMenuList }: AdminSideBarProps) {
                 p: 1,
                 borderRadius: '4px',
 
-                color: 'grey.500',
+                color: 'grey.600',
                 backgroundColor: 'white',
 
                 '&:hover': {

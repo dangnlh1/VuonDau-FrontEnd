@@ -7,7 +7,9 @@ import { Box, Container, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { FormDataPayload, RegisterForm } from './components/RegisterForm'
+import { FormDataPayload, RegisterForm } from '../components/RegisterForm'
+
+const pageTitle = 'Đăng ký giảng dạy trên Vườn Dâu'
 
 export function TeacherRegister() {
   const [subjectOptionList, setSubjectOptionList] = useState<SelectOption[]>([])
@@ -125,7 +127,7 @@ export function TeacherRegister() {
       <Container>
         <Box sx={{ my: 3 }}>
           <Typography variant="h5" fontWeight={600}>
-            Đăng ký giảng dạy trên Vườn Dâu
+            {pageTitle}
           </Typography>
         </Box>
 

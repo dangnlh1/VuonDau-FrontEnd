@@ -9,6 +9,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 import { FullLogo, Logo } from '../common/Logo'
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
@@ -36,11 +37,15 @@ function AdminHeader() {
     <AppBar position="static" color="inherit">
       <Toolbar>
         <Box sx={{ display: { xs: 'none', lg: 'flex' }, mr: 2 }}>
-          <FullLogo />
+          <Link to="/giao-vien">
+            <FullLogo />
+          </Link>
         </Box>
 
         <Box sx={{ display: { lg: 'none' } }}>
-          <Logo />
+          <Link to="/giao-vien">
+            <Logo />
+          </Link>
         </Box>
 
         <Box flexGrow={1} />

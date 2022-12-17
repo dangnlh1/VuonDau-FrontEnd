@@ -1,16 +1,11 @@
-import { LayoutType } from './common'
 import { CoursePayload } from './course'
+import { RolePayload } from './role'
+import { StudentPayload } from './student'
 
 export interface ClassType {
   id: number
   code: string
   name: string
-}
-
-export interface Role {
-  id: number
-  name: string
-  code: LayoutType
 }
 
 export interface GenderResponse {
@@ -26,7 +21,7 @@ export interface Teacher {
   birthday: string
   email: string
   phoneNumber: string
-  role: Role
+  role: RolePayload
   avatar: string
   active: true
   gender: string
@@ -50,7 +45,7 @@ export interface ClassPayload {
   id: number
   name: string
   code: string
-  status: string //'NEW'
+  status: string
   classType: ClassType
   startDate: string
   endDate: string
@@ -61,4 +56,5 @@ export interface ClassPayload {
   finalPrice: number
   teacher: Teacher
   resources: Resource
+  students: StudentPayload[]
 }

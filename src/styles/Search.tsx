@@ -3,15 +3,17 @@ import { alpha, styled } from '@mui/material/styles'
 
 export const Search = styled('div')(({ theme }) => ({
   position: 'relative',
+
+  width: '100%',
   border: '1.5px solid',
   borderColor: alpha(theme.palette.common.black, 0.3),
   borderRadius: theme.shape.borderRadius,
+
   backgroundColor: alpha(theme.palette.common.white, 0.15),
+
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-
-  width: '100%',
 }))
 
 export const SearchIconWrapper = styled('div')(({ theme }) => ({

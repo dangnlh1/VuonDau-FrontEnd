@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 export interface ListResponse<T> {
   items: T[]
   pageItemSize?: number
@@ -7,6 +9,7 @@ export interface ListResponse<T> {
   pageSize?: number
   first?: boolean
   last?: boolean
+  error_message?: string
 }
 
 export interface FilterParams {
@@ -32,8 +35,13 @@ export interface Pagination {
   total: number
 }
 
-export type LayoutType = 'STUDENT' | 'ADMIN' | 'TEACHER' | 'BLANK'
-
 export interface City {
   name: string
+}
+
+export interface Action {
+  label: string
+  value: string
+  icon?: ReactNode
+  variant?: 'outlined' | 'contained' | 'text'
 }
