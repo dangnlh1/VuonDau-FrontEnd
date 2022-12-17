@@ -37,11 +37,17 @@ const firstNavList: NavPayload[] = [
 const lastNavList: NavPayload[] = [
   {
     label: 'Học sinh',
-    link: '/dang-ky-hoc-sinh',
+    items: [
+      { label: 'Đăng kí tìm gia sư', link: '/dang-ky-tim-gia-su' },
+      { label: 'Danh sách gia sư', link: '/danh-sach-gia-su' },
+    ],
   },
   {
-    label: 'Đăng ký giáo viên',
-    link: '/dang-ky-giao-vien',
+    label: 'Đăng ký',
+    items: [
+      { label: 'Đăng ký giáo viên', link: '/dang-ky-giao-vien' },
+      { label: 'Đăng ký học sinh', link: '/dang-ky-hoc-sinh' },
+    ],
   },
 ]
 
