@@ -9,9 +9,6 @@ import ClassIcon from '@mui/icons-material/Class'
 import DescriptionIcon from '@mui/icons-material/Description'
 import GroupIcon from '@mui/icons-material/Group'
 import SettingsIcon from '@mui/icons-material/Settings'
-import StudentDashboard from '@/features/StudentDashboard/StudentDashboard'
-import Moodle from '@/features/Moodle/Moodle'
-import Forum from '@/features/Forum/Forum'
 import Classroom from '@/features/Classroom/Classroom'
 
 export const menuList: Menu[] = [
@@ -25,11 +22,10 @@ export const lastMenuList: Menu[] = [
   { label: 'Cài đặt', path: '/hoc-sinh/cai-dat', icon: <SettingsIcon /> },
 ]
 
-const TeacherDashboard = lazy(() => import('@/features/TeacherDashboard/TeacherDashboard'))
-const ExerciseManagement = lazy(() => import('@/features/ExerciseManagement/ExerciseManagement'))
-const ClassManagement = lazy(() => import('@/features/ClassManagement/pages/ClassManagement'))
-const Exam = lazy(() => import('@/features/Exam/Exam'))
-const TeacherTeams = lazy(() => import('@/features/TeacherTeams/TeacherTeams'))
+const StudentDashboard = lazy(() => import('@/features/StudentDashboard/StudentDashboard'))
+const Moodle = lazy(() => import('@/features/Moodle/Moodle'))
+const Forum = lazy(() => import('@/features/Forum/Forum'))
+const Classroom = lazy(() => import('@/features/Classroom/ClassroomFeature'))
 
 export default function Teacher() {
   return (
@@ -40,7 +36,7 @@ export default function Teacher() {
           <Route path="tong-quan" element={<StudentDashboard />} />
           <Route path="moodle" element={<Moodle />} />
           <Route path="forum" element={<Forum />} />
-          <Route path="lop-hoc" element={<Classroom />} />
+          <Route path="lop-hoc/*" element={<Classroom />} />
         </Routes>
       </AdminLayout>
     </Suspense>

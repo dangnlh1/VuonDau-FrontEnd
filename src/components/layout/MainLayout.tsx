@@ -77,11 +77,15 @@ export function MainLayout({ children }: MainLayoutProps) {
   const [showDrawer, setShowDrawer] = useState(false)
 
   const { keycloak, initialized } = useKeycloak()
-
-  function handleRegisterClick(value: string) {
-    console.log(value)
+  console.log(keycloak.token)
+  async function handleRegisterClick(value: string) {
     if (value === 'login') {
-      keycloak.login()
+      try {
+        await keycloak.login()
+        // console.log(keycloak.token)
+      } catch (error) {
+        console.log(error.message)
+      }
       return
     }
   }
