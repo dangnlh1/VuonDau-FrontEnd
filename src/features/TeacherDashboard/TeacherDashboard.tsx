@@ -1,6 +1,6 @@
 import { Box, Button, Stack, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import { menuList } from '../Teacher'
+import { menuList } from '../TeacherPageManagements'
 import DeleteIcon from '@mui/icons-material/Delete'
 import HelpIcon from '@mui/icons-material/Help'
 

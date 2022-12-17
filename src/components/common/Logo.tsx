@@ -13,8 +13,6 @@ export function FullLogo() {
       <Typography
         variant="h6"
         noWrap
-        component="a"
-        href="/trang-chu"
         sx={{
           fontWeight: 700,
           fontFamily: 'monospace',

@@ -1,6 +1,9 @@
+import { useGetAccountDetailAfterLogin } from '@/hooks/accountDetailAfterLogin'
 import { NavPayload, RegisterPayload } from '@/models/navMenu'
+import { LayoutType, RolePayload } from '@/models/role'
 import {
   Box,
+  Button,
   createTheme,
   CssBaseline,
   responsiveFontSizes,
@@ -9,7 +12,8 @@ import {
   Toolbar,
 } from '@mui/material'
 import { useKeycloak } from '@react-keycloak/web'
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { PageLoading } from '../common/PageLoading'
 import { Footer } from './Footer'
 import { Header } from './Header'
@@ -61,27 +65,34 @@ const registerList: RegisterPayload[] = [
     value: 'signUp',
   },
 ]
-let theme = createTheme({
-  palette: {
-    primary: {
-      main: '#9c27b0',
-      light: '#d05ce3',
-      dark: '#6a0080',
-      contrastText: '#fff',
-    },
-  },
-})
-theme = responsiveFontSizes(theme)
 
 export function MainLayout({ children }: MainLayoutProps) {
   const [showDrawer, setShowDrawer] = useState(false)
 
-  const { keycloak, initialized } = useKeycloak()
+  const { keycloak } = useKeycloak()
+  const token = keycloak.token
 
-  function handleRegisterClick(value: string) {
-    console.log(value)
+  const { data, refetch } = useGetAccountDetailAfterLogin()
+
+  useEffect(() => {
+    if (!token) return
+    refetch()
+    localStorage.setItem('token', token)
+  }, [token])
+
+  useEffect(() => {
+    if (!data) return
+    const role = data.role.code
+    localStorage.setItem('role', role)
+  }, [data])
+
+  async function handleRegisterClick(value: string) {
     if (value === 'login') {
-      keycloak.login()
+      try {
+        await keycloak.login()
+      } catch (error) {
+        console.log(error)
+      }
       return
     }
   }
@@ -90,30 +101,36 @@ export function MainLayout({ children }: MainLayoutProps) {
     setShowDrawer((x) => !x)
   }
 
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Stack width="100%" height="100vh">
-        <Header
-          firstNavList={firstNavList}
-          registerList={registerList}
-          lastNavList={lastNavList}
-          onRegisterClick={handleRegisterClick}
-          onToggleDrawer={handleToggleDrawer}
-        />
-        <Toolbar />
+  function handleLogout() {
+    keycloak.logout()
+    //clear token
+    localStorage.setItem('token', '')
+    //clear role
+    localStorage.setItem('role', '')
+  }
 
-        <SideBar
-          navList={[...firstNavList, ...lastNavList]}
-          registerList={registerList}
-          onClose={() => setShowDrawer(false)}
-          onRegisterClick={handleRegisterClick}
-          open={showDrawer}
-        />
-        <Box flexGrow={1}>{children}</Box>
-        <Footer />
-        <PageLoading />
-      </Stack>
-    </ThemeProvider>
+  return (
+    <Stack width="100%" height="100vh">
+      <Header
+        firstNavList={firstNavList}
+        registerList={registerList}
+        lastNavList={lastNavList}
+        onRegisterClick={handleRegisterClick}
+        onToggleDrawer={handleToggleDrawer}
+      />
+
+      <Toolbar />
+
+      <SideBar
+        navList={[...firstNavList, ...lastNavList]}
+        registerList={registerList}
+        onClose={() => setShowDrawer(false)}
+        onRegisterClick={handleRegisterClick}
+        open={showDrawer}
+      />
+      <Box flexGrow={1}>{children}</Box>
+      <Footer />
+      <PageLoading />
+    </Stack>
   )
 }
