@@ -24,7 +24,7 @@ let theme = createTheme({
 theme = responsiveFontSizes(theme)
 
 const Home = lazy(() => import('@/features/Home'))
-const TeacherRegister = lazy(() => import('@/features/TeacherRegister/TeacherRegister'))
+const TeacherRegister = lazy(() => import('@/features/TeacherRegister/pages/TeacherRegister'))
 const Course = lazy(() => import('@/features/Course/CourseFeature'))
 
 export default function Main() {

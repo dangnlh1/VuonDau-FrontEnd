@@ -1,5 +1,8 @@
 import { AdminLayout } from '@/components/layout/AdminLayout'
 import { Menu } from '@/components/layout/AdminSideBar'
+import { useGetAccountDetailAfterLogin } from '@/hooks/accountDetailAfterLogin'
+import keycloak from '@/keycloak'
+import { LayoutType } from '@/models/role'
 import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined'
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined'
 import FolderOpenOutlinedIcon from '@mui/icons-material/FolderOpenOutlined'
@@ -13,8 +16,9 @@ import {
   responsiveFontSizes,
   ThemeProvider,
 } from '@mui/material'
-import { lazy, Suspense } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { useKeycloak } from '@react-keycloak/web'
+import { lazy, Suspense, useEffect, useState } from 'react'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 
 let theme = createTheme({
   palette: {
@@ -47,6 +51,19 @@ const Exam = lazy(() => import('@/features/Exam/Exam'))
 const TeacherTeams = lazy(() => import('@/features/TeacherTeams/TeacherTeams'))
 
 export default function Teacher() {
+  const role = localStorage.getItem('role')
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (role !== 'TEACHER') {
+      navigate('/')
+    }
+  }, [role])
+
+  if (role !== 'TEACHER') {
+    return null
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -56,7 +73,7 @@ export default function Teacher() {
             <Route index element={<Navigate to="tong-quan" />} />
             <Route path="tong-quan" element={<TeacherDashboard />} />
             <Route path="bai-tap" element={<ExerciseManagement />} />
-            <Route path="quan-ly-lop" element={<ClassManagement />} />
+            <Route path="quan-ly-lop/*" element={<ClassManagement />} />
             <Route path="de-thi" element={<Exam />} />
             <Route path="doi-nhom" element={<TeacherTeams />} />
           </Routes>

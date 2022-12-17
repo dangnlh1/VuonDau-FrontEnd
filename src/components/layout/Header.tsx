@@ -3,11 +3,12 @@ import { Search, SearchIconWrapper, StyledInputBase } from '@/styles/Search'
 import SearchIcon from '@mui/icons-material/Search'
 import { alpha, AppBar, Box, Button, IconButton, Stack, Toolbar, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-
 import MenuIcon from '@mui/icons-material/Menu'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import { FullLogo, Logo } from '../common/Logo'
 import { Link } from 'react-router-dom'
+import styled from '@emotion/styled'
+
 export interface HeaderProps {
   firstNavList?: NavPayload[]
   registerList?: RegisterPayload[]

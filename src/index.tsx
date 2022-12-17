@@ -16,6 +16,7 @@ import './index.css'
 import keycloak from './keycloak'
 import * as serviceWorker from './serviceWorker'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import React from 'react'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,7 +28,7 @@ const queryClient = new QueryClient({
 
 ReactDOM.render(
   <ReactKeycloakProvider authClient={keycloak}>
-    <CookiesProvider>
+    <React.StrictMode>
       <BrowserRouter>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <QueryClientProvider client={queryClient}>
@@ -46,7 +47,7 @@ ReactDOM.render(
           </QueryClientProvider>
         </LocalizationProvider>
       </BrowserRouter>
-    </CookiesProvider>
+    </React.StrictMode>
   </ReactKeycloakProvider>,
   document.getElementById('root')
 )

@@ -1,6 +1,9 @@
+import { useGetAccountDetailAfterLogin } from '@/hooks/accountDetailAfterLogin'
 import { NavPayload, RegisterPayload } from '@/models/navMenu'
+import { LayoutType, RolePayload } from '@/models/role'
 import {
   Box,
+  Button,
   createTheme,
   CssBaseline,
   responsiveFontSizes,
@@ -9,7 +12,8 @@ import {
   Toolbar,
 } from '@mui/material'
 import { useKeycloak } from '@react-keycloak/web'
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { PageLoading } from '../common/PageLoading'
 import { Footer } from './Footer'
 import { Header } from './Header'
@@ -59,18 +63,44 @@ const registerList: RegisterPayload[] = [
 export function MainLayout({ children }: MainLayoutProps) {
   const [showDrawer, setShowDrawer] = useState(false)
 
-  const { keycloak, initialized } = useKeycloak()
+  const { keycloak } = useKeycloak()
+  const token = keycloak.token
 
-  function handleRegisterClick(value: string) {
-    console.log(value)
+  const { data, refetch } = useGetAccountDetailAfterLogin()
+
+  useEffect(() => {
+    if (!token) return
+    refetch()
+    localStorage.setItem('token', token)
+  }, [token])
+
+  useEffect(() => {
+    if (!data) return
+    const role = data.role.code
+    localStorage.setItem('role', role)
+  }, [data])
+
+  async function handleRegisterClick(value: string) {
     if (value === 'login') {
-      keycloak.login()
+      try {
+        await keycloak.login()
+      } catch (error) {
+        console.log(error)
+      }
       return
     }
   }
 
   function handleToggleDrawer() {
     setShowDrawer((x) => !x)
+  }
+
+  function handleLogout() {
+    keycloak.logout()
+    //clear token
+    localStorage.setItem('token', '')
+    //clear role
+    localStorage.setItem('role', '')
   }
 
   return (
@@ -82,7 +112,10 @@ export function MainLayout({ children }: MainLayoutProps) {
         onRegisterClick={handleRegisterClick}
         onToggleDrawer={handleToggleDrawer}
       />
+
       <Toolbar />
+
+      <Button onClick={handleLogout}>Logout</Button>
 
       <SideBar
         navList={[...firstNavList, ...lastNavList]}
