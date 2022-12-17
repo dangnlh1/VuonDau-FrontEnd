@@ -6,7 +6,7 @@ import '@fontsource/roboto/700.css'
 import Main from '@/features/Main'
 import { Route, Routes } from 'react-router-dom'
 import Teacher from './features/TeacherPageManagements'
-import Students from './features/ClassManagement/pages/Students'
+import Students from './features/Student'
 
 export default function App() {
   return (

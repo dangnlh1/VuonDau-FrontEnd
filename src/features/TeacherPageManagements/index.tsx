@@ -13,6 +13,7 @@ import {
   responsiveFontSizes,
   ThemeProvider,
 } from '@mui/material'
+import { useKeycloak } from '@react-keycloak/web'
 import { lazy, Suspense, useEffect } from 'react'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 
@@ -40,6 +41,8 @@ export const lastMenuList: Menu[] = [
   { label: 'Cài đặt', path: '/giao-vien/cai-dat', icon: <SettingsIcon /> },
 ]
 
+const settingList = ['Trang Chủ', 'Đăng xuất']
+
 const TeacherDashboard = lazy(() => import('@/features/TeacherDashboard/TeacherDashboard'))
 const ExerciseManagement = lazy(() => import('@/features/ExerciseManagement/ExerciseManagement'))
 const ClassManagement = lazy(() => import('@/features/ClassManagement/ClassManagement'))
@@ -49,14 +52,29 @@ const TeacherTeams = lazy(() => import('@/features/TeacherTeams/TeacherTeams'))
 export default function Teacher() {
   const role = localStorage.getItem('role')
   const navigate = useNavigate()
+  const { keycloak } = useKeycloak()
 
   useEffect(() => {
-    if (role !== 'TEACHER') {
-      navigate('/')
+    if (!role || role !== 'TEACHER') {
+      navigate('/trang-chu')
     }
   }, [role])
 
-  if (role !== 'TEACHER') {
+  function handleSettingMenuClick(value: string) {
+    if (value === 'Đăng xuất') {
+      keycloak.logout()
+      localStorage.setItem('token', '')
+      localStorage.setItem('role', '')
+
+      return
+    }
+
+    if (value === 'Trang Chủ') {
+      navigate('/trang-chu')
+    }
+  }
+
+  if (!role || role !== 'TEACHER') {
     return null
   }
 
@@ -64,7 +82,12 @@ export default function Teacher() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Suspense fallback={<LinearProgress />}>
-        <AdminLayout menuList={menuList} lastMenuList={lastMenuList}>
+        <AdminLayout
+          menuList={menuList}
+          lastMenuList={lastMenuList}
+          settingList={settingList}
+          onSettingMenuClick={handleSettingMenuClick}
+        >
           <Routes>
             <Route index element={<Navigate to="tong-quan" />} />
             <Route path="tong-quan" element={<TeacherDashboard />} />

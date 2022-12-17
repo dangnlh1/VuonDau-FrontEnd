@@ -25,13 +25,7 @@ export const lastMenuList: Menu[] = [
   { label: 'Cài đặt', path: '/hoc-sinh/cai-dat', icon: <SettingsIcon /> },
 ]
 
-const TeacherDashboard = lazy(() => import('@/features/TeacherDashboard/TeacherDashboard'))
-const ExerciseManagement = lazy(() => import('@/features/ExerciseManagement/ExerciseManagement'))
-const ClassManagement = lazy(() => import('@/features/ClassManagement/pages/ClassManagement'))
-const Exam = lazy(() => import('@/features/Exam/Exam'))
-const TeacherTeams = lazy(() => import('@/features/TeacherTeams/TeacherTeams'))
-
-export default function Teacher() {
+export default function Students() {
   return (
     <Suspense fallback={<LinearProgress />}>
       <AdminLayout menuList={menuList} lastMenuList={lastMenuList}>

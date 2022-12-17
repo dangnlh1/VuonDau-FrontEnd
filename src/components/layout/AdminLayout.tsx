@@ -8,9 +8,17 @@ export interface AdminLayoutProps {
   children?: ReactNode
   menuList?: Menu[]
   lastMenuList?: Menu[]
+  settingList?: string[]
+  onSettingMenuClick?: (setting: string) => void
 }
 
-export function AdminLayout({ children, menuList, lastMenuList }: AdminLayoutProps) {
+export function AdminLayout({
+  children,
+  menuList,
+  lastMenuList,
+  settingList,
+  onSettingMenuClick,
+}: AdminLayoutProps) {
   const divRef = useRef<HTMLDivElement>()
   const location = useLocation()
 
@@ -37,7 +45,10 @@ export function AdminLayout({ children, menuList, lastMenuList }: AdminLayoutPro
       }}
     >
       <Box gridArea="header" sx={{ borderBottom: `1.5px solid #e0e0e0` }}>
-        <AdminHeader />
+        <AdminHeader
+          settingList={settingList}
+          onSettingMenuClick={(setting: string) => onSettingMenuClick?.(setting)}
+        />
       </Box>
 
       <Box
