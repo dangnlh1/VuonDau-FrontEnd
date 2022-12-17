@@ -1,13 +1,13 @@
 import { NavPayload, RegisterPayload } from '@/models/navMenu'
-import { Search, SearchIconWrapper, StyledInputBase } from '@/styles/Search'
-import SearchIcon from '@mui/icons-material/Search'
-import { alpha, AppBar, Box, Button, IconButton, Stack, Toolbar, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import MenuIcon from '@mui/icons-material/Menu'
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
+import { Search, SearchIconWrapper, StyledInputBase } from '@/styles/Search'
 import { FullLogo, Logo } from '../common/Logo'
+import { alpha, AppBar, Box, Button, IconButton, Stack, Toolbar } from '@mui/material'
+import DropdownNavBar from '@/components/common/DropdownNavBar'
+import MenuIcon from '@mui/icons-material/Menu'
+import SearchIcon from '@mui/icons-material/Search'
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import { Link } from 'react-router-dom'
-import styled from '@emotion/styled'
 
 export interface HeaderProps {
   firstNavList?: NavPayload[]
@@ -67,7 +67,7 @@ export function Header({
           {Array.isArray(firstNavList) &&
             firstNavList.length > 0 &&
             firstNavList.map((item, idx) => (
-              <NavLink to={item.link} key={idx}>
+              <NavLink to={item.link as string} key={idx}>
                 <Button color="inherit" sx={{ textTransform: 'none' }}>
                   {item.label}
                 </Button>
@@ -91,17 +91,7 @@ export function Header({
         <Stack direction="row" sx={{ display: { xs: 'none', lg: 'flex' } }}>
           {Array.isArray(lastNavList) &&
             lastNavList.length > 0 &&
-            lastNavList.map((item, idx) => (
-              <NavLink
-                to={item.link}
-                key={idx}
-                className={({ isActive }) => (isActive ? 'active' : '')}
-              >
-                <Button color="inherit" sx={{ textTransform: 'none' }}>
-                  {item.label}
-                </Button>
-              </NavLink>
-            ))}
+            lastNavList.map((item, idx) => <DropdownNavBar item={item} key={idx} />)}
         </Stack>
 
         <IconButton color="inherit" sx={{ mr: { xs: -1, lg: 0 } }}>

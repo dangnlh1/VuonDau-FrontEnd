@@ -25,6 +25,7 @@ theme = responsiveFontSizes(theme)
 
 const Home = lazy(() => import('@/features/Home'))
 const TeacherRegister = lazy(() => import('@/features/TeacherRegister/pages/TeacherRegister'))
+const StudentRegister = lazy(() => import('@/features/StudentRegister/StudentRegister'))
 const Course = lazy(() => import('@/features/Course/CourseFeature'))
 
 export default function Main() {
@@ -37,9 +38,10 @@ export default function Main() {
             <Route index element={<Navigate to="trang-chu" />} />
             <Route path="trang-chu/*" element={<Home />} />
             <Route path="dang-ky-giao-vien" element={<TeacherRegister />} />
-            <Route path="gioi-thieu" element={<ComingSoon />} />
+            <Route path="dang-ky-hoc-sinh" element={<StudentRegister />} />
             <Route path="khoa-hoc/*" element={<Course />} />
-            <Route path="dang-ky-hoc-sinh" element={<ComingSoon />} />
+
+            <Route path="gioi-thieu" element={<ComingSoon />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
