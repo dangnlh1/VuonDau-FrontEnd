@@ -246,59 +246,65 @@ export function RegisterForm({ cityList, subjectList, onFormSubmit }: RegisterFo
         </Box>
       </Stack>
 
-      <Stack direction="row" flexWrap="wrap" alignItems="flex-start" sx={{ mx: -1 }}>
-        <Box sx={{ width: { xs: '100%', sm: 1 / 3, md: 1 / 3 } }}>
-          <Box sx={{ p: 1 }}>
-            <UploadCardImage
-              width={'100%'}
-              height={200}
-              name="id-card"
-              label="Ảnh CMND/CCCD"
-              onChange={(file) => {
-                // onUploadIdCard?.(file)
-                setIdCardFile(file)
-              }}
-            />
+      <Box>
+        <Stack direction="row" flexWrap="wrap" alignItems="flex-start" sx={{ mx: -2 }}>
+          <Box sx={{ width: { xs: '100%', sm: 1 / 3, md: 1 / 3 } }}>
+            <Box sx={{ p: 2 }}>
+              <UploadCardImage
+                width={'100%'}
+                height={200}
+                name="id-card"
+                label="Ảnh CMND/CCCD"
+                onChange={(file) => {
+                  // onUploadIdCard?.(file)
+                  setIdCardFile(file)
+                }}
+              />
 
-            {!idCardFile && <FormHelperText error={!idCardFile}>{idCardHelperText}</FormHelperText>}
+              {!idCardFile && (
+                <FormHelperText error={!idCardFile}>{idCardHelperText}</FormHelperText>
+              )}
+            </Box>
           </Box>
-        </Box>
 
-        <Box sx={{ width: { xs: '100%', sm: 1 / 3, md: 1 / 3 } }}>
-          <Box sx={{ p: 1 }}>
-            <UploadCardImage
-              width={'100%'}
-              height={200}
-              name="certification"
-              label="Ảnh chứng nhận/ bằng tốt nghiệp"
-              onChange={(file) => {
-                setCertificationCardFile(file)
-              }}
-            />
-            {!certificationCardFile && (
-              <FormHelperText error={!certificationCardFile}>
-                {certificationCardHelperText}
-              </FormHelperText>
-            )}
+          <Box sx={{ width: { xs: '100%', sm: 1 / 3, md: 1 / 3 } }}>
+            <Box sx={{ p: 2 }}>
+              <UploadCardImage
+                width={'100%'}
+                height={200}
+                name="certification"
+                label="Ảnh chứng nhận/ bằng tốt nghiệp"
+                onChange={(file) => {
+                  setCertificationCardFile(file)
+                }}
+              />
+              {!certificationCardFile && (
+                <FormHelperText error={!certificationCardFile}>
+                  {certificationCardHelperText}
+                </FormHelperText>
+              )}
+            </Box>
           </Box>
-        </Box>
 
-        <Box sx={{ width: { xs: '100%', sm: 1 / 3, md: 1 / 3 } }}>
-          <Box sx={{ p: 1 }}>
-            <UploadCardImage
-              width={'100%'}
-              height={200}
-              name="avatar"
-              label="Ảnh đại diện"
-              onChange={(file) => {
-                // onUploadAvatar?.(file)
-                setAvatarFile(file)
-              }}
-            />
-            {!avatarFile && <FormHelperText error={!avatarFile}>{avatarHelperText}</FormHelperText>}
+          <Box sx={{ width: { xs: '100%', sm: 1 / 3, md: 1 / 3 } }}>
+            <Box sx={{ p: 2 }}>
+              <UploadCardImage
+                width={'100%'}
+                height={200}
+                name="avatar"
+                label="Ảnh đại diện"
+                onChange={(file) => {
+                  // onUploadAvatar?.(file)
+                  setAvatarFile(file)
+                }}
+              />
+              {!avatarFile && (
+                <FormHelperText error={!avatarFile}>{avatarHelperText}</FormHelperText>
+              )}
+            </Box>
           </Box>
-        </Box>
-      </Stack>
+        </Stack>
+      </Box>
 
       <Button type="submit" variant="contained">
         Đăng ký
