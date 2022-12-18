@@ -47,7 +47,10 @@ export function SideBar({ navList, open, onClose, registerList, onRegisterClick 
           navList.length > 0 &&
           navList.map((item, idx) => (
             <ListItem key={idx} onClick={() => onClose?.()}>
-              <NavLink to={item.link} className={({ isActive }) => (isActive ? 'active' : '')}>
+              <NavLink
+                to={item.link as string}
+                className={({ isActive }) => (isActive ? 'active' : '')}
+              >
                 <ListItemButton>
                   <ListItemText primary={item.label} />
                 </ListItemButton>

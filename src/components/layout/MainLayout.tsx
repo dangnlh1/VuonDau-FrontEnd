@@ -1,16 +1,7 @@
 import { useGetAccountDetailAfterLogin } from '@/hooks/accountDetailAfterLogin'
+import { InfoPayload } from '@/models/info'
 import { NavPayload, RegisterPayload } from '@/models/navMenu'
-import { LayoutType, RolePayload } from '@/models/role'
-import {
-  Box,
-  Button,
-  createTheme,
-  CssBaseline,
-  responsiveFontSizes,
-  Stack,
-  ThemeProvider,
-  Toolbar,
-} from '@mui/material'
+import { Box, Stack, Toolbar } from '@mui/material'
 import { useKeycloak } from '@react-keycloak/web'
 import { ReactNode, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -18,7 +9,7 @@ import { PageLoading } from '../common/PageLoading'
 import { Footer } from './Footer'
 import { Header } from './Header'
 import { SideBar } from './SideBar'
-
+const settingList = ['Dashboard', 'Logout']
 export interface MainLayoutProps {
   children?: ReactNode
 }
@@ -40,18 +31,8 @@ const firstNavList: NavPayload[] = [
 
 const lastNavList: NavPayload[] = [
   {
-    label: 'Học sinh',
-    items: [
-      { label: 'Đăng kí tìm gia sư', link: '/dang-ky-tim-gia-su' },
-      { label: 'Danh sách gia sư', link: '/danh-sach-gia-su' },
-    ],
-  },
-  {
-    label: 'Đăng ký',
-    items: [
-      { label: 'Đăng ký giáo viên', link: '/dang-ky-giao-vien' },
-      { label: 'Đăng ký học sinh', link: '/dang-ky-hoc-sinh' },
-    ],
+    label: 'Đăng ký giáo viên',
+    link: '/dang-ky-giao-vien',
   },
 ]
 
@@ -61,21 +42,28 @@ const registerList: RegisterPayload[] = [
     value: 'login',
   },
   {
-    label: 'Đăng ký',
+    label: 'Tạo tài khoản',
     value: 'signUp',
   },
 ]
 
 export function MainLayout({ children }: MainLayoutProps) {
   const [showDrawer, setShowDrawer] = useState(false)
+  const [user, setUser] = useState<InfoPayload | null>(null)
 
   const { keycloak } = useKeycloak()
   const token = keycloak.token
 
   const { data, refetch } = useGetAccountDetailAfterLogin()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (!token) return
+    if (!token) {
+      setUser(null)
+      localStorage.setItem('role', '')
+      return
+    }
+
     refetch()
     localStorage.setItem('token', token)
   }, [token])
@@ -84,6 +72,7 @@ export function MainLayout({ children }: MainLayoutProps) {
     if (!data) return
     const role = data.role.code
     localStorage.setItem('role', role)
+    setUser(data)
   }, [data])
 
   async function handleRegisterClick(value: string) {
@@ -95,18 +84,33 @@ export function MainLayout({ children }: MainLayoutProps) {
       }
       return
     }
+
+    navigate('/dang-ky-hoc-sinh')
   }
 
   function handleToggleDrawer() {
     setShowDrawer((x) => !x)
   }
 
-  function handleLogout() {
+  function handleSettingMenuClick(value: string) {
+    if (value === 'Dashboard' && data) {
+      switch (data.role.code) {
+        case 'TEACHER':
+          navigate(`/giao-vien`)
+          return
+
+        case 'STUDENT':
+          navigate(`/hoc-sinh`)
+          return
+
+        default:
+          navigate(`/`)
+          return
+      }
+    }
+
     keycloak.logout()
-    //clear token
     localStorage.setItem('token', '')
-    //clear role
-    localStorage.setItem('role', '')
   }
 
   return (
@@ -115,8 +119,11 @@ export function MainLayout({ children }: MainLayoutProps) {
         firstNavList={firstNavList}
         registerList={registerList}
         lastNavList={lastNavList}
+        user={user as InfoPayload}
+        settingList={settingList}
         onRegisterClick={handleRegisterClick}
         onToggleDrawer={handleToggleDrawer}
+        onSettingMenuClick={handleSettingMenuClick}
       />
 
       <Toolbar />

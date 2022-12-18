@@ -9,7 +9,6 @@ import ClassIcon from '@mui/icons-material/Class'
 import DescriptionIcon from '@mui/icons-material/Description'
 import GroupIcon from '@mui/icons-material/Group'
 import SettingsIcon from '@mui/icons-material/Settings'
-import Classroom from '@/features/Classroom/Classroom'
 
 export const menuList: Menu[] = [
   { label: 'Tổng quan', path: '/hoc-sinh/tong-quan', icon: <HomeIcon /> },
@@ -22,12 +21,7 @@ export const lastMenuList: Menu[] = [
   { label: 'Cài đặt', path: '/hoc-sinh/cai-dat', icon: <SettingsIcon /> },
 ]
 
-const StudentDashboard = lazy(() => import('@/features/StudentDashboard/StudentDashboard'))
-const Moodle = lazy(() => import('@/features/Moodle/Moodle'))
-const Forum = lazy(() => import('@/features/Forum/Forum'))
-const Classroom = lazy(() => import('@/features/Classroom/ClassroomFeature'))
-
-export default function Teacher() {
+export default function Students() {
   return (
     <Suspense fallback={<LinearProgress />}>
       <AdminLayout menuList={menuList} lastMenuList={lastMenuList}>

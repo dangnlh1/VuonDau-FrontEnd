@@ -1,4 +1,3 @@
-import MenuIcon from '@mui/icons-material/Menu'
 import AppBar from '@mui/material/AppBar'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
@@ -12,25 +11,25 @@ import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { FullLogo, Logo } from '../common/Logo'
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+export interface AdminHeader {
+  settingList?: string[]
+  onSettingMenuClick?: (setting: string) => void
+}
 
-function AdminHeader() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
+function AdminHeader({ settingList, onSettingMenuClick }: AdminHeader) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget)
-  }
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  function handleOpenUserMenu(event: React.MouseEvent<HTMLElement>) {
     setAnchorElUser(event.currentTarget)
   }
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null)
+  function handleCloseUserMenu() {
+    setAnchorElUser(null)
   }
 
-  const handleCloseUserMenu = () => {
+  function handleSettingMenuClick(setting: string) {
     setAnchorElUser(null)
+    onSettingMenuClick?.(setting)
   }
 
   return (
@@ -56,6 +55,7 @@ function AdminHeader() {
               <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
             </IconButton>
           </Tooltip>
+
           <Menu
             sx={{ mt: '45px' }}
             id="menu-appbar"
@@ -72,11 +72,13 @@ function AdminHeader() {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            {settings.map((setting) => (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">{setting}</Typography>
-              </MenuItem>
-            ))}
+            {Array.isArray(settingList) &&
+              settingList.length > 0 &&
+              settingList.map((setting) => (
+                <MenuItem key={setting} onClick={() => handleSettingMenuClick(setting)}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
           </Menu>
         </Box>
       </Toolbar>

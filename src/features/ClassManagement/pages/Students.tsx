@@ -43,8 +43,6 @@ export default function Students() {
 
   const { data, isLoading } = useClass(parseInt(classId as string))
 
-  console.log('class: ', data)
-
   useEffect(() => {
     if (data && Array.isArray(data.students)) {
       setStudentList(data.students)
