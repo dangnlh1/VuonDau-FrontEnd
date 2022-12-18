@@ -154,6 +154,8 @@ export default function Classes() {
       </Stack>
 
       <Stack>
+        <Typography variant="h5">Tổng số: {pagination.total} lớp</Typography>
+
         <ClassList classList={classByTeacherList} onCardClick={handleCardClick} />
       </Stack>
 
