@@ -1,4 +1,4 @@
-import { SelectOption } from '@/models/option'
+import { OptionPayload } from '@/models/option'
 import { Box, FormHelperText, InputLabel } from '@mui/material'
 import Checkbox, { CheckboxProps } from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
@@ -9,7 +9,7 @@ export interface CheckboxFieldProps extends CheckboxProps {
   name: string
   control: Control<any>
   label?: string
-  optionList: SelectOption[]
+  optionList: OptionPayload[]
   disabled?: boolean
 }
 

@@ -1,4 +1,3 @@
-import { useCity } from '@/hooks/city'
 import { useStudentRegister } from '@/hooks/studentRegister'
 import { StudentRegisterPayload } from '@/models/studentRegister'
 import { Box, Container, Typography } from '@mui/material'

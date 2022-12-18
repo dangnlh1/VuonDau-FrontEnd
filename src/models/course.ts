@@ -18,3 +18,11 @@ export interface CoursePayload {
   unitPrice?: string
   teacherCourse: any
 }
+
+export interface CreateNewCourseFormPayload {
+  name: string
+  title: string
+  description: string
+  code: string
+  subjectId: number
+}

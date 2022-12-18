@@ -1,9 +1,9 @@
-import { SelectOption } from '@/models/option'
+import { OptionPayload } from '@/models/option'
 import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { useState } from 'react'
 
 export interface SortProps {
-  optionList?: SelectOption[]
+  optionList?: OptionPayload[]
   label?: string
   hideOptionAll?: boolean
   defaultValue?: string

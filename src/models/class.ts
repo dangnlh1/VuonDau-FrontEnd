@@ -51,12 +51,25 @@ export interface ClassPayload {
   endDate: string
   numberStudent: number
   maxNumberStudent: number
+  minNumberStudent: number
   course: CoursePayload
   unitPrice: number
   finalPrice: number
   teacher: Teacher
   resources: Resource
   students: StudentPayload[]
+  level: string
+}
+
+export interface AddEditClassFormPayload {
+  name: string
+  code: string
+  level: string
+  classType: string
+  minNumberStudent: number
+  maxNumberStudent: number
+  subjectId: number
+  courseId: number
 }
 
 export interface ResourcePayload {

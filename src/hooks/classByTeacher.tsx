@@ -5,11 +5,14 @@ import { useQuery, useQueryClient } from 'react-query'
 export function useClassesByTeacher(params: FilterParams) {
   const queryKey = ['/classesByTeacher', params]
   const queryClient = useQueryClient()
-  const { data, isLoading, error } = useQuery(queryKey, () => classApi.getAllClassByTeacher(params))
+  const { data, isLoading, error, refetch } = useQuery(queryKey, () =>
+    classApi.getAllClassByTeacher(params)
+  )
 
   return {
     isLoading,
     error,
+    refetch,
     classByTeacherList: data?.items,
     pagination: {
       page: data?.currentPage,

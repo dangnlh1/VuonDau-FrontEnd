@@ -59,7 +59,7 @@ export function ClassList({
       paginationMode="server"
       rowCount={pagination?.total || 10}
       pageSize={pagination?.size || 10}
-      page={(pagination?.page || 1) - 1}
+      page={pagination?.page || 0}
       onPageChange={onPageChange}
       onRowClick={onRowClick}
       disableColumnMenu

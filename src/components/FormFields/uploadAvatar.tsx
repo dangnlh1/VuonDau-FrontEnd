@@ -7,15 +7,16 @@ export interface UploadCardImageProps {
   label?: string
   width?: number | string
   height?: number | string
-
+  variant?: 'square' | 'rounded' | 'circular'
   onChange?: (file: File) => void
 }
 
-export function UploadCardImage({
+export function UploadAvatar({
   name,
   label,
-  width = '100%',
-  height = 'auto',
+  variant = 'circular',
+  width = 72,
+  height = 72,
   onChange,
 }: UploadCardImageProps) {
   const [imageUrl, setImageUrl] = useState('')
@@ -37,35 +38,14 @@ export function UploadCardImage({
     <Stack spacing={2}>
       <InputLabel sx={{ fontWeight: 'bold', fontSize: 13 }}>{label}</InputLabel>
 
-      <Box
-        boxShadow={3}
-        component="label"
-        htmlFor={key}
-        sx={{ cursor: 'pointer', borderRadius: 4, overflow: 'hidden' }}
-      >
+      <Box component="label" htmlFor={key} sx={{ cursor: 'pointer' }}>
         <Avatar
-          variant="rounded"
+          variant={variant}
           sx={{ width, height }}
           aria-label="photo upload"
           alt="avatar"
           src={imageUrl}
-        >
-          <Stack
-            boxShadow={3}
-            alignItems="center"
-            direction="row"
-            spacing={1}
-            sx={{
-              p: 1,
-              border: `1px solid`,
-              borderRadius: '4px',
-              bgcolor: 'primary.main',
-              borderColor: 'primary.main',
-            }}
-          >
-            <InsertPhotoIcon /> <Typography variant="h6">Upload</Typography>
-          </Stack>
-        </Avatar>
+        />
       </Box>
 
       <Box>

@@ -11,6 +11,8 @@ export interface StudentListProps {
   studentList?: StudentPayload[]
   pagination?: Pagination
   isLoading?: boolean
+
+  onPageChange?: (page: number) => void
   onEditClick?: (params: StudentPayload) => void
   onRemoveClick?: (id: number) => void
   onRowClick?: (row: any) => void
@@ -20,6 +22,8 @@ export function StudentList({
   studentList,
   pagination,
   isLoading,
+
+  onPageChange,
   onEditClick,
   onRemoveClick,
   onRowClick,
@@ -118,8 +122,8 @@ export function StudentList({
       paginationMode="server"
       rowCount={pagination?.total || 10}
       pageSize={pagination?.size || 10}
-      page={(pagination?.page || 1) - 1}
-      // onPageChange={onPageChange}
+      page={pagination?.page || 0}
+      onPageChange={onPageChange}
       onRowClick={onRowClick}
       disableColumnMenu
       autoHeight
