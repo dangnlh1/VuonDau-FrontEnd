@@ -11,11 +11,6 @@ import { StudentList } from '../components/StudenList'
 
 const actionList: Action[] = [
   {
-    label: 'Danh sách học sinh',
-    value: 'create-new-class-for-new-course',
-    variant: 'contained',
-  },
-  {
     label: 'Bài học',
     value: 'create-new-class-for-new-course',
     variant: 'contained',
@@ -90,13 +85,18 @@ export default function Students() {
         </Typography>
       </Stack>
 
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Box>
+      <Stack direction="row" flexWrap="wrap" alignItems="center" justifyContent="space-between">
+        <Box sx={{ mb: { xs: 2, sm: 0 }, width: { xs: '100%', sm: 'auto' } }}>
           <SearchField />
         </Box>
 
-        <Stack direction="row" spacing={1}>
-          {actionList.map((item, idx) => (
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          spacing={1}
+          sx={{ width: { xs: '100%', sm: 'auto' } }}
+        >
+          {actionList.map((item, idx, arr) => (
             <Button variant={item.variant} key={idx} startIcon={item.icon}>
               {item.label}
             </Button>

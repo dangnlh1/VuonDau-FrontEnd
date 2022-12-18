@@ -152,12 +152,14 @@ export default function Classes() {
           ))}
         </Stack>
       </Stack>
-
-      <Stack>
-        <Typography variant="h5">Tổng số: {pagination.total} lớp</Typography>
-
-        <ClassList classList={classByTeacherList} onCardClick={handleCardClick} />
-      </Stack>
+      {Array.isArray(classByTeacherList) && classByTeacherList.length > 0 && (
+        <Stack>
+          <Typography variant="body1" fontStyle="italic">
+            Tổng số: {classByTeacherList?.length}/ {pagination.total} lớp
+          </Typography>
+          <ClassList classList={classByTeacherList} onCardClick={handleCardClick} />
+        </Stack>
+      )}
 
       {classByTeacherList && (
         <Stack alignItems="center" sx={{ py: 2 }}>
