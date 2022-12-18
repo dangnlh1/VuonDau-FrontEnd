@@ -1,8 +1,13 @@
 import { StudentRegisterPayload } from '@/models/studentRegister'
 import axiosClient from './axiosClient'
 
-export const studentRegisterApi = {
-  post(params: StudentRegisterPayload): Promise<any> {
-    return axiosClient.post('/students/account', params)
+export const studentAccountApi = {
+  registerStudent(params: StudentRegisterPayload): Promise<any> {
+    return axiosClient.post('/class/account', params)
   },
+
+  getStudentClass(id:number): Promise<any>{
+    return axiosClient.get('')
+  }
+
 }

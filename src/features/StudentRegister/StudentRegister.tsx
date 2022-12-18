@@ -1,16 +1,14 @@
-import { studentRegisterApi } from '@/api/studentRegisterApi'
 import { useCity } from '@/hooks/city'
-import { useSubject } from '@/hooks/subject'
-import { useTeacherRegister } from '@/hooks/teacherRegister'
-import { SelectOption } from '@/models/option'
+import { useStudentRegister } from '@/hooks/studentRegister'
 import { StudentRegisterPayload } from '@/models/studentRegister'
 import { Box, Container, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { FormDataPayload, RegisterForm } from './components/RegisterForm'
 
 export function StudentRegister() {
+  const { registerStudent } = useStudentRegister()
   const navigate = useNavigate()
 
   async function handleFormSubmit(formValues: FormDataPayload) {
@@ -26,18 +24,13 @@ export function StudentRegister() {
         phoneNumber: formValues.phone,
         genderCode: formValues.gender,
       }
-      studentRegisterApi
-        .post(formData)
-        .then((response) => {
-          if (response.error_message) {
-            toast.error('Đăng kí không thành công!')
-          } else {
-            toast.success('Đăng ký thành công!')
-          }
-        })
-        .catch((error) => {
-          toast.error('Đăng kí không thành công!')
-        })
+      const response = await registerStudent.mutateAsync(formData)
+      if (response) {
+        toast.success('Đăng kí thành công')
+        navigate('/')
+        return
+      }
+      toast.error('Đăng kí không thành công')
     } else {
       toast.error('Password không trùng khớp!')
     }

@@ -1,5 +1,8 @@
 import { Stack } from '@mui/material'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Moodle() {
-  return <Stack>Moodle</Stack>
+  window.location.href = 'http://moodle-vuondau.amazingtech.vn/my/'
+  return null
 }

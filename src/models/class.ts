@@ -58,3 +58,7 @@ export interface ClassPayload {
   resources: Resource
   students: StudentPayload[]
 }
+
+export interface ResourcePayload {
+  resources: Resource[]
+}

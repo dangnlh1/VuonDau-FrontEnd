@@ -40,7 +40,6 @@ export default function Main() {
             <Route path="dang-ky-giao-vien" element={<TeacherRegister />} />
             <Route path="dang-ky-hoc-sinh" element={<StudentRegister />} />
             <Route path="khoa-hoc/*" element={<Course />} />
-
             <Route path="gioi-thieu" element={<ComingSoon />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
