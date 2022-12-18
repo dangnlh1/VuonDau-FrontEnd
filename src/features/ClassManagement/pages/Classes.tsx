@@ -46,7 +46,7 @@ export default function Classes() {
   const { createClassByTeacherRequest } = useClasses(params)
   const { createNewCourse } = useCourse(params)
 
-  const { subjectByTeacherList, refetch: refetchSubjectList } = useSubjectByTeacher()
+  const { subjectByTeacherList } = useSubjectByTeacher()
   const { data: courseList, refetch } = useGetCourseBySubjectId(subjectId as number)
   const {
     classByTeacherList,
@@ -121,6 +121,13 @@ export default function Classes() {
     }
   }
 
+  function handlePageChange(newPage: number) {
+    setParams((params) => ({
+      ...params,
+      page: newPage,
+    }))
+  }
+
   return (
     <Stack spacing={3}>
       <Typography variant="h5" fontWeight={700}>
@@ -152,6 +159,7 @@ export default function Classes() {
           pagination={pagination}
           isLoading={isLoading}
           onRowClick={handleRowClick}
+          onPageChange={handlePageChange}
         />
       </Stack>
 

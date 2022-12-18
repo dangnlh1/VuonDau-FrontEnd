@@ -1,5 +1,6 @@
 import { SearchField } from '@/components/FormFields/SearchField'
 import { useClass } from '@/hooks/class'
+import { useGetStudentByClassId } from '@/hooks/useGetStudentByClassId'
 import { Action } from '@/models/common'
 import { StudentPayload } from '@/models/student'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -8,7 +9,6 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { StudentList } from '../components/StudenList'
 
-const pageTitle = 'Quản lý lớp học'
 const actionList: Action[] = [
   {
     label: 'Bài học',
@@ -32,17 +32,37 @@ export interface ClassManagementProps {}
 
 export default function Students() {
   const [studentList, setStudentList] = useState<StudentPayload[]>([])
+  const [params, setParams] = useState({
+    page: 0,
+    size: 10,
+  })
 
   const { classId } = useParams()
   const navigate = useNavigate()
 
-  const { data, isLoading } = useClass(parseInt(classId as string))
+  const { data } = useClass(parseInt(classId as string))
+
+  const {
+    data: students,
+    isLoading,
+    pagination,
+  } = useGetStudentByClassId(params, parseInt(classId as string))
 
   useEffect(() => {
-    if (data && Array.isArray(data.students)) {
-      setStudentList(data.students)
+    if (students && Array.isArray(students) && students.length > 0) {
+      setStudentList(students)
+      return
     }
-  }, [data])
+
+    setStudentList([])
+  }, [students])
+
+  function handlePageChange(newPage: number) {
+    setParams((params) => ({
+      ...params,
+      page: newPage,
+    }))
+  }
 
   return (
     <Stack spacing={3}>
@@ -78,8 +98,14 @@ export default function Students() {
           ))}
         </Stack>
       </Stack>
+
       <Stack>
-        <StudentList studentList={studentList || []} />
+        <StudentList
+          studentList={studentList || []}
+          isLoading={isLoading}
+          pagination={pagination}
+          onPageChange={handlePageChange}
+        />
       </Stack>
     </Stack>
   )
