@@ -1,5 +1,5 @@
 import { FilterParams, ListResponse } from '@/models/common'
-import { ClassPayload } from '@/models/class'
+import { AddEditClassFormPayload, ClassPayload } from '@/models/class'
 import axiosClient from './axiosClient'
 
 const url = '/class'
@@ -15,5 +15,9 @@ export const classApi = {
 
   getAllClassByTeacher(params: FilterParams): Promise<ListResponse<ClassPayload>> {
     return axiosClient.get(`${url}/account`, { params })
+  },
+
+  createClassByTeacherRequest(data: AddEditClassFormPayload): Promise<any> {
+    return axiosClient.post(`${url}/teacher-request-create-class`, data)
   },
 }

@@ -1,4 +1,4 @@
-import { SelectOption } from '@/models/option'
+import { OptionPayload } from '@/models/option'
 import {
   FormControl,
   FormHelperText,
@@ -14,7 +14,8 @@ export interface SelectFieldProps {
   name: string
   control: Control<any>
   label?: string
-  optionList?: SelectOption[]
+  optionList?: OptionPayload[]
+  onOptionChange?: (value: number) => void
 }
 
 export function SelectField({
@@ -22,6 +23,7 @@ export function SelectField({
   control,
   label,
   optionList,
+  onOptionChange,
   ...otherSelectProps
 }: SelectFieldProps & SelectProps) {
   const {
@@ -32,6 +34,11 @@ export function SelectField({
     control,
   })
 
+  function handleChange(e: any) {
+    onChange(e)
+    onOptionChange?.(e.target.value)
+  }
+
   return (
     <React.Fragment>
       <InputLabel sx={{ fontWeight: 'bold', fontSize: 13 }}>{label}</InputLabel>
@@ -39,7 +46,7 @@ export function SelectField({
         <Select
           value={value || ''}
           name={name}
-          onChange={onChange}
+          onChange={handleChange}
           onBlur={onBlur}
           inputRef={ref}
           {...otherSelectProps}

@@ -3,18 +3,13 @@ import { useClass } from '@/hooks/class'
 import { Action } from '@/models/common'
 import { StudentPayload } from '@/models/student'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { Box, Button, IconButton, Stack, Typography } from '@mui/material'
+import { Box, Button, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { StudentList } from '../components/StudenList'
+
 const pageTitle = 'Quản lý lớp học'
 const actionList: Action[] = [
-  // {
-  //   label: 'Danh sách học sinh',
-  //   value: 'create-new-class',
-  //   variant: 'contained',
-  // },
-
   {
     label: 'Bài học',
     value: 'create-new-class-for-new-course',

@@ -35,9 +35,6 @@ export const menuList: Menu[] = [
   { label: 'Bài tập', path: '/giao-vien/bai-tap', icon: <DescriptionOutlinedIcon /> },
   { label: 'Đề thi', path: '/giao-vien/de-thi', icon: <FolderOpenOutlinedIcon /> },
   { label: 'Đội nhóm', path: '/giao-vien/doi-nhom', icon: <GroupOutlinedIcon /> },
-]
-
-export const lastMenuList: Menu[] = [
   { label: 'Cài đặt', path: '/giao-vien/cai-dat', icon: <SettingsIcon /> },
 ]
 
@@ -84,7 +81,6 @@ export default function Teacher() {
       <Suspense fallback={<LinearProgress />}>
         <AdminLayout
           menuList={menuList}
-          lastMenuList={lastMenuList}
           settingList={settingList}
           onSettingMenuClick={handleSettingMenuClick}
         >

@@ -4,7 +4,7 @@ import { InputField } from '@/components/FormFields/InputField'
 import { SelectField } from '@/components/FormFields/SelectField'
 import { UploadCardImage } from '@/components/FormFields/UploadCardImageField'
 import { classLevelList, genderList, voiceList } from '@/constants/info'
-import { SelectOption } from '@/models/option'
+import { OptionPayload } from '@/models/option'
 import { TeacherRegisterPayload, UploadFile } from '@/models/teacherRegister'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
@@ -22,8 +22,8 @@ export interface FormDataPayload extends TeacherRegisterPayload {
   uploadFile?: UploadFile[]
 }
 export interface RegisterFormProps {
-  subjectList?: SelectOption[]
-  cityList?: SelectOption[]
+  subjectList?: OptionPayload[]
+  cityList?: OptionPayload[]
   onFormSubmit?: (formValues: FormDataPayload) => void
 }
 
@@ -79,11 +79,11 @@ export function RegisterForm({ cityList, subjectList, onFormSubmit }: RegisterFo
       passwordConfirmation: '',
 
       phone: '',
-      gender: 'MALE',
+      gender: '',
 
       domicile: '',
-      voice: 'Miền Nam',
-      teachingProvince: 'Thành phố Hồ Chí Minh',
+      voice: '',
+      teachingProvince: '',
       currentAddress: '',
       idCard: '',
 

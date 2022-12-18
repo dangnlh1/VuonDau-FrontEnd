@@ -1,8 +1,8 @@
 import { useCity } from '@/hooks/city'
 import { useSubject } from '@/hooks/subject'
 import { useTeacherRegister } from '@/hooks/teacherRegister'
-import { SelectOption } from '@/models/option'
-import { TeacherRegisterPayload, UploadFile } from '@/models/teacherRegister'
+import { OptionPayload } from '@/models/option'
+import { TeacherRegisterPayload } from '@/models/teacherRegister'
 import { Box, Container, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -12,8 +12,8 @@ import { FormDataPayload, RegisterForm } from '../components/RegisterForm'
 const pageTitle = 'Đăng ký giảng dạy trên Vườn Dâu'
 
 export function TeacherRegister() {
-  const [subjectOptionList, setSubjectOptionList] = useState<SelectOption[]>([])
-  const [cityOptionList, setCityOptionList] = useState<SelectOption[]>([])
+  const [subjectOptionList, setSubjectOptionList] = useState<OptionPayload[]>([])
+  const [cityOptionList, setCityOptionList] = useState<OptionPayload[]>([])
 
   const navigate = useNavigate()
 
@@ -118,6 +118,7 @@ export function TeacherRegister() {
         }
       })
       .catch((error) => {
+        console.log('error', error)
         toast.error(error.err_message)
       })
   }
