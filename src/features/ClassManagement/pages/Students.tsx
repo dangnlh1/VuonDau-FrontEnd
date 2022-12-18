@@ -11,6 +11,11 @@ import { StudentList } from '../components/StudenList'
 
 const actionList: Action[] = [
   {
+    label: 'Danh sách học sinh',
+    value: 'create-new-class-for-new-course',
+    variant: 'contained',
+  },
+  {
     label: 'Bài học',
     value: 'create-new-class-for-new-course',
     variant: 'contained',
