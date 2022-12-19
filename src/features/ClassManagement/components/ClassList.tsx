@@ -1,69 +1,34 @@
-import { DataGridLoadingOverlay } from '@/components/common/DataGridLoadingOverlay'
+import { ClassRoomCard } from '@/components/common/ClassRoomCard'
 import { ClassPayload } from '@/models/class'
-import { Pagination } from '@/models/common'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { Box, Stack } from '@mui/material'
 
 export interface ClassListProps {
   classList?: ClassPayload[]
-  pagination?: Pagination
-  isLoading?: boolean
-  onPageChange?: (page: number) => void
-  onRowClick?: (row: any) => void
+  onCardClick?: (row: any) => void
 }
 
-export function ClassList({
-  classList,
-  pagination,
-  isLoading,
-  onRowClick,
-  onPageChange,
-}: ClassListProps) {
-  const columns: GridColDef<ClassPayload>[] = [
-    {
-      field: 'id',
-      headerName: 'ID',
-      width: 50,
-    },
-    {
-      field: 'name',
-      headerName: 'Lớp',
-      flex: 1,
-    },
-    {
-      field: 'numberStudent',
-      headerName: 'Sĩ số lớp',
-      flex: 1,
-    },
-    {
-      field: '',
-      headerName: 'Năm học',
-      flex: 1,
-      valueGetter: ({ row }) => {
-        const startYear = new Date(row.startDate).getFullYear()
-        const endYear = new Date(row.endDate).getFullYear()
-
-        return `${startYear} - ${endYear}`
-      },
-    },
-  ]
-
+export function ClassList({ classList, onCardClick }: ClassListProps) {
   return (
-    <DataGrid
-      components={{
-        LoadingOverlay: DataGridLoadingOverlay,
-      }}
-      loading={isLoading}
-      rows={classList || []}
-      columns={columns}
-      pagination
-      paginationMode="server"
-      rowCount={pagination?.total || 10}
-      pageSize={pagination?.size || 10}
-      page={pagination?.page || 0}
-      onPageChange={onPageChange}
-      onRowClick={onRowClick}
-      disableColumnMenu
-      autoHeight
-    />
+    <Stack direction="row" flexWrap="wrap" sx={{ mx: -2 }}>
+      {Array.isArray(classList) &&
+        classList.length > 0 &&
+        classList.map((item, idx) => (
+          <Box
+            key={idx}
+            sx={{ width: { xs: '100%', sm: 1 / 2, md: 1 / 3, lg: 1 / 4 }, height: 'auto' }}
+            onClick={() => onCardClick?.(item)}
+          >
+            <Box sx={{ p: 2, height: '100%' }}>
+              <ClassRoomCard
+                name={item.name}
+                yearOfCourse={`Niên khóa: ${new Date(item.startDate).getFullYear()} - ${new Date(
+                  item.endDate
+                ).getFullYear()}`}
+                classSize={`Sỉ số: ${item.numberStudent || 0}`}
+              />
+            </Box>
+          </Box>
+        ))}
+    </Stack>
   )
 }

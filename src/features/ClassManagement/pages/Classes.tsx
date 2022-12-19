@@ -5,11 +5,11 @@ import { useClasses } from '@/hooks/classes'
 import { useCourse } from '@/hooks/course'
 import { useSubjectByTeacher } from '@/hooks/subjectByTeacher'
 import { useGetCourseBySubjectId } from '@/hooks/useGetCourseBySubjectId'
-import { AddEditClassFormPayload } from '@/models/class'
+import { AddEditClassFormPayload, ClassPayload } from '@/models/class'
 import { Action } from '@/models/common'
 import { CreateNewCourseFormPayload } from '@/models/course'
 import AddIcon from '@mui/icons-material/Add'
-import { Box, Button, Stack, Typography } from '@mui/material'
+import { Box, Button, Pagination, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -38,7 +38,7 @@ export default function Classes() {
 
   const [params, setParams] = useState({
     page: 0,
-    size: 10,
+    size: 12,
   })
 
   const navigate = useNavigate()
@@ -59,7 +59,7 @@ export default function Classes() {
     refetch()
   }, [subjectId])
 
-  function handleRowClick(value: any) {
+  function handleCardClick(value: ClassPayload) {
     navigate(`/giao-vien/quan-ly-lop/${value.id}`)
   }
 
@@ -121,10 +121,10 @@ export default function Classes() {
     }
   }
 
-  function handlePageChange(newPage: number) {
+  function handlePageChange(e: any, newPage: number) {
     setParams((params) => ({
       ...params,
-      page: newPage,
+      page: newPage - 1,
     }))
   }
 
@@ -134,12 +134,12 @@ export default function Classes() {
         {pageTitle}
       </Typography>
 
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Box>
+      <Stack direction="row" alignItems="center" flexWrap="wrap" justifyContent="space-between">
+        <Box sx={{ mb: { xs: 2, sm: 0 }, width: { xs: '100%', sm: 'auto' } }}>
           <SearchField />
         </Box>
 
-        <Stack direction="row" spacing={1}>
+        <Stack direction="row" flexWrap="wrap" spacing={1}>
           {actionList.map((item, idx) => (
             <Button
               variant={item.variant}
@@ -152,16 +152,26 @@ export default function Classes() {
           ))}
         </Stack>
       </Stack>
+      {Array.isArray(classByTeacherList) && classByTeacherList.length > 0 && (
+        <Stack>
+          <Typography variant="body1" fontStyle="italic">
+            Tổng số: {classByTeacherList?.length}/ {pagination.total} lớp
+          </Typography>
+          <ClassList classList={classByTeacherList} onCardClick={handleCardClick} />
+        </Stack>
+      )}
 
-      <Stack>
-        <ClassList
-          classList={classByTeacherList}
-          pagination={pagination}
-          isLoading={isLoading}
-          onRowClick={handleRowClick}
-          onPageChange={handlePageChange}
-        />
-      </Stack>
+      {classByTeacherList && (
+        <Stack alignItems="center" sx={{ py: 2 }}>
+          <Pagination
+            variant="outlined"
+            shape="rounded"
+            page={params?.page + 1}
+            count={pagination?.totalPages}
+            onChange={handlePageChange}
+          />
+        </Stack>
+      )}
 
       <CustomizedDialogs
         maxWidth="sm"
