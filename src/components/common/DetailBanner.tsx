@@ -1,8 +1,8 @@
 import { formatCurrency } from '@/utils/common'
-import { dateFormatting } from '@/utils/dateFormating'
+import { dateFormatting } from '@/utils/dateFormatting'
 import NewReleasesIcon from '@mui/icons-material/NewReleases'
 import { Box, Button, Chip, Container, Stack, SxProps, Theme, Typography } from '@mui/material'
-import { RatingCustom } from './RatingCustom'
+
 export interface BannerPayload {
   title?: string
   imageUrl?: string
