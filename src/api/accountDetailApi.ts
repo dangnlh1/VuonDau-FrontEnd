@@ -2,7 +2,7 @@ import { City } from '@/models/common'
 import { TeacherRegisterPayload } from '@/models/teacherRegister'
 import axiosClient from './axiosClient'
 
-const url = `/account-detail`
+const url = `/account-profile`
 
 export interface UploadRegisterProfileImagePayload {
   formData: FormData

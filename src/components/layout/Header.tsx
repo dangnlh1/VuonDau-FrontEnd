@@ -157,7 +157,7 @@ export function Header({
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt={user.firstName} src={user.avatar}>
-                  {user.firstName.split('')[0]}
+                  {user.firstName?.split('')[0]}
                 </Avatar>
               </IconButton>
             </Tooltip>

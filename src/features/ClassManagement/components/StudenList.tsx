@@ -1,11 +1,10 @@
 import { DataGridLoadingOverlay } from '@/components/common/DataGridLoadingOverlay'
-import { ClassPayload } from '@/models/class'
 import { Pagination } from '@/models/common'
 import { StudentPayload } from '@/models/student'
-import { dateFormatting } from '@/utils/dateFormating'
+import { dateFormatting } from '@/utils/dateFormatting'
 import { Delete, Edit } from '@mui/icons-material'
 import { Avatar, IconButton, Stack } from '@mui/material'
-import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid'
+import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
 export interface StudentListProps {
   studentList?: StudentPayload[]
