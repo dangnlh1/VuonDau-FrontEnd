@@ -25,7 +25,7 @@ import ClassroomFeature from '@/features/Classroom/ClassroomFeature'
 export const menuList: Menu[] = [
   { label: 'Tổng quan', path: '/hoc-sinh/tong-quan', icon: <HomeIcon /> },
   { label: 'Học tập', path: '/hoc-sinh/hoc-tap', icon: <SchoolIcon /> },
-  { label: 'Diễn đàn', path: '/hoc-sinh/diễn đàn', icon: <ForumIcon /> },
+  { label: 'Diễn đàn', path: '/hoc-sinh/dien-dan', icon: <ForumIcon /> },
   { label: 'Lớp Học', path: '/hoc-sinh/lop-hoc', icon: <ClassIcon /> },
 ]
 
@@ -41,7 +41,7 @@ export default function Students() {
           <Route index element={<Navigate to="tong-quan" />} />
           <Route path="tong-quan" element={<StudentDashboard />} />
           <Route path="hoc-tap" element={<Moodle />} />
-          <Route path="forum" element={<Forum />} />
+          <Route path="dien-dan" element={<Forum />} />
           <Route path="lop-hoc/*" element={<ClassroomFeature />} />
         </Routes>
       </AdminLayout>

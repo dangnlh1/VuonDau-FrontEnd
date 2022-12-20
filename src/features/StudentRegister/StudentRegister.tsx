@@ -1,8 +1,7 @@
 import { useStudentRegister } from '@/hooks/studentRegister'
 import { StudentRegisterPayload } from '@/models/studentRegister'
 import { Box, Container, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { FormDataPayload, RegisterForm } from './components/RegisterForm'
 

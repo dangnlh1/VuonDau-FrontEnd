@@ -1,10 +1,11 @@
 import { SearchField } from '@/components/FormFields/SearchField'
 import { Action } from '@/models/common'
-import { Box, Button, Stack, Typography } from '@mui/material'
+import { Box, Button, Pagination, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ClassList } from '@/features/Classroom/classroomComponent/ClassList'
 import { useClassesByStudent } from '@/hooks/classByStudent'
+import { ClassPayload } from '@/models/class'
+import { StudentClassList } from '@/features/Classroom/classroomComponent/StudentClassList'
 
 const pageTitle = 'Quản lý lớp học'
 const actionList: Action[] = [
@@ -45,8 +46,15 @@ export default function Classes() {
 
   const { classByStudentList, pagination, isLoading } = useClassesByStudent(params)
 
-  function handleRowClick(value: any) {
+  function handleCardClick(value: ClassPayload) {
     navigate(`/hoc-sinh/lop-hoc/${value.id}`)
+  }
+
+  function handlePageChange(e: any, newPage: number) {
+    setParams((params) => ({
+      ...params,
+      page: newPage - 1,
+    }))
   }
 
   return (
@@ -58,23 +66,29 @@ export default function Classes() {
         <Box>
           <SearchField />
         </Box>
-
-        {/* <Stack direction="row" spacing={1}>
-          {actionList.map((item, idx) => (
-            <Button variant={item.variant} key={idx} startIcon={item.icon}>
-              {item.label}
-            </Button>
-          ))}
-        </Stack> */}
       </Stack>
 
       <Stack>
-        <ClassList
-          classList={classByStudentList}
-          pagination={pagination}
-          isLoading={isLoading}
-          onRowClick={handleRowClick}
-        />
+        {Array.isArray(classByStudentList) && classByStudentList.length > 0 && (
+          <Stack>
+            <Typography variant="body1" fontStyle="italic">
+              Tổng số: {classByStudentList?.length}/ {pagination.total} lớp
+            </Typography>
+            <StudentClassList classList={classByStudentList} onCardClick={handleCardClick} />
+          </Stack>
+        )}
+
+        {classByStudentList && (
+          <Stack alignItems="center" sx={{ py: 2 }}>
+            <Pagination
+              variant="outlined"
+              shape="rounded"
+              page={params?.page + 1}
+              count={pagination?.totalPages}
+              onChange={handlePageChange}
+            />
+          </Stack>
+        )}
       </Stack>
     </Stack>
   )

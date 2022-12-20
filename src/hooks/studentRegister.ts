@@ -13,8 +13,6 @@ export function useStudentRegister() {
     }
   )
 
-  
-
   return {
     registerStudent,
   }

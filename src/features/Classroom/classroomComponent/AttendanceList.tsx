@@ -2,42 +2,40 @@ import { DataGridLoadingOverlay } from '@/components/common/DataGridLoadingOverl
 import { ClassPayload } from '@/models/class'
 import { Pagination } from '@/models/common'
 import { StudentPayload } from '@/models/student'
+import { Slot } from '@/models/timetable'
 import { dateFormatting } from '@/utils/dateFormating'
 import { Delete, Edit } from '@mui/icons-material'
 import { Avatar, IconButton, Stack } from '@mui/material'
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams } from '@mui/x-data-grid'
 
-export interface StudentListProps {
-  studentList?: StudentPayload[]
+export interface AttendanceListProps {
+  attendanceList?: Slot[]
   pagination?: Pagination
   isLoading?: boolean
-  onEditClick?: (params: StudentPayload) => void
+  onEditClick?: (params: Slot) => void
   onRemoveClick?: (id: number) => void
   onRowClick?: (row: any) => void
 }
 
-export function StudentList({
-  studentList,
+export function AttendanceList({
+  attendanceList,
   pagination,
   isLoading,
   onEditClick,
   onRemoveClick,
   onRowClick,
-}: StudentListProps) {
-  const data = studentList?.map((item, idx) => ({
+}: AttendanceListProps) {
+  const data = attendanceList?.map((item, idx) => ({
     ...item,
     idx: idx,
   }))
 
-  const columns: GridColDef<StudentPayload>[] = [
+  const columns: GridColDef<Slot>[] = [
     {
       field: 'avatar',
       headerName: '',
       width: 50,
       align: 'center',
-      renderCell: ({ row }) => {
-        return <Avatar alt="avatar" src={row.avatar} />
-      },
     },
     {
       field: 'idx',
@@ -50,18 +48,12 @@ export function StudentList({
       headerName: 'Tên và tên',
       flex: 1,
       minWidth: 200,
-      valueGetter: ({ row }) => {
-        return `${row.lastName} ${row.firstName} `
-      },
     },
     {
       field: 'birthday',
       headerName: 'Ngày sinh',
       flex: 1,
       minWidth: 100,
-      valueGetter: ({ row }) => {
-        return `${dateFormatting(row.birthday)}`
-      },
     },
 
     {

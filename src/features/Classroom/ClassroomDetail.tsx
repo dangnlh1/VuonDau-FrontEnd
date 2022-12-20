@@ -11,7 +11,7 @@ import ClassroomTeacher from '@/features/Classroom/classroomComponent/ClassroomT
 import ClassroomSchedule from '@/features/Classroom/classroomComponent/ClassroomSchedule'
 
 const actionList: Action[] = [
-  { label: 'Bài tập', value: '/tai-nguyen', variant: 'outlined' },
+  { label: 'Bài tập (Bài Học)', value: '/tai-nguyen', variant: 'outlined' },
   { label: 'Giáo viên', value: '/giao-vien-cua-lop', variant: 'outlined' },
   { label: 'Điểm danh/ Thời Khóa Biểu', value: '/diem-danh', variant: 'outlined' },
 ]

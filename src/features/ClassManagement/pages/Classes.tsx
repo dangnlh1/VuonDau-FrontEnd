@@ -152,6 +152,7 @@ export default function Classes() {
           ))}
         </Stack>
       </Stack>
+
       {Array.isArray(classByTeacherList) && classByTeacherList.length > 0 && (
         <Stack>
           <Typography variant="body1" fontStyle="italic">
