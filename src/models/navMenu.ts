@@ -8,6 +8,10 @@ export interface NavPayLoadItem {
   label:string
   link:string
 }
+export interface LoginPayload {
+  label: string
+  value: string
+}
 export interface RegisterPayload {
   label: string
   value: string

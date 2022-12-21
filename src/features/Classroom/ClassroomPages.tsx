@@ -69,16 +69,22 @@ export default function Classes() {
       </Stack>
 
       <Stack>
-        {Array.isArray(classByStudentList) && classByStudentList.length > 0 && (
+        {Array.isArray(classByStudentList) && classByStudentList.length > 0 ? (
           <Stack>
             <Typography variant="body1" fontStyle="italic">
               Tổng số: {classByStudentList?.length}/ {pagination.total} lớp
             </Typography>
             <StudentClassList classList={classByStudentList} onCardClick={handleCardClick} />
           </Stack>
+        ) : (
+          <Stack>
+            <Typography variant="body1" fontStyle="italic">
+              Bạn chưa có lớp học nào.
+            </Typography>
+          </Stack>
         )}
 
-        {classByStudentList && (
+        {Array.isArray(classByStudentList) && classByStudentList.length > 0 && (
           <Stack alignItems="center" sx={{ py: 2 }}>
             <Pagination
               variant="outlined"

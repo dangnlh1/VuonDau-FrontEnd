@@ -3,7 +3,7 @@ import axiosClient from './axiosClient'
 
 export const studentAccountApi = {
   registerStudent(params: StudentRegisterPayload): Promise<any> {
-    return axiosClient.post('/class/account', params)
+    return axiosClient.post('/students/account', params)
   },
 
   getStudentClass(id:number): Promise<any>{
