@@ -44,7 +44,7 @@ export function CheckboxField({ name, control, label, optionList, ...props }: Ch
 
   return (
     <Box>
-      <InputLabel sx={{ fontWeight: 'bold', fontSize: 13 }}>{label}</InputLabel>
+      <InputLabel sx={{ fontWeight: 900, fontSize: 14 }}>{label}</InputLabel>
 
       {Array.isArray(optionList) &&
         optionList.length > 0 &&
