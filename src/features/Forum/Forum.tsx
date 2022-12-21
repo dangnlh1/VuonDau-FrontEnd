@@ -11,7 +11,6 @@ export default function Forum() {
   }
 
   const { error, forumList, isLoading } = useForum(filter)
-  console.log('forumlist', forumList, error)
 
   return (
     <Stack direction={'row'} flexWrap={'wrap'}>
