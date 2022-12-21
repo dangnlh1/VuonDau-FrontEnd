@@ -68,7 +68,7 @@ export function AdminLayout({
           gridArea: 'main',
           px: 2,
           py: { xs: 1, sm: 2 },
-          backgroundColor: 'paper',
+          backgroundColor: '#f5f7fa',
           overflow: 'auto',
         }}
       >

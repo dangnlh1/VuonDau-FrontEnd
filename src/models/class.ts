@@ -59,6 +59,7 @@ export interface ClassPayload {
   resources: Resource
   students: StudentPayload[]
   level: string
+  account?: string
 }
 
 export interface AddEditClassFormPayload {
@@ -70,4 +71,12 @@ export interface AddEditClassFormPayload {
   maxNumberStudent: number
   subjectId: number
   courseId: number
+}
+
+export interface ResourcePayload {
+  resources: Resource[]
+}
+
+export interface TeacherPayload {
+  teacher: Teacher
 }
