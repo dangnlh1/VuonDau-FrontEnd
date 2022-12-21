@@ -1,36 +1,76 @@
+import { useCity } from '@/hooks/city'
 import { useStudentRegister } from '@/hooks/studentRegister'
+import { useSubject } from '@/hooks/subject'
+import { OptionPayload } from '@/models/option'
 import { StudentRegisterPayload } from '@/models/studentRegister'
 import { Box, Container, Typography } from '@mui/material'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { FormDataPayload, RegisterForm } from './components/RegisterForm'
 
 export function StudentRegister() {
-  const { registerStudent } = useStudentRegister()
+  const [subjectOptionList, setSubjectOptionList] = useState<OptionPayload[]>([])
+  const [cityOptionList, setCityOptionList] = useState<OptionPayload[]>([])
   const navigate = useNavigate()
 
+  const { registerStudent } = useStudentRegister()
+  const { subjectList } = useSubject()
+  const { cityList } = useCity()
+
+  useEffect(() => {
+    if (Array.isArray(subjectList) && subjectList.length > 0) {
+      const newSubjectOptionList = subjectList.map((item) => ({
+        label: item.name,
+        value: item.id,
+      }))
+
+      setSubjectOptionList(newSubjectOptionList)
+    }
+  }, [subjectList])
+
+  useEffect(() => {
+    if (Array.isArray(cityList) && cityList.length > 0) {
+      const newCityOptionList = cityList.map((item) => ({
+        label: item.name,
+        value: item.name,
+      }))
+
+      setCityOptionList(newCityOptionList)
+    }
+  }, [cityList])
+
   async function handleFormSubmit(formValues: FormDataPayload) {
-    if (formValues.password == formValues.passwordConfirmation) {
-      const formData: StudentRegisterPayload = {
-        account: {
-          username: formValues.username,
+    try {
+      if (formValues.password == formValues.passwordConfirmation) {
+        const formData: StudentRegisterPayload = {
+          firstName: formValues.firstName,
+          lastName: formValues.lastName,
+          birthDay: new Date(formValues.birthDay).toISOString(),
+          email: formValues.email,
           password: formValues.password,
-        },
-        firstName: formValues.firstName,
-        lastName: formValues.lastName,
-        email: formValues.email,
-        phoneNumber: formValues.phone,
-        genderCode: formValues.gender,
+
+          phone: formValues.phone,
+          gender: formValues.gender,
+
+          classLevel: formValues.classLevel,
+          subjects: formValues.subjects,
+          currentAddress: formValues.currentAddress,
+          schoolName: formValues.schoolName,
+        }
+        const response = await registerStudent.mutateAsync(formData)
+        if (response.status !== 'FAILED') {
+          toast.success('Đăng kí thành công')
+          navigate('/')
+          return
+        } else {
+          toast.error('Đăng kí không thành công:' + response.error_message)
+        }
+      } else {
+        toast.error('Password không trùng khớp!')
       }
-      const response = await registerStudent.mutateAsync(formData)
-      if (response) {
-        toast.success('Đăng kí thành công')
-        navigate('/')
-        return
-      }
+    } catch (error) {
       toast.error('Đăng kí không thành công')
-    } else {
-      toast.error('Password không trùng khớp!')
     }
   }
 
@@ -44,7 +84,11 @@ export function StudentRegister() {
         </Box>
 
         <Box sx={{ my: 3 }}>
-          <RegisterForm onFormSubmit={handleFormSubmit} />
+          <RegisterForm
+            subjectList={subjectOptionList}
+            cityList={cityOptionList}
+            onFormSubmit={handleFormSubmit}
+          />
         </Box>
       </Container>
     </Box>
