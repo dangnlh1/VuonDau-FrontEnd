@@ -50,6 +50,7 @@ export function Header({
     setAnchorElUser(null)
     onSettingMenuClick?.(setting)
   }
+
   return (
     <AppBar
       position="fixed"
@@ -117,13 +118,15 @@ export function Header({
         <Stack direction="row" sx={{ display: { xs: 'none', lg: 'flex' } }} spacing={0.5}>
           {Array.isArray(lastNavList) &&
             lastNavList.length > 0 &&
-            lastNavList.map((item, idx) => (
-              <NavLink to={item.link as string} key={idx}>
-                <Button color="inherit" sx={{ textTransform: 'none' }}>
-                  {item.label}
-                </Button>
-              </NavLink>
-            ))}
+            lastNavList
+              .filter((item) => (user ? item.value !== user.role.code : item))
+              .map((item, idx) => (
+                <NavLink to={item.link as string} key={idx}>
+                  <Button color="inherit" sx={{ textTransform: 'none' }}>
+                    {item.label}
+                  </Button>
+                </NavLink>
+              ))}
         </Stack>
 
         <IconButton color="inherit" sx={{ mr: { xs: user ? 0 : -1, lg: 0 } }}>

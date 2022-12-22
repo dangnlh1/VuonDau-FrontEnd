@@ -43,6 +43,21 @@ export const genderList = [
   },
 ]
 
+export const classLevelOptionList = [
+  {
+    label: 'Lớp 10',
+    value: 'TEN',
+  },
+  {
+    label: 'Lớp 11',
+    value: 'ELEVENT',
+  },
+  {
+    label: 'Lớp 12',
+    value: 'TWELFTH',
+  },
+]
+
 export const levelList = [
   {
     value: 'Sinh Viên',

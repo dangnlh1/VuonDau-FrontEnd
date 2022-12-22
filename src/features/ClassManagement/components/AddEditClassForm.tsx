@@ -1,43 +1,39 @@
+import { DateTimePickerField } from '@/components/FormFields/DateTimePickerField'
 import { InputField } from '@/components/FormFields/InputField'
 import { SelectField } from '@/components/FormFields/SelectField'
+import { classLevelOptionList } from '@/constants/info'
 import { AddEditClassFormPayload } from '@/models/class'
-import { CoursePayload } from '@/models/course'
 import { OptionPayload } from '@/models/option'
-import { Subject } from '@/models/subject'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Box, Button, Divider, Stack } from '@mui/material'
-import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 const classTypeOptionList: OptionPayload[] = [
   {
-    label: 'ONE',
+    label: 'Dạy 1 & 1',
     value: 'ONE',
   },
   {
-    label: 'MANY',
+    label: 'Dạy nhiều học sinh',
     value: 'MANY',
   },
 ]
 
 const schema = yup.object({
   name: yup.string().required('Vui lòng tên lớp học!'),
-  code: yup.number().min(0).required('Vui lòng nhập mã lớp học!'),
+  code: yup.string().required('Vui lòng nhập mã lớp học!'),
+  classLevel: yup.string().required('Vui lòng chọn lớp'),
   classType: yup.string().required('Vui lòng chọn loại lớp học!'),
 
   minNumberStudent: yup.number().min(0).required('Vui lòng nhập số học sinh tối thiều!'),
   maxNumberStudent: yup.number().min(0).required('Vui lòng nhập số học sinh tối đa!'),
-  subjectId: yup.number().min(0).required('Vui lòng chọn môn học!'),
-  courseId: yup.number().required('Vui lòng chọn khóa học!'),
+  // subjectId: yup.number().min(0).required('Vui lòng chọn môn học!'),
+  // courseId: yup.number().required('Vui lòng chọn khóa học!'),
 })
 
 export interface CreateNewClassProps {
   classData?: AddEditClassFormPayload
-  subjectList?: Subject[]
-  courseList?: CoursePayload[]
-  subjectId?: number
-  courseId?: number
 
   onSubmit?: (formValue: AddEditClassFormPayload) => void
   onSubjectChange?: (value: number) => void
@@ -45,37 +41,26 @@ export interface CreateNewClassProps {
   onCreateNewCourse?: () => void
 }
 
-export function AddEditClassForm({
-  subjectList,
-  courseList,
-  subjectId,
-  courseId,
-
-  onSubmit,
-  onCancelClick,
-  onSubjectChange,
-  onCreateNewCourse,
-}: CreateNewClassProps) {
-  const { control, handleSubmit, setValue } = useForm({
+export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProps) {
+  const {
+    control,
+    handleSubmit,
+    formState: { isValid, isDirty },
+  } = useForm({
     defaultValues: {
       name: '',
       code: '',
-      level: '',
+      startDate: '',
+      endDate: '',
+      classLevel: '',
       classType: '',
       minNumberStudent: 0,
       maxNumberStudent: 0,
-      subjectId: subjectId || 0,
-      courseId: courseId || 0,
+      unitPrice: 0,
     },
 
     resolver: yupResolver(schema),
   })
-
-  useEffect(() => {
-    if (courseId) {
-      setValue('courseId', courseId)
-    }
-  }, [courseId])
 
   function handleFormSubmit(formValue: AddEditClassFormPayload) {
     onSubmit?.(formValue)
@@ -91,14 +76,25 @@ export function AddEditClassForm({
         <InputField name="code" control={control} label="Mã lớp học" />
       </Box>
 
-      <Box>
-        <SelectField
-          name="classType"
-          control={control}
-          label="Loại lớp học"
-          optionList={classTypeOptionList}
-        />
-      </Box>
+      <Stack direction="row" alignItems="flex-start" spacing={2}>
+        <Box sx={{ width: 1 / 2 }}>
+          <SelectField
+            name="classLevel"
+            control={control}
+            label="Lớp"
+            optionList={classLevelOptionList}
+          />
+        </Box>
+
+        <Box sx={{ width: 1 / 2 }}>
+          <SelectField
+            name="classType"
+            control={control}
+            label="Loại lớp học"
+            optionList={classTypeOptionList}
+          />
+        </Box>
+      </Stack>
 
       <Box>
         <InputField
@@ -118,63 +114,25 @@ export function AddEditClassForm({
         />
       </Box>
 
+      <Stack direction="row" alignItems="flex-start" spacing={2}>
+        <Box sx={{ width: 1 / 2 }}>
+          <DateTimePickerField control={control} name="startDate" label="Ngày bắt đầu" />
+        </Box>
+
+        <Box sx={{ width: 1 / 2 }}>
+          <DateTimePickerField control={control} name="endDate" label="Ngày kết thúc" />
+        </Box>
+      </Stack>
+
       <Box>
-        <SelectField
-          name="subjectId"
-          control={control}
-          label="Môn học"
-          optionList={
-            (Array.isArray(subjectList) &&
-              subjectList.map((item) => ({
-                label: item.name,
-                value: item.id,
-              }))) ||
-            []
-          }
-          onOptionChange={(value: number) => onSubjectChange?.(value)}
-        />
+        <InputField name="unitPrice" control={control} label="Giá tiền" type="number" />
       </Box>
-
-      {subjectId && (
-        <Stack direction="row" spacing={2} alignItems="flex-start">
-          {Array.isArray(courseList) && courseList.length > 0 && (
-            <Box width="50%">
-              <SelectField
-                fullWidth
-                name="courseId"
-                control={control}
-                label="Khóa học"
-                optionList={courseList.map((item) => ({
-                  label: item.name as string,
-                  value: item.id as number,
-                }))}
-              />
-            </Box>
-          )}
-
-          <Box sx={{ pt: '18px' }} flexGrow={1}>
-            <Button
-              variant="outlined"
-              size="medium"
-              fullWidth
-              sx={{ height: 40 }}
-              onClick={() => onCreateNewCourse?.()}
-            >
-              Tạo khóa học mới
-            </Button>
-          </Box>
-        </Stack>
-      )}
 
       <Divider />
 
       <Stack width="100%" spacing={1}>
-        <Button fullWidth variant="contained" type="submit">
+        <Button fullWidth variant="contained" type="submit" disabled={!isDirty && !isValid}>
           Tạo lớp học
-        </Button>
-
-        <Button fullWidth variant="outlined" onClick={() => onCancelClick?.()}>
-          Hủy
         </Button>
       </Stack>
     </Stack>

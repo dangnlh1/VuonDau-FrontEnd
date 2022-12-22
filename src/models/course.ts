@@ -24,5 +24,5 @@ export interface CreateNewCourseFormPayload {
   title: string
   description: string
   code: string
-  subjectId: number
+  subjectId: string | number
 }

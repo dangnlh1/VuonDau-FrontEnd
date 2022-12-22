@@ -61,13 +61,20 @@ export interface ClassPayload {
   level: string
 }
 
+export type ClassLevel = 'TEN' | 'ELEVENT' | 'TWELFTH'
+export type TypeOfClass = 'MANY' | 'ONE'
+
 export interface AddEditClassFormPayload {
   name: string
   code: string
-  level: string
+  level?: string
+
+  classLevel: string
   classType: string
+
+  startDate: string
+  endDate: string
   minNumberStudent: number
   maxNumberStudent: number
-  subjectId: number
-  courseId: number
+  unitPrice: number
 }
