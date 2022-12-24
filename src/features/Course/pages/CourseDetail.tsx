@@ -20,8 +20,8 @@ export function CourseDetail() {
   const { paymentClass } = usePaymentClass()
   const defaultImage = 'https://img-c.udemycdn.com/course/240x135/658286_99b2_2.jpg'
   async function handleBuyCourse() {
-    console.log('hello');
-    
+    console.log('hello')
+
     try {
       if (courseId && data?.finalPrice) {
         const params: PaymentPayload = {
@@ -36,7 +36,7 @@ export function CourseDetail() {
         toast.error('Lỗi không có finalprice')
       }
     } catch (error) {
-      toast.error(error.message)
+      toast.error((error as Error).message)
     }
   }
   useEffect(() => {

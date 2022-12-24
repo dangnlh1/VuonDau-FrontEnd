@@ -80,7 +80,7 @@ export function DetailBanner({ sx, data }: DetailBannerProps) {
                 </Typography>
 
                 <Box>
-                  <Button variant="contained">Mua ngay</Button>
+                  <Button variant="contained">Mua ngay di</Button>
                 </Box>
               </Stack>
             </Stack>

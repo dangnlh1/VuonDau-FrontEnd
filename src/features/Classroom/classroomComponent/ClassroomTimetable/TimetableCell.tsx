@@ -7,7 +7,7 @@ interface Props {
 }
 export default function TimetableCell({ attendance }: Props) {
   return (
-    <Box sx={{ flexWrap: 'wrap', width: 150 }}>
+    <Box sx={{ flexWrap: 'wrap', width: 100 }}>
       {attendance && (
         <>
           <Typography

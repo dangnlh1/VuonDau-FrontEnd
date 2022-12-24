@@ -1,9 +1,9 @@
+import { AttendanceRequest } from './../models/timetable'
 import { ResourcePayload, TeacherPayload } from './../models/class'
 import { FilterParams, ListResponse } from '@/models/common'
 import { AddEditClassFormPayload, ClassPayload, Resource } from '@/models/class'
 import axiosClient from './axiosClient'
 import { StudentPayload } from '@/models/student'
-import { Slot } from '@/models/timetable'
 
 const url = '/class'
 
@@ -37,7 +37,8 @@ export const classApi = {
   getClassTeacher(id: string): Promise<TeacherPayload> {
     return axiosClient.get(`${url}/${id}/teacher`)
   },
-  getClassTimetable(id: string): Promise<Slot[]> {
-    return axiosClient.get(`${url}/${id}/timetable`)
+
+  getClassAttendance(id: string): Promise<AttendanceRequest> {
+    return axiosClient.get(`${url}/${id}/attendance`)
   },
 }
