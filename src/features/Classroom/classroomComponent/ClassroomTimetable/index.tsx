@@ -15,11 +15,12 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
+  TextField,
   Typography,
 } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import TimetableCell from '@/features/Classroom/classroomComponent/ClassroomTimetable/TimetableCell'
-import { CalendarPicker } from '@mui/x-date-pickers'
+import { CalendarPicker, DesktopDatePicker } from '@mui/x-date-pickers'
 import { of } from 'ramda'
 import dayjs, { Dayjs } from 'dayjs'
 import { useAttendance } from '@/hooks/attendance'
@@ -167,13 +168,13 @@ export default function ClassroomTimetable({ id }: Props) {
     setDate(tmpDate)
   }
   return (
-    <Stack marginY={2}>
+    <Stack>
       <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
         Thời Khóa Biểu
       </Typography>
 
-      <Stack direction={'row'} flexWrap={'wrap'}>
-        <Stack>
+      <Grid container>
+        <Grid xs={3}>
           <Stack paddingBottom={2} paddingRight={2}>
             <FormControl>
               <InputLabel id="demo-simple-select-label">Hiển thị </InputLabel>
@@ -196,8 +197,8 @@ export default function ClassroomTimetable({ id }: Props) {
               if (newDate) setDate(newDate)
             }}
           />
-        </Stack>
-        <Stack flexGrow={1}>
+        </Grid>
+        <Grid xs={9}>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
@@ -249,8 +250,8 @@ export default function ClassroomTimetable({ id }: Props) {
               </TableBody>
             </Table>
           </TableContainer>
-        </Stack>
-      </Stack>
+        </Grid>
+      </Grid>
     </Stack>
   )
 }

@@ -8,6 +8,6 @@ export function useClassTeacher(id: string) {
   return {
     isLoading,
     error,
-    data,
+    data: data?.teacher,
   }
 }
