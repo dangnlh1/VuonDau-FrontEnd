@@ -3,16 +3,25 @@ import { ClassPayload } from '@/models/class'
 import { IndeterminateCheckBox } from '@mui/icons-material'
 import { Box, Button, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { NavLink, useParams } from 'react-router-dom'
+import {
+  NavLink,
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Action } from '@/models/common'
 import ClassroomResource from '@/features/Classroom/classroomComponent/ClassroomResource'
 import ClassroomTeacher from '@/features/Classroom/classroomComponent/ClassroomTeacher'
 import ClassroomSchedule from '@/features/Classroom/classroomComponent/ClassroomSchedule'
+import ClassroomTimetable from '@/features/Classroom/classroomComponent/ClassroomTimetable'
 
 const actionList: Action[] = [
   { label: 'Bài tập (Bài Học)', value: '/tai-nguyen', variant: 'outlined' },
-  { label: 'Giáo viên', value: '/giao-vien-cua-lop', variant: 'outlined' },
+  { label: 'Giáo viên', value: '/giao-vien', variant: 'outlined' },
   { label: 'Điểm danh/ Thời Khóa Biểu', value: '/diem-danh', variant: 'outlined' },
 ]
 
@@ -20,19 +29,9 @@ export default function ClassroomDetail() {
   const [classDetail, setClassDetail] = useState<ClassPayload>()
   const [selectedAction, setSelectedAction] = useState<Action>(actionList[0])
   const { classId } = useParams()
+  const navigate = useNavigate()
+  const location = useLocation()
 
-  let actionPage = null
-  switch (selectedAction) {
-    case actionList[0]:
-      actionPage = <ClassroomResource id={classId} />
-      break
-    case actionList[1]:
-      actionPage = <ClassroomTeacher id={classId} />
-      break
-    default:
-      actionPage = <ClassroomSchedule id={classId} />
-      break
-  }
   async function getClassDetail() {
     try {
       if (classId) {
@@ -45,14 +44,14 @@ export default function ClassroomDetail() {
       toast.error(error.message)
     }
   }
-  function handleClickAction(value: Action) {
-    setSelectedAction(value)
+  function handleClickAction(item: Action) {
+    navigate(`/hoc-sinh/lop-hoc/${classId}` + item.value)
+    setSelectedAction(item)
   }
 
   useEffect(() => {
     getClassDetail()
   }, [])
-  console.log('class', classDetail)
   if (!classDetail) return null
   return (
     <Stack>
@@ -61,13 +60,23 @@ export default function ClassroomDetail() {
           <Button
             key={index}
             onClick={() => handleClickAction(item)}
-            variant={selectedAction === item ? 'contained' : 'outlined'}
+            variant={
+              location.pathname === `/hoc-sinh/lop-hoc/${classId}` + item.value
+                ? 'outlined'
+                : 'contained'
+            }
           >
             {item.label}
           </Button>
         ))}
       </Stack>
-      <Stack>{actionPage}</Stack>
+      <Box
+        sx={{
+          flexGrow: 1,
+        }}
+      >
+        <Outlet />
+      </Box>
     </Stack>
   )
 }

@@ -1,48 +1,43 @@
 import React from 'react'
-import { Box, Card, Grid, Stack, Typography } from '@mui/material'
+import { Box, Card, Divider, Grid, Stack, Typography } from '@mui/material'
 import { useClassTeacher } from '@/hooks/teacher'
-interface Props {
-  id: string | undefined
-}
-export default function ClassroomTeacher({ id }: Props) {
+import { useParams } from 'react-router-dom'
+import { dateFormatting } from '@/utils/dateFormatting'
+
+export default function ClassroomTeacher() {
+  const id = useParams().classId
   if (!id) return null
   const { data } = useClassTeacher(id)
+  if (!data) return <Stack>Không có dữ liệu về gia sư</Stack>
+  const noImageTeacher = 'https://banffventureforum.com/wp-content/uploads/2019/08/No-Image.png'
   return (
-    <Grid container>
-      <Grid xs={3}>
-        <Card>
-          <Box
-            component="img"
-            sx={{
-              height: undefined,
-              aspectRatio: 1,
-              width: '100%',
-            }}
-            alt="The house from the offer."
-            src="http://unblast.com/wp-content/uploads/2020/09/Male-Teacher-Illustration.jpg"
-          ></Box>
-        </Card>
-      </Grid>
-      <Grid xs={9}>
-        <Stack paddingLeft={2}>
-          <Typography variant="body1" fontWeight="800">
-            ID
-          </Typography>
-          <Typography variant="body2">{`${data?.teacher.id}`}</Typography>
-          <Typography variant="body1" fontWeight="800">
-            Tên giáo viên
-          </Typography>
-          <Typography variant="body2">{`${data?.teacher.firstName} ${data?.teacher.lastName}`}</Typography>
-          <Typography variant="body1" fontWeight="800">
-            Số điện thoại
-          </Typography>
-          <Typography variant="body2">{`${data?.teacher.phoneNumber}`}</Typography>
-          <Typography variant="body1" fontWeight="800">
-            Giới tính
-          </Typography>
-          <Typography variant="body2">{`${data?.teacher.genderResponse} `}</Typography>
+    <Stack marginY={2}>
+      <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
+        Giáo viên
+      </Typography>
+      <Stack direction="row">
+        <Stack sx={{ width: '20%' }}>
+          <Box component={'img'} alt="image" src={data.avatar ? data.avatar : noImageTeacher} />
         </Stack>
-      </Grid>
-    </Grid>
+        <Stack paddingLeft={2} flexGrow={1}>
+          <Stack paddingY={2}>
+            <Typography variant="h3">{`${data.firstName} ${data.lastName}`}</Typography>
+          </Stack>
+          <Divider />
+          <Stack paddingY={1}>
+            <Typography sx={{ fontSize: 20 }}>Email</Typography>
+            <Typography variant="body1">{data.email}</Typography>
+          </Stack>
+          <Stack paddingY={1}>
+            <Typography sx={{ fontSize: 20 }}>Ngày Sinh</Typography>
+            <Typography variant="body1">{dateFormatting(data.birthday)}</Typography>
+          </Stack>
+          <Stack paddingY={1}>
+            <Typography sx={{ fontSize: 20 }}>Số điện thoại</Typography>
+            <Typography variant="body1">{data.phoneNumber}</Typography>
+          </Stack>
+        </Stack>
+      </Stack>
+    </Stack>
   )
 }

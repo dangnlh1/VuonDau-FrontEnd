@@ -1,23 +1,20 @@
 import React from 'react'
 
-import { useTimetable } from '@/hooks/timetable'
 import { Box, Stack, Typography } from '@mui/material'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
+import { useParams } from 'react-router-dom'
+import ClassroomTimetable from '@/features/Classroom/classroomComponent/ClassroomTimetable'
 
-interface Props {
-  id: string | undefined
-}
-export default function ClassroomSchedule({ id }: Props) {
+export default function ClassroomSchedule() {
+  const id = useParams().classId
   if (!id) return null
 
-  const { data } = useTimetable(id)
-  const displayData = data || []
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 90 },
     {
       field: 'date',
       headerName: 'Ngày điểm danh',
-      width: 150,
+      width: 500,
       editable: true,
     },
     {
@@ -30,17 +27,7 @@ export default function ClassroomSchedule({ id }: Props) {
 
   return (
     <Box sx={{ width: '100%' }} paddingTop={2}>
-      <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
-        Điểm danh
-      </Typography>
-      <DataGrid
-        rows={displayData}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        disableSelectionOnClick
-        experimentalFeatures={{ newEditingApi: true }}
-      />
+      <ClassroomTimetable id={id} />
     </Box>
   )
 }
