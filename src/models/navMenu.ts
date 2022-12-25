@@ -1,12 +1,13 @@
 export interface NavPayload {
   label: string
   link?: string
-  items?:Array<NavPayLoadItem>
+  value?: string
+  items?: Array<NavPayLoadItem>
 }
 
 export interface NavPayLoadItem {
-  label:string
-  link:string
+  label: string
+  link: string
 }
 export interface LoginPayload {
   label: string

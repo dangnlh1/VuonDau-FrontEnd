@@ -3,7 +3,8 @@ import { DateTimePickerField } from '@/components/FormFields/DateTimePickerField
 import { InputField } from '@/components/FormFields/InputField'
 import { SelectField } from '@/components/FormFields/SelectField'
 import { UploadCardImage } from '@/components/FormFields/UploadCardImageField'
-import { classLevelList, genderList, voiceList } from '@/constants/info'
+import { classLevelList, genderList, levelList, voiceList } from '@/constants/info'
+import { passwordRegex } from '@/constants/regex'
 import { OptionPayload } from '@/models/option'
 import { TeacherRegisterPayload, UploadFile } from '@/models/teacherRegister'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -41,10 +42,15 @@ const schema = yup.object({
   majors: yup.string().required('Vui lòng nhập chuyên ngành!'),
   level: yup.string().required('Vui lòng nhập trình độ của bạn!'),
 
-  password: yup.string().when('id', {
-    is: (x: number) => !Boolean(x),
-    then: yup.string().required('Vui lòng nhập mật khẩu.'),
-  }),
+  password: yup
+    .string()
+    .when('id', {
+      is: (x: number) => !Boolean(x),
+      then: yup.string().required('Vui lòng nhập mật khẩu.'),
+    })
+    .test('len', 'Mật khẩu tối thiểu 8 ký tự', (value) => value && value.length > 6)
+    .matches(passwordRegex, 'Mật khẩu gồm ít nhất 1 chữ hoa, chữ thường, số và ký tự đặc biệt'),
+
   passwordConfirmation: yup.string().when('id', {
     is: (x: number) => !Boolean(x),
     then: yup
@@ -207,7 +213,7 @@ export function RegisterForm({ cityList, subjectList, onFormSubmit }: RegisterFo
       <InputField control={control} name="currentAddress" label="Nơi ở hiện nay" />
       <InputField control={control} name="idCard" label="CMND / CCCD" />
 
-      <InputField control={control} name="level" label="Trình độ" />
+      <SelectField control={control} name="level" optionList={levelList} label="Trình độ" />
       <InputField control={control} name="majors" label="Chuyên ngành" />
       <InputField control={control} name="trainingSchoolName" label="Trường đào tạo" />
 

@@ -35,7 +35,7 @@ export function InputField({
 
   return (
     <Box>
-      <InputLabel sx={{ fontWeight: 'bold', fontSize: 13 }}>{label}</InputLabel>
+      <InputLabel sx={{ fontWeight: 900, fontSize: 14 }}>{label}</InputLabel>
       <TextField
         fullWidth
         size="small"

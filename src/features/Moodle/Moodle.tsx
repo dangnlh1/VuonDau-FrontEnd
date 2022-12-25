@@ -5,7 +5,7 @@ export default function Moodle() {
   const navigate = useNavigate()
   useEffect(() => {
     var url = 'http://moodle-vuondau.amazingtech.vn/auth/oidc/'
-    navigate('/hoc-sinh/tong-quan')
+    navigate('/')
     window.location.href = window.location.href = url
   }, [])
 

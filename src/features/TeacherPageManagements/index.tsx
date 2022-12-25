@@ -6,6 +6,7 @@ import FolderOpenOutlinedIcon from '@mui/icons-material/FolderOpenOutlined'
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import SettingsIcon from '@mui/icons-material/Settings'
+import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import {
   createTheme,
   CssBaseline,
@@ -32,6 +33,7 @@ theme = responsiveFontSizes(theme)
 export const menuList: Menu[] = [
   { label: 'Tổng quan', path: '/giao-vien/tong-quan', icon: <HomeOutlinedIcon /> },
   { label: 'Quản lý lớp', path: '/giao-vien/quan-ly-lop', icon: <ClassOutlinedIcon /> },
+  { label: 'Moodle', path: '/giao-vien/moodle', icon: <AccountBoxIcon /> },
   { label: 'Bài tập', path: '/giao-vien/bai-tap', icon: <DescriptionOutlinedIcon /> },
   { label: 'Đề thi', path: '/giao-vien/de-thi', icon: <FolderOpenOutlinedIcon /> },
   { label: 'Đội nhóm', path: '/giao-vien/doi-nhom', icon: <GroupOutlinedIcon /> },
@@ -45,6 +47,7 @@ const ExerciseManagement = lazy(() => import('@/features/ExerciseManagement/Exer
 const ClassManagement = lazy(() => import('@/features/ClassManagement/ClassManagement'))
 const Exam = lazy(() => import('@/features/Exam/Exam'))
 const TeacherTeams = lazy(() => import('@/features/TeacherTeams/TeacherTeams'))
+const Moodle = lazy(() => import('@/features/Moodle/Moodle'))
 
 export default function Teacher() {
   const role = localStorage.getItem('role')
@@ -91,6 +94,7 @@ export default function Teacher() {
             <Route path="quan-ly-lop/*" element={<ClassManagement />} />
             <Route path="de-thi" element={<Exam />} />
             <Route path="doi-nhom" element={<TeacherTeams />} />
+            <Route path="moodle" element={<Moodle />} />
           </Routes>
         </AdminLayout>
       </Suspense>

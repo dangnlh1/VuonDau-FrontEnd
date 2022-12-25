@@ -19,10 +19,9 @@ export function AdminSidebar({ menuList, lastMenuList }: AdminSideBarProps) {
   return (
     <Stack
       justifyContent="space-between"
+      direction={{ xs: 'row', md: 'column' }}
+      height={{ md: '100%' }}
       sx={{
-        flexDirection: { xs: 'row', md: 'column' },
-        height: { md: '100%' },
-
         p: { xs: 1, md: 2 },
 
         '.active > div': {

@@ -43,6 +43,40 @@ export const genderList = [
   },
 ]
 
+export const classLevelOptionList = [
+  {
+    label: 'Lớp 10',
+    value: 'TEN',
+  },
+  {
+    label: 'Lớp 11',
+    value: 'ELEVENT',
+  },
+  {
+    label: 'Lớp 12',
+    value: 'TWELFTH',
+  },
+]
+
+export const levelList = [
+  {
+    value: 'Sinh Viên',
+    label: 'Sinh Viên',
+  },
+  {
+    value: 'Giáo Viên',
+    label: 'Giáo Viên',
+  },
+  {
+    value: 'Thạc sĩ',
+    label: 'Thạc sĩ',
+  },
+  {
+    value: 'Tiến sĩ',
+    label: 'Tiến sĩ',
+  },
+]
+
 export const cityList = [
   {
     name: 'An Giang',

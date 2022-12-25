@@ -33,7 +33,7 @@ function AdminHeader({ settingList, onSettingMenuClick }: AdminHeader) {
   }
 
   return (
-    <AppBar position="static" color="inherit">
+    <AppBar position="static" color="inherit" sx={{ boxShadow: 0 }}>
       <Toolbar>
         <Box sx={{ display: { xs: 'none', lg: 'flex' }, mr: 2 }}>
           <Link to="/giao-vien">

@@ -34,6 +34,7 @@ const lastNavList: NavPayload[] = [
   {
     label: 'Đăng ký giáo viên',
     link: '/dang-ky-giao-vien',
+    value: 'TEACHER',
   },
 ]
 

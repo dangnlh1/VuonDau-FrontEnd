@@ -54,7 +54,7 @@ export function StudentList({
       flex: 1,
       minWidth: 200,
       valueGetter: ({ row }) => {
-        return `${row.lastName} ${row.firstName} `
+        return `${row.lastName || ''} ${row.firstName || ''} `
       },
     },
     {
@@ -63,7 +63,7 @@ export function StudentList({
       flex: 1,
       minWidth: 100,
       valueGetter: ({ row }) => {
-        return `${dateFormatting(row.birthday)}`
+        return `${row.birthday ? dateFormatting(row.birthday) : ''}`
       },
     },
 

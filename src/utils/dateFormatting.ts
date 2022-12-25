@@ -6,6 +6,7 @@ export function dateFormatting(date: string, format = 'DD/MM/YYYY') {
 
   return dayjs(date).format(format)
 }
+
 export function getCurrentDayOfWeek(day: Dayjs) {
   if (!day) return []
   const currentDate = new Date(day.toISOString())

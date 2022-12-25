@@ -62,6 +62,7 @@ export function Header({
     setAnchorElUser(null)
     onSettingMenuClick?.(setting)
   }
+
   return (
     <AppBar
       position="fixed"
@@ -88,16 +89,19 @@ export function Header({
             <MenuIcon />
           </IconButton>
         </Box>
+
         <Box sx={{ display: { xs: 'none', lg: 'flex' }, mr: 2 }}>
           <Link to="/trang-chu">
             <FullLogo />
           </Link>
         </Box>
+
         <Box sx={{ display: { lg: 'none' }, flexGrow: 1 }}>
           <Link to="/trang-chu">
             <Logo />
           </Link>
         </Box>
+
         <Stack direction="row" sx={{ display: { xs: 'none', lg: 'flex' } }} spacing={0.5}>
           {Array.isArray(firstNavList) &&
             firstNavList.length > 0 &&
@@ -109,6 +113,7 @@ export function Header({
               </NavLink>
             ))}
         </Stack>
+
         <Box flexGrow={1} sx={{ display: { xs: 'none', lg: 'flex' }, mx: 2 }}>
           <Search>
             <SearchIconWrapper>
@@ -117,23 +122,15 @@ export function Header({
             <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
           </Search>
         </Box>
+
         <IconButton color="inherit" sx={{ display: { lg: 'none' } }}>
           <SearchIcon />
         </IconButton>
-        {/* <Stack direction="row" sx={{ display: { xs: 'none', lg: 'flex' } }} spacing={0.5}>
-          {Array.isArray(lastNavList) &&
-            lastNavList.length > 0 &&
-            lastNavList.map((item, idx) => (
-              <NavLink to={item.link as string} key={idx}>
-                <Button color="inherit" sx={{ textTransform: 'none' }}>
-                  {item.label}
-                </Button>
-              </NavLink>
-            ))}
-        </Stack> */}
+
         <IconButton color="inherit" sx={{ mr: { xs: user ? 0 : -1, lg: 0 } }}>
           <ShoppingCartOutlinedIcon />
         </IconButton>
+
         {!user && (
           <Stack direction="row" sx={{ display: { xs: 'none', lg: 'flex' } }}>
             {Array.isArray(loginList) &&

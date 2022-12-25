@@ -1,15 +1,14 @@
 import { InputField } from '@/components/FormFields/InputField'
-import { CreateNewCourseFormPayload } from '@/models/course'
+import { CreateNewCoursePayload } from '@/models/course'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Box, Button, Divider, Stack } from '@mui/material'
 import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { useEffect } from 'react'
 
-export interface CreateNewCourseProps {
-  subjectId: number
-  onCancelClick?: () => void
-  onSubmit?: (formValues: CreateNewCourseFormPayload) => void
+export interface CreateNewCourseFormProps {
+  subjectId: number | string
+  onClose?: () => void
+  onSubmit?: (formValues: CreateNewCoursePayload) => void
 }
 
 const schema = yup.object({
@@ -18,8 +17,8 @@ const schema = yup.object({
   code: yup.number().min(0).required('Vui lòng nhập mã khóa học!'),
 })
 
-export function CreateNewCourseForm({ subjectId, onSubmit, onCancelClick }: CreateNewCourseProps) {
-  const { control, handleSubmit, setValue } = useForm({
+export function CreateNewCourseForm({ subjectId, onClose, onSubmit }: CreateNewCourseFormProps) {
+  const { control, handleSubmit } = useForm({
     defaultValues: {
       name: '',
       title: '',
@@ -30,11 +29,7 @@ export function CreateNewCourseForm({ subjectId, onSubmit, onCancelClick }: Crea
     resolver: yupResolver(schema),
   })
 
-  useEffect(() => {
-    setValue('subjectId', subjectId)
-  }, [subjectId])
-
-  function handleFormSubmit(formValues: CreateNewCourseFormPayload) {
+  function handleFormSubmit(formValues: CreateNewCoursePayload) {
     onSubmit?.(formValues)
   }
 
@@ -58,12 +53,12 @@ export function CreateNewCourseForm({ subjectId, onSubmit, onCancelClick }: Crea
 
       <Divider />
 
-      <Stack width="100%" spacing={1}>
+      <Stack width="100%" spacing={2}>
         <Button fullWidth variant="contained" type="submit">
-          Tạo khóa học
+          Tạo khóa học mới
         </Button>
 
-        <Button fullWidth variant="outlined" onClick={() => onCancelClick?.()}>
+        <Button fullWidth variant="outlined" onClick={() => onClose?.()}>
           Hủy
         </Button>
       </Stack>
