@@ -1,42 +1,93 @@
-import { AdminLayout } from '@/components/layout/AdminLayout'
 import { Menu } from '@/components/layout/AdminSideBar'
-import { LinearProgress } from '@mui/material'
-import { lazy, Suspense } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
 import HomeIcon from '@mui/icons-material/Home'
-import FolderIcon from '@mui/icons-material/Folder'
+import SchoolIcon from '@mui/icons-material/School'
+import ForumIcon from '@mui/icons-material/Forum'
 import ClassIcon from '@mui/icons-material/Class'
-import DescriptionIcon from '@mui/icons-material/Description'
-import GroupIcon from '@mui/icons-material/Group'
-import SettingsIcon from '@mui/icons-material/Settings'
-import StudentDashboard from '@/features/StudentDashboard/StudentDashboard'
-import Moodle from '@/features/Moodle/Moodle'
-import Forum from '@/features/Forum/Forum'
-import Classroom from '@/features/Classroom/Classroom'
+import {
+  createTheme,
+  CssBaseline,
+  LinearProgress,
+  responsiveFontSizes,
+  ThemeProvider,
+} from '@mui/material'
+import { useKeycloak } from '@react-keycloak/web'
+import { lazy, Suspense, useEffect } from 'react'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { StudentLayout } from '@/components/layout/StudentLayout'
+
+let theme = createTheme({
+  palette: {
+    primary: {
+      main: '#74a2f7',
+      light: '#7789ff',
+      dark: '#506faa',
+      contrastText: '#fff',
+    },
+  },
+})
+theme = responsiveFontSizes(theme)
 
 export const menuList: Menu[] = [
   { label: 'Tổng quan', path: '/hoc-sinh/tong-quan', icon: <HomeIcon /> },
-  { label: 'Moodle', path: '/hoc-sinh/moodle', icon: <DescriptionIcon /> },
-  { label: 'Forum', path: '/hoc-sinh/forum', icon: <FolderIcon /> },
+  { label: 'Học tập', path: '/hoc-sinh/hoc-tap', icon: <SchoolIcon /> },
+  { label: 'Diễn đàn', path: '/hoc-sinh/dien-dan', icon: <ForumIcon /> },
   { label: 'Lớp Học', path: '/hoc-sinh/lop-hoc', icon: <ClassIcon /> },
 ]
 
-export const lastMenuList: Menu[] = [
-  { label: 'Cài đặt', path: '/hoc-sinh/cai-dat', icon: <SettingsIcon /> },
-]
+const settingList = ['Trang Chủ', 'Đăng xuất']
 
-export default function Students() {
+const StudentDashboard = lazy(() => import('@/features/StudentDashboard/StudentDashboard'))
+const Moodle = lazy(() => import('@/features/Moodle/Moodle'))
+const Forum = lazy(() => import('@/features/Forum/Forum'))
+const ClassroomFeature = lazy(() => import('@/features/Classroom/ClassroomFeature'))
+
+export default function Teacher() {
+  const role = localStorage.getItem('role')
+  const navigate = useNavigate()
+  const { keycloak } = useKeycloak()
+
+  useEffect(() => {
+    if (!role || role !== 'STUDENT') {
+      navigate('/trang-chu')
+    }
+  }, [role])
+
+  function handleSettingMenuClick(value: string) {
+    if (value === 'Đăng xuất') {
+      keycloak.logout()
+      localStorage.setItem('token', '')
+      localStorage.setItem('role', '')
+
+      return
+    }
+
+    if (value === 'Trang Chủ') {
+      navigate('/trang-chu')
+    }
+  }
+
+  if (!role || role !== 'STUDENT') {
+    return null
+  }
+
   return (
-    <Suspense fallback={<LinearProgress />}>
-      <AdminLayout menuList={menuList} lastMenuList={lastMenuList}>
-        <Routes>
-          <Route index element={<Navigate to="tong-quan" />} />
-          <Route path="tong-quan" element={<StudentDashboard />} />
-          <Route path="moodle" element={<Moodle />} />
-          <Route path="forum" element={<Forum />} />
-          <Route path="lop-hoc" element={<Classroom />} />
-        </Routes>
-      </AdminLayout>
-    </Suspense>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Suspense fallback={<LinearProgress />}>
+        <StudentLayout
+          menuList={menuList}
+          settingList={settingList}
+          onSettingMenuClick={handleSettingMenuClick}
+        >
+          <Routes>
+            <Route index element={<Navigate to="tong-quan" />} />
+            <Route path="tong-quan" element={<StudentDashboard />} />
+            <Route path="hoc-tap" element={<Moodle />} />
+            <Route path="dien-dan" element={<Forum />} />
+            <Route path="lop-hoc/*" element={<ClassroomFeature />} />
+          </Routes>
+        </StudentLayout>
+      </Suspense>
+    </ThemeProvider>
   )
 }

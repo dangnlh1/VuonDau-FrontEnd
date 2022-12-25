@@ -59,6 +59,7 @@ export interface ClassPayload {
   resources: Resource
   students: StudentPayload[]
   level: string
+  account?: string
 }
 
 export type ClassLevel = 'TEN' | 'ELEVENT' | 'TWELFTH'
@@ -77,4 +78,12 @@ export interface AddEditClassFormPayload {
   minNumberStudent: number
   maxNumberStudent: number
   unitPrice: number
+}
+
+export interface ResourcePayload {
+  resources: Resource[]
+}
+
+export interface TeacherPayload {
+  teacher: Teacher
 }

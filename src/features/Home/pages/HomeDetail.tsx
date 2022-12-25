@@ -3,10 +3,14 @@ import { CourseContent } from '@/components/common/CourseContent'
 import { BannerPayload, DetailBanner } from '@/components/common/DetailBanner'
 import { SideDetailBanner } from '@/components/common/SideDetailBanner'
 import { useClass } from '@/hooks/class'
+import { usePaymentClass } from '@/hooks/paymentClass'
 import { Resource } from '@/models/class'
+import { PaymentPayload } from '@/models/payment'
+import { openWindow } from '@/utils/window'
 import { Box, Container, Stack } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export function HomeDetail() {
   const { courseId } = useParams()
@@ -15,6 +19,30 @@ export function HomeDetail() {
 
   const { data } = useClass(parseInt(courseId as string))
   const defaultImage = 'https://img-c.udemycdn.com/course/240x135/658286_99b2_2.jpg'
+  const { paymentClass } = usePaymentClass()
+
+  async function handleBuyCourse() {
+    try {
+      if (courseId && data?.finalPrice) {
+        const userName = localStorage.getItem('session')
+        const params: PaymentPayload = {
+          classId: parseInt(courseId),
+          amount: `${data?.finalPrice}`,
+          ordertype: '250000',
+          vnp_OrderInfo: `Chuyển khoản tiền học phí lớp học ${data.name}`,
+          sessionId: `${userName}`,
+        }
+        console.log('param payment', params)
+
+        const response = await paymentClass.mutateAsync(params)
+        openWindow(response.paymentUrl)
+      } else {
+        toast.error('Lỗi không có FinalPrice')
+      }
+    } catch (error) {
+      toast.error((error as Error).message)
+    }
+  }
 
   useEffect(() => {
     if (data) {
@@ -70,6 +98,7 @@ export function HomeDetail() {
               finalPrice={bannerData?.finalPrice}
               unitPrice={bannerData?.unitPrice}
               imageUrl={bannerData?.imageUrl}
+              onBuyClick={handleBuyCourse}
             />
           </Box>
         </Stack>

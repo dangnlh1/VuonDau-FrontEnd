@@ -1,6 +1,7 @@
 import { useGetAccountDetailAfterLogin } from '@/hooks/accountDetailAfterLogin'
 import { InfoPayload } from '@/models/info'
 import { NavPayload, RegisterPayload } from '@/models/navMenu'
+import { DialogPayload } from '@/models/option'
 import { Box, Stack, Toolbar } from '@mui/material'
 import { useKeycloak } from '@react-keycloak/web'
 import { ReactNode, useEffect, useState } from 'react'
@@ -37,20 +38,36 @@ const lastNavList: NavPayload[] = [
   },
 ]
 
-const registerList: RegisterPayload[] = [
+const loginList: RegisterPayload[] = [
   {
     label: 'Đăng nhập',
     value: 'login',
   },
+]
+const registerList: RegisterPayload[] = [
   {
     label: 'Tạo tài khoản',
-    value: 'signUp',
+    value: 'register',
+  },
+]
+
+const roleList: DialogPayload[] = [
+  {
+    label: 'Học Sinh',
+    link: '/dang-ky-hoc-sinh',
+    icon: 'https://img.icons8.com/external-flaticons-flat-flat-icons/2x/external-student-university-flaticons-flat-flat-icons-2.png',
+  },
+  {
+    label: 'Giáo Viên',
+    link: '/dang-ky-giao-vien',
+    icon: 'https://img.icons8.com/external-flaticons-flat-flat-icons/2x/external-lecturer-university-flaticons-flat-flat-icons.png',
   },
 ]
 
 export function MainLayout({ children }: MainLayoutProps) {
   const [showDrawer, setShowDrawer] = useState(false)
   const [user, setUser] = useState<InfoPayload | null>(null)
+  const [openRoleDialog, setOpenRoleDialog] = useState<boolean>(false)
 
   const { keycloak } = useKeycloak()
   const token = keycloak.token
@@ -75,6 +92,18 @@ export function MainLayout({ children }: MainLayoutProps) {
     localStorage.setItem('role', role)
     setUser(data)
   }, [data])
+
+  const handleClickOpen = () => {
+    setOpenRoleDialog(true)
+  }
+
+  const handleClose = () => {
+    setOpenRoleDialog(false)
+  }
+
+  const handleNavigate = (value: string) => {
+    navigate(value)
+  }
 
   async function handleRegisterClick(value: string) {
     if (value === 'login') {
@@ -119,12 +148,17 @@ export function MainLayout({ children }: MainLayoutProps) {
       <Header
         firstNavList={firstNavList}
         registerList={registerList}
-        lastNavList={lastNavList}
+        loginList={loginList}
+        roleList={roleList}
         user={user as InfoPayload}
+        openChooseRoleDialog={openRoleDialog}
         settingList={settingList}
         onRegisterClick={handleRegisterClick}
         onToggleDrawer={handleToggleDrawer}
         onSettingMenuClick={handleSettingMenuClick}
+        onClickOpenDialog={handleClickOpen}
+        onCloseDialog={handleClose}
+        onNavigate={handleNavigate}
       />
 
       <Toolbar />

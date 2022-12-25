@@ -1,5 +1,7 @@
+import ChooseRoleDialog from '@/components/common/Dialog'
 import { InfoPayload } from '@/models/info'
-import { NavPayload, RegisterPayload } from '@/models/navMenu'
+import { LoginPayload, NavPayload, RegisterPayload } from '@/models/navMenu'
+import { DialogPayload } from '@/models/option'
 import { Search, SearchIconWrapper, StyledInputBase } from '@/styles/Search'
 import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
@@ -15,29 +17,39 @@ import { Link, NavLink } from 'react-router-dom'
 import { FullLogo, Logo } from '../common/Logo'
 
 export interface HeaderProps {
+  openChooseRoleDialog: boolean
   firstNavList?: NavPayload[]
   registerList?: RegisterPayload[]
-  lastNavList?: NavPayload[]
+  loginList?: LoginPayload[]
   user?: InfoPayload
   settingList?: string[]
+  roleList?: DialogPayload[]
 
   onRegisterClick?: (value: string) => void
   onToggleDrawer?: () => void
   onSettingMenuClick?: (setting: string) => void
+  onClickOpenDialog?: () => void
+  onCloseDialog?: () => void
+  onNavigate: (link: string) => void
 }
 
 export function Header({
   firstNavList,
   registerList,
-  lastNavList,
+  loginList,
   user,
+  openChooseRoleDialog,
+  roleList,
   settingList,
   onRegisterClick,
   onToggleDrawer,
   onSettingMenuClick,
+  onClickOpenDialog,
+  onCloseDialog,
+  onNavigate,
 }: HeaderProps) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null)
-
+  const title = 'Bạn hiện tại là:'
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
   }
@@ -115,32 +127,17 @@ export function Header({
           <SearchIcon />
         </IconButton>
 
-        <Stack direction="row" sx={{ display: { xs: 'none', lg: 'flex' } }} spacing={0.5}>
-          {Array.isArray(lastNavList) &&
-            lastNavList.length > 0 &&
-            lastNavList
-              .filter((item) => (user ? item.value !== user.role.code : item))
-              .map((item, idx) => (
-                <NavLink to={item.link as string} key={idx}>
-                  <Button color="inherit" sx={{ textTransform: 'none' }}>
-                    {item.label}
-                  </Button>
-                </NavLink>
-              ))}
-        </Stack>
-
         <IconButton color="inherit" sx={{ mr: { xs: user ? 0 : -1, lg: 0 } }}>
           <ShoppingCartOutlinedIcon />
         </IconButton>
 
         {!user && (
           <Stack direction="row" sx={{ display: { xs: 'none', lg: 'flex' } }}>
-            {Array.isArray(registerList) &&
-              registerList.length > 0 &&
-              registerList.map((item, idx) => (
+            {Array.isArray(loginList) &&
+              loginList.length > 0 &&
+              loginList.map((item, idx) => (
                 <Button
                   key={idx}
-                  className={idx === 1 ? 'sign-up' : ''}
                   color="inherit"
                   variant="outlined"
                   sx={{
@@ -152,9 +149,34 @@ export function Header({
                   {item.label}
                 </Button>
               ))}
+            {Array.isArray(registerList) &&
+              registerList.length > 0 &&
+              registerList.map((item, idx) => (
+                <Button
+                  key={idx}
+                  className={'sign-up'}
+                  color="inherit"
+                  variant="outlined"
+                  sx={{
+                    ml: 1,
+                    textTransform: 'none',
+                  }}
+                  onClick={onClickOpenDialog}
+                >
+                  {item.label}
+                </Button>
+              ))}
           </Stack>
         )}
-
+        {roleList && onCloseDialog && (
+          <ChooseRoleDialog
+            title={title}
+            roleList={roleList}
+            open={openChooseRoleDialog}
+            onClose={onCloseDialog}
+            onNavigate={onNavigate}
+          />
+        )}
         {user && (
           <Box sx={{ flexGrow: 0, ml: 1 }}>
             <Tooltip title="Open settings">

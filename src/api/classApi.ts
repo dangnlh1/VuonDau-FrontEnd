@@ -1,5 +1,7 @@
+import { AttendanceRequest } from './../models/timetable'
+import { ResourcePayload, TeacherPayload } from './../models/class'
 import { FilterParams, ListResponse } from '@/models/common'
-import { AddEditClassFormPayload, ClassPayload } from '@/models/class'
+import { AddEditClassFormPayload, ClassPayload, Resource } from '@/models/class'
 import axiosClient from './axiosClient'
 import { StudentPayload } from '@/models/student'
 import { CreateCoursePayload } from '@/models/course'
@@ -32,5 +34,16 @@ export const classApi = {
     classId: number
   ): Promise<ListResponse<StudentPayload>> {
     return axiosClient.get(`${url}/${classId}/students`, { params })
+  },
+
+  getClassResource(id: string): Promise<ResourcePayload> {
+    return axiosClient.get(`${url}/${id}/resource`)
+  },
+  getClassTeacher(id: string): Promise<TeacherPayload> {
+    return axiosClient.get(`${url}/${id}/teacher`)
+  },
+
+  getClassAttendance(id: string): Promise<AttendanceRequest> {
+    return axiosClient.get(`${url}/${id}/attendance`)
   },
 }

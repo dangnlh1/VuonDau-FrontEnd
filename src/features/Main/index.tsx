@@ -1,6 +1,8 @@
 import { ComingSoon } from '@/components/common/ComingSoon'
 import { NotFound } from '@/components/common/NotFound'
 import { MainLayout } from '@/components/layout/MainLayout'
+import PaymentInProgress from '@/features/PaymentInProgress'
+import PaymentSuccess from '@/features/PaymentSuccess'
 import {
   createTheme,
   CssBaseline,
@@ -8,8 +10,11 @@ import {
   responsiveFontSizes,
   ThemeProvider,
 } from '@mui/material'
-import { lazy, Suspense } from 'react'
+import { env } from 'process'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import { useSubscription } from 'react-stomp-hooks'
+import { toast } from 'react-toastify'
 
 let theme = createTheme({
   palette: {
@@ -40,8 +45,8 @@ export default function Main() {
             <Route path="dang-ky-giao-vien" element={<TeacherRegister />} />
             <Route path="dang-ky-hoc-sinh" element={<StudentRegister />} />
             <Route path="khoa-hoc/*" element={<Course />} />
-
             <Route path="gioi-thieu" element={<ComingSoon />} />
+            <Route path="thanh-toan" element={<PaymentSuccess />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

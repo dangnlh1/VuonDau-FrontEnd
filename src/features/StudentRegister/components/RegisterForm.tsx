@@ -1,6 +1,9 @@
+import { CheckboxField } from '@/components/FormFields/CheckboxField'
+import { DateTimePickerField } from '@/components/FormFields/DateTimePickerField'
 import { InputField } from '@/components/FormFields/InputField'
 import { SelectField } from '@/components/FormFields/SelectField'
-import { genderList } from '@/constants/info'
+import { classLevelList, genderList } from '@/constants/info'
+import { OptionPayload } from '@/models/option'
 import { StudentRegisterData } from '@/models/studentRegister'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
@@ -17,12 +20,13 @@ const avatarHelperText = 'Upload ảnh đại diện là trường bắt buộc!
 
 export interface FormDataPayload extends StudentRegisterData {}
 export interface RegisterFormProps {
+  subjectList?: OptionPayload[]
+  cityList?: OptionPayload[]
   onFormSubmit?: (formValues: FormDataPayload) => void
 }
 
 const schema = yup.object({
   lastName: yup.string().required('Vui lòng nhập họ!'),
-  username: yup.string().required('Vui lòng nhập tên đăng nhập!'),
   firstName: yup.string().required('Vui lòng nhập tên!'),
   email: yup.string().email('Email không hợp lệ').required('Vui lòng nhập Email!'),
   phone: yup.string().required('Vui lòng nhập số điện thoại!'),
@@ -40,7 +44,7 @@ const schema = yup.object({
   }),
 })
 
-export function RegisterForm({ onFormSubmit }: RegisterFormProps) {
+export function RegisterForm({ onFormSubmit, subjectList, cityList }: RegisterFormProps) {
   const [showPassword, setShowPassword] = React.useState(false)
   const [avatarFile, setAvatarFile] = useState<File>()
   const [certificationCardFile, setCertificationCardFile] = useState<File>()
@@ -54,14 +58,18 @@ export function RegisterForm({ onFormSubmit }: RegisterFormProps) {
     formState: { isDirty, isValid },
   } = useForm({
     defaultValues: {
-      username: '',
       password: '',
       passwordConfirmation: '',
       firstName: '',
       lastName: '',
+      birthDay: '',
       email: '',
       phone: '',
       gender: '',
+      currentAddress: '',
+      classLevel: 1,
+      subjects: [],
+      schoolName: '',
     },
 
     resolver: yupResolver(schema),
@@ -91,8 +99,6 @@ export function RegisterForm({ onFormSubmit }: RegisterFormProps) {
       onSubmit={handleSubmit(handleFormSubmit, handleError)}
       noValidate
     >
-      <InputField control={control} name="username" label="Tên đăng nhập" />
-
       <Stack direction="row" alignItems="flex-start" spacing={2}>
         <Box sx={{ width: 1 / 2 }}>
           <InputField control={control} name="lastName" label="Họ" />
@@ -104,11 +110,11 @@ export function RegisterForm({ onFormSubmit }: RegisterFormProps) {
       </Stack>
 
       <Stack direction="row" alignItems="flex-start" spacing={2}>
-        {/* <Box sx={{ width: 1 / 2 }}>
+        <Box sx={{ width: 1 / 2 }}>
           <DateTimePickerField control={control} name="birthDay" label="Ngày sinh" />
-        </Box> */}
+        </Box>
 
-        <Box sx={{ width: 1 }}>
+        <Box sx={{ width: 1 / 2 }}>
           <SelectField control={control} name="gender" label="Giới tính" optionList={genderList} />
         </Box>
       </Stack>
@@ -158,7 +164,35 @@ export function RegisterForm({ onFormSubmit }: RegisterFormProps) {
       <FormHelperText>{helperText}</FormHelperText>
 
       <InputField control={control} name="phone" label="Số điện thoại" />
+      <Stack direction="row" alignItems="flex-start" spacing={2}>
+        <Box sx={{ width: 1 }}>
+          <SelectField
+            control={control}
+            name="teachingProvince"
+            label="Tỉnh/TP giảng dạy"
+            optionList={cityList}
+          />
+        </Box>
+      </Stack>
+      <Stack direction="row" alignItems="flex-start" spacing={2}>
+        <Box sx={{ width: 1 / 2 }}>
+          <CheckboxField
+            control={control}
+            name="subjects"
+            label="Môn học"
+            optionList={subjectList || []}
+          />
+        </Box>
 
+        <Box sx={{ width: 1 / 2 }}>
+          <CheckboxField
+            control={control}
+            name="classLevels"
+            label="Lớp"
+            optionList={classLevelList}
+          />
+        </Box>
+      </Stack>
       <Button type="submit" variant="contained">
         Đăng ký
       </Button>

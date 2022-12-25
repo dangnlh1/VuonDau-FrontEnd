@@ -52,7 +52,6 @@ export function AdminLayout({
       </Box>
 
       <Box
-        boxShadow={3}
         sx={{
           gridArea: 'sidebar',
           borderRight: { xs: 0, md: `1.5px solid #e0e0e0` },
@@ -68,7 +67,7 @@ export function AdminLayout({
           gridArea: 'main',
           px: 2,
           py: { xs: 1, sm: 2 },
-          backgroundColor: 'paper',
+          backgroundColor: '#f5f7fa',
           overflow: 'auto',
         }}
       >
