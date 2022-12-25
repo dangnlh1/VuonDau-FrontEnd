@@ -2,6 +2,7 @@ import { FilterParams, ListResponse } from '@/models/common'
 import { AddEditClassFormPayload, ClassPayload } from '@/models/class'
 import axiosClient from './axiosClient'
 import { StudentPayload } from '@/models/student'
+import { CreateCoursePayload } from '@/models/course'
 
 const url = '/class'
 
@@ -20,6 +21,10 @@ export const classApi = {
 
   createClassByTeacherRequest(data: AddEditClassFormPayload): Promise<any> {
     return axiosClient.post(`${url}/teacher-request-create-class`, data)
+  },
+
+  createClassSubjectCourse(id: number, payload: CreateCoursePayload): Promise<any> {
+    return axiosClient.post(`${url}/${id}/teacher-request-create-class-subject-course`, payload)
   },
 
   useGetStudentByClassId(

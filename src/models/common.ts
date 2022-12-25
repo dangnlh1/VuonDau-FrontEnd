@@ -16,17 +16,18 @@ export interface FilterParams {
   page?: number
   size?: number
   sort?: string[]
+  numberSlot?: number
 }
 export interface RegisterPayload {
-  account:{
-      username:string,
-      password:string,
+  account: {
+    username: string
+    password: string
   }
-  firstName:string,
-  lastName:string,
-  email:string,
-  phoneNumber:string,
-  genderCode:string
+  firstName: string
+  lastName: string
+  email: string
+  phoneNumber: string
+  genderCode: string
 }
 export interface Pagination {
   page: number

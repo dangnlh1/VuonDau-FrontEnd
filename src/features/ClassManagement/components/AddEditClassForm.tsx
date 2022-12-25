@@ -25,11 +25,11 @@ const schema = yup.object({
   code: yup.string().required('Vui lòng nhập mã lớp học!'),
   classLevel: yup.string().required('Vui lòng chọn lớp'),
   classType: yup.string().required('Vui lòng chọn loại lớp học!'),
+  startDate: yup.string().required('Vui lòng chọn ngày bắt đầu!'),
+  endDate: yup.string().required('Vui lòng chọn ngày kết thúc!'),
 
-  minNumberStudent: yup.number().min(0).required('Vui lòng nhập số học sinh tối thiều!'),
-  maxNumberStudent: yup.number().min(0).required('Vui lòng nhập số học sinh tối đa!'),
-  // subjectId: yup.number().min(0).required('Vui lòng chọn môn học!'),
-  // courseId: yup.number().required('Vui lòng chọn khóa học!'),
+  minNumberStudent: yup.number().min(1).required('Vui lòng nhập số học sinh tối thiều!'),
+  maxNumberStudent: yup.number().min(1).required('Vui lòng nhập số học sinh tối đa!'),
 })
 
 export interface CreateNewClassProps {
@@ -131,8 +131,8 @@ export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProp
       <Divider />
 
       <Stack width="100%" spacing={1}>
-        <Button fullWidth variant="contained" type="submit" disabled={!isDirty && !isValid}>
-          Tạo lớp học
+        <Button fullWidth variant="contained" type="submit">
+          Lưu lớp học và tiếp theo
         </Button>
       </Stack>
     </Stack>

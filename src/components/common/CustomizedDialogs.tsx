@@ -5,7 +5,6 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import IconButton from '@mui/material/IconButton'
 import { styled, SxProps, Theme } from '@mui/material/styles'
-import { maxWidth } from '@mui/system'
 import * as React from 'react'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({

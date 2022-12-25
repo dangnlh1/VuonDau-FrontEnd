@@ -1,5 +1,5 @@
 import { FilterParams, ListResponse } from '@/models/common'
-import { CoursePayload, CreateNewCourseFormPayload } from '@/models/course'
+import { CoursePayload, CreateNewCoursePayload } from '@/models/course'
 
 import axiosClient from './axiosClient'
 const url = `/courses`
@@ -17,7 +17,7 @@ export const courseApi = {
     return axiosClient.get(`${url}/${subjectId}/subject`)
   },
 
-  createNewCourse(data: CreateNewCourseFormPayload): Promise<any> {
+  createNewCourse(data: CreateNewCoursePayload): Promise<any> {
     return axiosClient.post(`${url}/create-course`, data)
   },
 }

@@ -1,6 +1,6 @@
 import { courseApi } from '@/api/courseApi'
 import { FilterParams, Pagination } from '@/models/common'
-import { CreateNewCourseFormPayload } from '@/models/course'
+import { CreateNewCoursePayload } from '@/models/course'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 
 export function useCourse(params: FilterParams) {
@@ -9,7 +9,7 @@ export function useCourse(params: FilterParams) {
   const { data, isLoading, error } = useQuery(queryKey, () => courseApi.getAll(params))
 
   const createNewCourse = useMutation(
-    (data: CreateNewCourseFormPayload) => courseApi.createNewCourse(data),
+    (data: CreateNewCoursePayload) => courseApi.createNewCourse(data),
     {
       onSuccess: () => queryClient.invalidateQueries(queryKey),
     }

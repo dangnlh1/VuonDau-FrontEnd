@@ -1,6 +1,7 @@
 import { classApi } from '@/api/classApi'
 import { AddEditClassFormPayload } from '@/models/class'
 import { FilterParams, Pagination } from '@/models/common'
+import { CreateCoursePayload } from '@/models/course'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 
 export function useClasses(params: FilterParams) {
@@ -10,6 +11,14 @@ export function useClasses(params: FilterParams) {
 
   const createClassByTeacherRequest = useMutation(
     (data: AddEditClassFormPayload) => classApi.createClassByTeacherRequest(data),
+    {
+      onSuccess: () => queryClient.invalidateQueries(queryKey),
+    }
+  )
+
+  const createClassSubjectByTeacherRequest = useMutation(
+    (payload: { id: number; data: CreateCoursePayload }) =>
+      classApi.createClassSubjectCourse(payload.id, payload.data),
     {
       onSuccess: () => queryClient.invalidateQueries(queryKey),
     }
@@ -26,5 +35,6 @@ export function useClasses(params: FilterParams) {
       total: data?.totalItems,
     } as Pagination,
     createClassByTeacherRequest,
+    createClassSubjectByTeacherRequest,
   }
 }

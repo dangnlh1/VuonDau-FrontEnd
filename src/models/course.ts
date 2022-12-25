@@ -19,10 +19,15 @@ export interface CoursePayload {
   teacherCourse: any
 }
 
-export interface CreateNewCourseFormPayload {
+export interface CreateNewCoursePayload {
   name: string
   title: string
   description: string
   code: string
   subjectId: string | number
+}
+
+export interface CreateCoursePayload {
+  subjectId: string | number
+  courseId: string | number
 }

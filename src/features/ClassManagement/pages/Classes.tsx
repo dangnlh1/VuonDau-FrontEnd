@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { ClassList } from '../components/ClassList'
 
 const pageTitle = 'Quản lý lớp học'
+
 const actionList: Action[] = [
   {
     label: 'Tạo lớp mới',
@@ -20,7 +21,7 @@ const actionList: Action[] = [
 
 export interface ClassManagementProps {}
 
-export default function Classes() {
+export function Classes() {
   const [params, setParams] = useState({
     page: 0,
     size: 12,
