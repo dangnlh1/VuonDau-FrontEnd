@@ -1,7 +1,7 @@
 import { SelectCustom } from '@/components/FormFields/SelectCustom'
 import { DayOfWeek } from '@/models/dayOfWeek'
 import { Slot } from '@/models/slot'
-import { SlotDow } from '@/models/timeTable'
+import { SlotDow } from '@/models/timetable'
 import { Box, Button, Divider, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 

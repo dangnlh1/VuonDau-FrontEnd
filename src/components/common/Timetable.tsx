@@ -1,5 +1,4 @@
-import { DayOfWeekProps, TimetableRowProps } from '@/features/Classroom/pages/ClassroomTimetable'
-
+import { DayOfWeekPayload, TimetableRow } from '../../models/timetable'
 import {
   TableContainer,
   Paper,
@@ -35,10 +34,10 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }))
 
 interface TimetableProps {
-  dows: DayOfWeekProps[]
-  rows: TimetableRowProps[]
-  renderHeadCell: (item: DayOfWeekProps, idx: number) => React.ReactNode
-  renderRowCell: (item: TimetableRowProps, idx: number) => React.ReactNode
+  dows: DayOfWeekPayload[]
+  rows: TimetableRow[]
+  renderHeadCell: (item: DayOfWeekPayload, idx: number) => React.ReactNode
+  renderRowCell: (item: TimetableRow, idx: number) => React.ReactNode
 }
 
 export default function Timetable({ dows, rows, renderHeadCell, renderRowCell }: TimetableProps) {
@@ -50,7 +49,7 @@ export default function Timetable({ dows, rows, renderHeadCell, renderRowCell }:
             <StyledTableCell>
               <Typography sx={{ fontSize: 15, fontWeight: 'bold' }}>Slot học</Typography>
             </StyledTableCell>
-            {dows.map((dow: DayOfWeekProps, idx) => renderHeadCell(dow, idx))}
+            {dows.map((dow: DayOfWeekPayload, idx) => renderHeadCell(dow, idx))}
           </TableRow>
         </TableHead>
         <TableBody>{rows.map((row, idx) => renderRowCell(row, idx))}</TableBody>

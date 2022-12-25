@@ -1,7 +1,6 @@
 import { ComingSoon } from '@/components/common/ComingSoon'
 import { NotFound } from '@/components/common/NotFound'
 import { MainLayout } from '@/components/layout/MainLayout'
-import PaymentInProgress from '@/features/PaymentInProgress'
 import PaymentSuccess from '@/features/PaymentSuccess'
 import {
   createTheme,
@@ -10,11 +9,8 @@ import {
   responsiveFontSizes,
   ThemeProvider,
 } from '@mui/material'
-import { env } from 'process'
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { useSubscription } from 'react-stomp-hooks'
-import { toast } from 'react-toastify'
 
 let theme = createTheme({
   palette: {

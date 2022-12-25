@@ -1,6 +1,5 @@
 import { toast } from 'react-toastify'
 
-// import SockJS from 'sockjs-client'
 const SockJS = require('sockjs-client')
 import { Stomp } from '@stomp/stompjs';
 import { closeWindow } from '@/utils/window';
@@ -12,8 +11,6 @@ export function connect() {
   var socket = new SockJS('http://103.173.255.39:8889/websocket');
   stompClient = Stomp.over(socket);
   stompClient.connect({}, function (frame: any) {
-    console.log('Connected: ' + JSON.stringify(frame));
-    // console.log(frame.);
     localStorage.setItem('session', frame.headers['user-name'])
 
     updateNotificationDisplay();
@@ -27,7 +24,6 @@ export function connect() {
 }
 
 function showMessage(message: string) {
-  console.log(message);
   toast.success(message)
   closeWindow()
 }
