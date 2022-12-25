@@ -6,11 +6,11 @@ import { useParams } from 'react-router-dom'
 export default function ClassroomResource() {
   const id = useParams().classId
   if (!id) return null
-  const { data, error, isLoading } = useResource(id)
-  const resourceList = data?.resources
+  const { resource, error, isLoading } = useResource(id)
+
   return (
     <Stack>
-      <CourseContent resourceList={resourceList} title="Tài Nguyên Môn Học" />
+      <CourseContent resourceList={resource || []} title="Tài Nguyên Môn Học" />
     </Stack>
   )
 }

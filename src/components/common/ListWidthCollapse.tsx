@@ -21,7 +21,7 @@ export function ListWidthCollapse({ title, children, onItemClick }: ListWidthCol
   }
 
   return (
-    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+    <List sx={{ width: '100%' }}>
       <ListItemButton onClick={handleClick}>
         <ListItemText primary={title} />
         {open ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}

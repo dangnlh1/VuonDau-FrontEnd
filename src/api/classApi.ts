@@ -39,6 +39,7 @@ export const classApi = {
   getClassResource(id: string): Promise<ResourcePayload> {
     return axiosClient.get(`${url}/${id}/resource`)
   },
+
   getClassTeacher(id: string): Promise<TeacherPayload> {
     return axiosClient.get(`${url}/${id}/teacher`)
   },
