@@ -1,4 +1,4 @@
-import { DayOfWeekPayload } from '@/models/timetable'
+import { DayOfWeekPayload } from '@/models/tmpTimetable'
 import { dateFormatting } from '@/utils/dateFormatting'
 import { Stack, Typography } from '@mui/material'
 import React from 'react'

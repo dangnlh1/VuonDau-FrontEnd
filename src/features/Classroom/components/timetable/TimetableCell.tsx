@@ -1,4 +1,4 @@
-import { AttendanceSlot, FirstRowProps } from '@/models/timetable'
+import { AttendanceSlot, FirstRowProps } from '@/models/tmpTimetable'
 import { Box, Chip, Typography } from '@mui/material'
 interface Props {
   firstRow?: FirstRowProps

@@ -1,4 +1,4 @@
-import { AttendanceRequest } from '../models/timetable'
+import { AttendanceRequest } from '../models/tmpTimetable'
 import { ResourcePayload, TeacherPayload } from './../models/class'
 import { FilterParams, ListResponse } from '@/models/common'
 import { AddEditClassFormPayload, ClassPayload, Resource } from '@/models/class'
