@@ -1,7 +1,6 @@
 import { DayOfWeekProps } from '@/features/Classroom/classroomComponent/ClassroomTimetable'
 import { dateFormatting } from '@/utils/dateFormatting'
 import { Stack, Typography } from '@mui/material'
-import React from 'react'
 interface Props {
   item: DayOfWeekProps
 }

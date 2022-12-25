@@ -1,5 +1,7 @@
 import { AttendanceSlot } from '@/models/timetable'
-import { Box, Chip, Typography } from '@mui/material'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import { Box, Chip, Stack, Typography } from '@mui/material'
+import { dateFormatting } from '@/utils/dateFormatting'
 interface Props {
   attendance: AttendanceSlot | undefined
 }
