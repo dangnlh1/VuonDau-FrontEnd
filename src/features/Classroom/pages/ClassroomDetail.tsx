@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Action } from '@/models/common'
+import ClassroomTopBar from '@/features/Classroom/components/classroom/ClassroomTopBar'
 
 const actionList: Action[] = [
   { label: 'Bài tập (Bài Học)', value: '/tai-nguyen', variant: 'outlined' },
@@ -42,21 +43,7 @@ export default function ClassroomDetail() {
   if (!classDetail) return null
   return (
     <Stack>
-      <Stack direction={'row'} justifyContent="flex-end" spacing={1}>
-        {actionList.map((item, index) => (
-          <Button
-            key={index}
-            onClick={() => handleClickAction(item)}
-            variant={
-              location.pathname === `/hoc-sinh/lop-hoc/${classId}` + item.value
-                ? 'outlined'
-                : 'contained'
-            }
-          >
-            {item.label}
-          </Button>
-        ))}
-      </Stack>
+      <ClassroomTopBar actions={actionList} id={classId} onActionClick={handleClickAction} />
       <Box
         sx={{
           flexGrow: 1,

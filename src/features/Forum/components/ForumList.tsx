@@ -1,5 +1,5 @@
-import { ClassRoomCard } from '@/components/common/ClassRoomCard'
 import { ForumRoomCard } from '@/features/Forum/components/ForumRoomCard'
+import { Action } from '@/models/common'
 import { ForumPayload } from '@/models/forum'
 import { Box, Stack } from '@mui/material'
 
@@ -9,8 +9,6 @@ export interface ForumListProps {
 }
 
 export function ForumList({ forumList, onCardClick }: ForumListProps) {
-  console.log(forumList)
-
   return (
     <Stack direction="row" flexWrap="wrap" sx={{ mx: -2 }}>
       {Array.isArray(forumList) &&

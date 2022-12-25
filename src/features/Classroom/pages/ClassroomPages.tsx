@@ -5,34 +5,9 @@ import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useClassesByStudent } from '@/hooks/classByStudent'
 import { ClassPayload } from '@/models/class'
-import { StudentClassList } from '@/features/Classroom/components/StudentClassList'
+import { StudentClassList } from '@/features/Classroom/components/classroom/StudentClassList'
 
 const pageTitle = 'Quản lý lớp học'
-const actionList: Action[] = [
-  {
-    label: 'Bài Tập',
-    value: 'excercise',
-    variant: 'contained',
-  },
-
-  {
-    label: 'Giáo viên',
-    value: 'teacher',
-    variant: 'contained',
-  },
-  {
-    label: 'Điểm danh/ Thời Khóa Biểu',
-    value: 'attendance',
-    variant: 'contained',
-  },
-
-  // {
-  //   label: 'Tạo lớp mới',
-  //   value: 'attendance',
-  //   icon: <FactCheckIcon />,
-  //   variant: 'outlined',
-  // },
-]
 
 export interface ClassManagementProps {}
 

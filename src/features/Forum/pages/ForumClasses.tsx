@@ -1,12 +1,12 @@
 import { ForumList } from '@/features/Forum/components/ForumList'
-import useForum from '@/hooks/forum'
 import { ForumPayload } from '@/models/forum'
 import { Pagination, Stack, Typography } from '@mui/material'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const pageTitle = 'Diễn đàn'
+const pageTitle = 'Diễn đàn lớp'
 
+//TODO: Delete when api updated
 const mockForumList: ForumPayload[] = [
   {
     classCode: 'Class Code',
@@ -19,6 +19,8 @@ const mockForumList: ForumPayload[] = [
     type: '',
   },
 ]
+
+//TODO: Delete when api updated
 const mockPagination = {
   page: 1,
   size: 1,
@@ -26,7 +28,7 @@ const mockPagination = {
   total: 1,
 }
 
-export default function ForumPage() {
+export default function ForumClasses() {
   const [forumId, setForumId] = useState<number | undefined>(undefined)
 
   const [params, setParams] = useState({
@@ -50,10 +52,8 @@ export default function ForumPage() {
       page: newPage - 1,
     }))
   }
-
   return (
-    <Stack spacing={3}>
-
+    <Stack>
       <Typography variant="h5" fontWeight={700}>
         {pageTitle}
       </Typography>
@@ -78,7 +78,6 @@ export default function ForumPage() {
           />
         </Stack>
       )}
-
     </Stack>
   )
 }

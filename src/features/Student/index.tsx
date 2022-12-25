@@ -83,7 +83,7 @@ export default function Teacher() {
             <Route index element={<Navigate to="tong-quan" />} />
             <Route path="tong-quan" element={<StudentDashboard />} />
             <Route path="hoc-tap" element={<Moodle />} />
-            <Route path="dien-dan" element={<Forum />} />
+            <Route path="dien-dan/*" element={<Forum />} />
             <Route path="lop-hoc/*" element={<ClassroomFeature />} />
           </Routes>
         </StudentLayout>
