@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useClassesByStudent } from '@/hooks/classByStudent'
 import { ClassPayload } from '@/models/class'
-import { StudentClassList } from '@/features/Classroom/classroomComponent/StudentClassList'
+import { StudentClassList } from '@/features/Classroom/components/StudentClassList'
 
 const pageTitle = 'Quản lý lớp học'
 const actionList: Action[] = [

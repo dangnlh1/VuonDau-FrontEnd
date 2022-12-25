@@ -1,11 +1,11 @@
 import { FilterParams, ListResponse } from '@/models/common'
-import { CoursePayload, CreateNewCourseFormPayload } from '@/models/course'
+import { ForumPayload } from '@/models/forum'
 
 import axiosClient from './axiosClient'
 const url = `/forums`
 
 export const forumApi = {
-  getAll(params?: FilterParams): Promise<ListResponse<CoursePayload>> {
+  getAll(params: FilterParams): Promise<ListResponse<ForumPayload>> {
     return axiosClient.get(`${url}/class-type`, { params })
   },
 }

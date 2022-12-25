@@ -1,22 +1,14 @@
-import useForum from '@/hooks/forum'
-import { FilterParams } from '@/models/common'
-import { Forum } from '@/models/forum'
-import { Card, Stack } from '@mui/material'
-import { GridColDef } from '@mui/x-data-grid'
+import ClassroomDetail from '@/features/Classroom/pages/ClassroomDetail'
+import ForumDetail from '@/features/Forum/ForumDetail'
+import ForumPage from '@/features/Forum/ForumPage'
+import { Route, Routes } from 'react-router-dom'
 
-export default function Forum() {
-  const filter: FilterParams = {
-    page: 1,
-    size: 10,
-  }
-
-  const { error, forumList, isLoading } = useForum(filter)
-
+export function Forum() {
   return (
-    <Stack direction={'row'} flexWrap={'wrap'}>
-      {forumList?.map((item, index) => (
-        <Card>Hello</Card>
-      ))}
-    </Stack>
+    <Routes>
+      <Route index element={<ForumPage />} />
+      <Route path=":forumId" element={<ForumDetail />} />
+    </Routes>
   )
 }
+export default Forum
