@@ -1,9 +1,9 @@
+import { GoBack } from '@/components/common/GoBack'
 import { SearchField } from '@/components/FormFields/SearchField'
 import { useClass } from '@/hooks/class'
 import { useGetStudentByClassId } from '@/hooks/useGetStudentByClassId'
 import { Action } from '@/models/common'
 import { StudentPayload } from '@/models/student'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { Box, Button, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -12,7 +12,7 @@ import { StudentList } from '../components/StudenList'
 const actionList: Action[] = [
   {
     label: 'Bài học',
-    value: 'create-new-class-for-new-course',
+    value: 'lesson',
     variant: 'contained',
   },
 
@@ -64,22 +64,17 @@ export default function Students() {
     }))
   }
 
+  function handleActionClick(action: Action) {
+    if (action.value === 'lesson') {
+      navigate(`/giao-vien/quan-ly-lop/${classId}/bai-hoc`)
+    }
+  }
+
   return (
     <Stack spacing={3}>
+      <GoBack onClick={() => navigate(-1)} />
+
       <Stack direction="row" alignItems="center" spacing={2}>
-        <Button
-          onClick={() => navigate(-1)}
-          color="inherit"
-          startIcon={<ArrowBackIcon fontSize="large" />}
-          sx={{
-            width: 40,
-            height: 40,
-            minWidth: 0,
-            '& span': {
-              m: 0,
-            },
-          }}
-        />
         <Typography variant="h5" fontWeight={700}>
           {data?.name}
         </Typography>
@@ -97,7 +92,12 @@ export default function Students() {
           sx={{ width: { xs: '100%', sm: 'auto' } }}
         >
           {actionList.map((item, idx, arr) => (
-            <Button variant={item.variant} key={idx} startIcon={item.icon}>
+            <Button
+              variant={item.variant}
+              key={idx}
+              startIcon={item.icon}
+              onClick={() => handleActionClick(item)}
+            >
               {item.label}
             </Button>
           ))}

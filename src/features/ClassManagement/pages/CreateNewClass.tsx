@@ -9,7 +9,7 @@ import { useTimeTable } from '@/hooks/timeTable'
 import { useGetCourseBySubjectId } from '@/hooks/useGetCourseBySubjectId'
 import { AddEditClassFormPayload } from '@/models/class'
 import { CreateCoursePayload, CreateNewCoursePayload } from '@/models/course'
-import { CreateTimeTablePayload, CreateTimeTableRequest } from '@/models/timetable'
+import { CreateTimeTablePayload, CreateTimeTableRequest } from '@/models/timetables'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined'
 import { Box, Stack, Tab, Tabs, Typography } from '@mui/material'
 import * as React from 'react'
@@ -22,6 +22,7 @@ import { CreateTimeTableData, CreateTimeTableForm } from '../components/CreateTi
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 
 const pageTitle = 'Tạo lớp Mới'
+
 export function CreateNewClass() {
   const [tab, setTab] = React.useState(0)
   const [classId, setClassId] = React.useState('')
@@ -146,7 +147,7 @@ export function CreateNewClass() {
       .then((response) => {
         if (response) {
           toast.success('Tạo thời khóa biểu thành công!')
-          navigate('/quan-ly-lop')
+          navigate('/giao-vien/quan-ly-lop')
           return
         }
         toast.error('Tạo thời khóa biểu thất bại!')

@@ -8,6 +8,6 @@ export function useResource(id: string) {
   return {
     isLoading,
     error,
-    data,
+    resource: data?.resources,
   }
 }

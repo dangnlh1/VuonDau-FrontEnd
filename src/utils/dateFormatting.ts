@@ -1,4 +1,4 @@
-import { DayOfWeekPayload } from '@/models/timetable'
+import { DayOfWeekPayload } from '@/models/timetables'
 import dayjs, { Dayjs } from 'dayjs'
 
 export function dateFormatting(date: string, format = 'DD/MM/YYYY') {
