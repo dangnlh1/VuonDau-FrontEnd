@@ -1,23 +1,10 @@
 import { classApi } from '@/api/classApi'
 import { ClassPayload } from '@/models/class'
-import { IndeterminateCheckBox } from '@mui/icons-material'
-import { Box, Button, Stack, Typography } from '@mui/material'
+import { Box, Button, Stack } from '@mui/material'
 import { useEffect, useState } from 'react'
-import {
-  NavLink,
-  Outlet,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-  useParams,
-} from 'react-router-dom'
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Action } from '@/models/common'
-import ClassroomResource from '@/features/Classroom/classroomComponent/ClassroomResource'
-import ClassroomTeacher from '@/features/Classroom/classroomComponent/ClassroomTeacher'
-import ClassroomSchedule from '@/features/Classroom/classroomComponent/ClassroomSchedule'
-import ClassroomTimetable from '@/features/Classroom/classroomComponent/ClassroomTimetable'
 
 const actionList: Action[] = [
   { label: 'Bài tập (Bài Học)', value: '/tai-nguyen', variant: 'outlined' },

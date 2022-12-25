@@ -1,9 +1,9 @@
-import { DayOfWeekProps } from '@/features/Classroom/classroomComponent/ClassroomTimetable'
+import { DayOfWeekPayload } from '@/models/timetable'
 import { dateFormatting } from '@/utils/dateFormatting'
 import { Stack, Typography } from '@mui/material'
 import React from 'react'
 interface Props {
-  item: DayOfWeekProps
+  item: DayOfWeekPayload
 }
 export default function ColumnHeader({ item }: Props) {
   const { day, name } = item

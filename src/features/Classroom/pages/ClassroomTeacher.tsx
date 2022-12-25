@@ -11,7 +11,7 @@ export default function ClassroomTeacher() {
   if (!data) return <Stack>Không có dữ liệu về gia sư</Stack>
   const noImageTeacher = 'https://banffventureforum.com/wp-content/uploads/2019/08/No-Image.png'
   return (
-    <Stack marginY={2}>
+    <Stack>
       <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
         Giáo viên
       </Typography>

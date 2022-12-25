@@ -1,19 +1,20 @@
-import ClassroomResource from '@/features/Classroom/classroomComponent/ClassroomResource'
-import ClassroomSchedule from '@/features/Classroom/classroomComponent/ClassroomSchedule'
-import ClassroomTeacher from '@/features/Classroom/classroomComponent/ClassroomTeacher'
-import ClassroomDetail from '@/features/Classroom/ClassroomDetail'
-import ClassroomPages from '@/features/Classroom/ClassroomPages'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
+
+import ClassroomResource from '@/features/Classroom/pages/ClassroomResource'
+import ClassroomTeacher from '@/features/Classroom/pages/ClassroomTeacher'
+import ClassroomDetail from '@/features/Classroom/pages/ClassroomDetail'
+import ClassroomPages from '@/features/Classroom/pages/ClassroomPages'
+import ClassroomTimetable from '@/features/Classroom/pages/ClassroomTimetable'
 
 export function ClassroomFeature() {
   return (
     <Routes>
       <Route index element={<ClassroomPages />} />
       <Route path=":classId" element={<ClassroomDetail />}>
-        <Route path="giao-vien" element={<ClassroomTeacher />} />
         <Route index element={<ClassroomResource />} />
+        <Route path="giao-vien" element={<ClassroomTeacher />} />
         <Route path="tai-nguyen" element={<ClassroomResource />} />
-        <Route path="diem-danh" element={<ClassroomSchedule />} />
+        <Route path="diem-danh" element={<ClassroomTimetable />} />
       </Route>
     </Routes>
   )

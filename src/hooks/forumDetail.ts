@@ -1,9 +1,9 @@
-import { Pagination } from './../models/common';
+import { Pagination } from '../models/common';
 import { FilterParams } from '@/models/common'
 import { forumApi } from '@/api/forumApi'
 import { useQuery } from 'react-query'
 
-export default function useForum(params: FilterParams) {
+export default function useForumDetail(params: FilterParams) {
   const queryKey = ['/forums']
   const { data, isLoading, error } = useQuery(queryKey, () => forumApi.getAll(params))
   console.log('data', data);
@@ -11,12 +11,6 @@ export default function useForum(params: FilterParams) {
   return {
     isLoading,
     error,
-    forumList: data?.items,
-    pagination: {
-      page: data?.currentPage,
-      size: data?.pageSize,
-      totalPages: data?.totalPages,
-      total: data?.totalItems,
-    } as Pagination,
+    forum: data?.items,
   }
 }

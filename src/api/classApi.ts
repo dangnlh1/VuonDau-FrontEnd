@@ -9,7 +9,7 @@ import { CreateCoursePayload } from '@/models/course'
 const url = '/class'
 
 export const classApi = {
-  getAll(params: FilterParams): Promise<ListResponse<ClassPayload>> {
+  getAll(params?: FilterParams): Promise<ListResponse<ClassPayload>> {
     return axiosClient.get(url, { params })
   },
 

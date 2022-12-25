@@ -1,13 +1,12 @@
-import { AttendanceSlot } from '@/models/timetable'
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
-import { Box, Chip, Stack, Typography } from '@mui/material'
-import { dateFormatting } from '@/utils/dateFormatting'
+import { AttendanceSlot, FirstRowProps } from '@/models/timetable'
+import { Box, Chip, Typography } from '@mui/material'
 interface Props {
-  attendance: AttendanceSlot | undefined
+  firstRow?: FirstRowProps
+  attendance?: AttendanceSlot | undefined
 }
-export default function TimetableCell({ attendance }: Props) {
+export default function TimetableCell({ attendance, firstRow }: Props) {
   return (
-    <Box sx={{ flexWrap: 'wrap', width: 100 }}>
+    <Box sx={{ flexWrap: 'wrap', width: 120 }}>
       {attendance && (
         <>
           <Typography
@@ -22,6 +21,12 @@ export default function TimetableCell({ attendance }: Props) {
             color={attendance.present ? 'success' : 'error'}
             variant="filled"
           />
+        </>
+      )}
+      {firstRow && (
+        <>
+          <Typography sx={{ fontSize: 20, fontWeight: 'bold' }}>{firstRow.name}</Typography>
+          <Typography sx={{ fontSize: 13 }}>{firstRow.time}</Typography>
         </>
       )}
     </Box>
