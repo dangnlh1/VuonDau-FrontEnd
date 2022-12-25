@@ -1,4 +1,4 @@
-import { CreateTimeTableRequest } from '@/models/tmpTimetable'
+import { CreateTimeTableRequest } from '@/models/timetable'
 import axiosClient from './axiosClient'
 
 const url = '/timetable'

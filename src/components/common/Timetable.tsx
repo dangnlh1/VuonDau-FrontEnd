@@ -1,4 +1,4 @@
-import { DayOfWeekPayload, TimetableRow } from '../../models/tmpTimetable'
+import { DayOfWeekPayload, TimetableRow } from '../../models/timetable'
 import {
   TableContainer,
   Paper,
