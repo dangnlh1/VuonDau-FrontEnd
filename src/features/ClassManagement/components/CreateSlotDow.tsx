@@ -1,8 +1,8 @@
 import { SelectCustom } from '@/components/FormFields/SelectCustom'
 import { DayOfWeek } from '@/models/dayOfWeek'
 import { Slot } from '@/models/slot'
-import { SlotDow } from '@/models/timeTable'
-import { Box, Button, Divider, Stack, Typography } from '@mui/material'
+import { SlotDow } from '@/models/timetables'
+import { Box, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 
 export interface CreateSlotDowProps {
@@ -60,7 +60,7 @@ export function CreateSlotDow({
                 label="Thời gian học"
                 currentValue={slotDowList[idx]?.slotId || ''}
                 optionList={slotList.map((slot) => ({
-                  label: `${slot.name} (${slot.startTime} ${slot.endTime})`,
+                  label: `Từ ${slot.startTime} đến ${slot.endTime}`,
                   value: slot.id,
                 }))}
                 onChange={(e) => handleSlotChange(e, idx)}

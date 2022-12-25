@@ -1,5 +1,5 @@
-import { AttendanceRequest } from './../models/timetable'
-import { ResourcePayload, TeacherPayload } from './../models/class'
+import { AttendanceRequest } from '@/models/timetables'
+import { ResourcePayload, TeacherPayload } from '@/models/class'
 import { FilterParams, ListResponse } from '@/models/common'
 import { AddEditClassFormPayload, ClassPayload, Resource } from '@/models/class'
 import axiosClient from './axiosClient'

@@ -1,4 +1,4 @@
-import { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs'
 export interface SlotDow {
   slotNumber?: number | string
   slotId?: number | string
@@ -20,19 +20,19 @@ export interface CreateTimeTableRequest {
 type DayType = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY'
 
 export interface AttendanceSlot {
-  id: number,
-  date: string,
-  slotNumber: number,
-  archetypeCode: string,
-  archetypeName: string,
-  slotCode: string,
-  slotName: string,
-  startTime: string,
-  endTime: string,
-  timeTableId: number,
-  dowName: string,
-  dowCode: DayType,
-  present: boolean,
+  id: number
+  date: string
+  slotNumber: number
+  archetypeCode: string
+  archetypeName: string
+  slotCode: string
+  slotName: string
+  startTime: string
+  endTime: string
+  timeTableId: number
+  dowName: string
+  dowCode: DayType
+  present: boolean
 }
 export interface FirstRowProps {
   name: string
@@ -50,4 +50,10 @@ export interface TimetableRow {
   WEDNESDAY: AttendanceSlot | undefined
   THURSDAY: AttendanceSlot | undefined
   FRIDAY: AttendanceSlot | undefined
+}
+
+export interface AttendanceRequest {
+  accountId: number
+  classId: number
+  attendance: AttendanceSlot[]
 }
