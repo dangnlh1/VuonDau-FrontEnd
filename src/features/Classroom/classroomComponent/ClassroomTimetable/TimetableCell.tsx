@@ -1,4 +1,4 @@
-import { AttendanceSlot } from '@/models/attendance'
+import { AttendanceSlot } from '@/models/timetable'
 import { Box, Chip, Typography } from '@mui/material'
 interface Props {
   attendance: AttendanceSlot | undefined

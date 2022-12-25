@@ -1,12 +1,8 @@
-import * as React from 'react'
-import { styled } from '@mui/material/styles'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell, { tableCellClasses } from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Paper from '@mui/material/Paper'
+import ColumnHeader from '@/features/Classroom/classroomComponent/ClassroomTimetable/ColumnHeader'
+import TimetableCell from '@/features/Classroom/classroomComponent/ClassroomTimetable/TimetableCell'
+import { useAttendance } from '@/hooks/attendance'
+import { AttendanceSlot } from '@/models/timetable'
+import { getCurrentDayOfWeek } from '@/utils/dateFormatting'
 import {
   FormControl,
   Grid,
@@ -15,18 +11,19 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
-  TextField,
   Typography,
 } from '@mui/material'
-import { useParams } from 'react-router-dom'
-import TimetableCell from '@/features/Classroom/classroomComponent/ClassroomTimetable/TimetableCell'
-import { CalendarPicker, DesktopDatePicker } from '@mui/x-date-pickers'
-import { of } from 'ramda'
+import Paper from '@mui/material/Paper'
+import { styled } from '@mui/material/styles'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell, { tableCellClasses } from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import { CalendarPicker } from '@mui/x-date-pickers'
 import dayjs, { Dayjs } from 'dayjs'
-import { useAttendance } from '@/hooks/attendance'
-import { AttendanceSlot } from '@/models/attendance'
-import { getCurrentDayOfWeek } from '@/utils/dateFormatting'
-import ColumnHeader from '@/features/Classroom/classroomComponent/ClassroomTimetable/ColumnHeader'
+import * as React from 'react'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {

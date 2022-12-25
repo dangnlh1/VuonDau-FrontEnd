@@ -1,14 +1,14 @@
 import { InputField } from '@/components/FormFields/InputField'
 import { SelectField } from '@/components/FormFields/SelectField'
+import { CreateTimeTablePayload, SlotDow } from '@/models/createTimeTable'
 import { DayOfWeek } from '@/models/dayOfWeek'
 import { Slot } from '@/models/slot'
-import { CreateTimeTablePayload, SlotDow } from '@/models/timeTable'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Box, Button, Stack } from '@mui/material'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { CreateSlotDow } from './CreateSlotDow'
-import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { CreateSlotDow } from './CreateSlotDow'
 
 export interface CreateTimeTableData extends CreateTimeTablePayload {
   numberSlot?: string | number
