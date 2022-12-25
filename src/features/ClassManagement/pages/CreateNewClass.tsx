@@ -146,7 +146,7 @@ export function CreateNewClass() {
       .then((response) => {
         if (response) {
           toast.success('Tạo thời khóa biểu thành công!')
-          navigate('/quan-ly-lop')
+          navigate('/giao-vien/quan-ly-lop')
           return
         }
         toast.error('Tạo thời khóa biểu thất bại!')

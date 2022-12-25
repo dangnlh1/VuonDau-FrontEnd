@@ -1,5 +1,5 @@
-import { AttendanceRequest } from './../models/timetable'
-import { ResourcePayload, TeacherPayload } from './../models/class'
+import { AttendanceRequest } from '@/models/attendance'
+import { ResourcePayload, TeacherPayload } from '@/models/class'
 import { FilterParams, ListResponse } from '@/models/common'
 import { AddEditClassFormPayload, ClassPayload, Resource } from '@/models/class'
 import axiosClient from './axiosClient'
@@ -39,6 +39,7 @@ export const classApi = {
   getClassResource(id: string): Promise<ResourcePayload> {
     return axiosClient.get(`${url}/${id}/resource`)
   },
+
   getClassTeacher(id: string): Promise<TeacherPayload> {
     return axiosClient.get(`${url}/${id}/teacher`)
   },

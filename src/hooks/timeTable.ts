@@ -1,5 +1,6 @@
 import { timeTableApi } from '@/api/timeTableApi'
-import { CreateTimeTablePayload, CreateTimeTableRequest } from '@/models/timeTable'
+import { CreateTimeTableRequest } from '@/models/timeTable'
+
 import { useMutation, useQueryClient } from 'react-query'
 
 export function useTimeTable() {

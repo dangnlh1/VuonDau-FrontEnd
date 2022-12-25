@@ -24,7 +24,7 @@ import { CalendarPicker, DesktopDatePicker } from '@mui/x-date-pickers'
 import { of } from 'ramda'
 import dayjs, { Dayjs } from 'dayjs'
 import { useAttendance } from '@/hooks/attendance'
-import { AttendanceSlot } from '@/models/timetable'
+import { AttendanceSlot } from '@/models/attendance'
 import { getCurrentDayOfWeek } from '@/utils/dateFormatting'
 import ColumnHeader from '@/features/Classroom/classroomComponent/ClassroomTimetable/ColumnHeader'
 

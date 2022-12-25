@@ -60,7 +60,7 @@ export function CreateSlotDow({
                 label="Thời gian học"
                 currentValue={slotDowList[idx]?.slotId || ''}
                 optionList={slotList.map((slot) => ({
-                  label: `${slot.name} (${slot.startTime} ${slot.endTime})`,
+                  label: `Từ ${slot.startTime} đến ${slot.endTime})`,
                   value: slot.id,
                 }))}
                 onChange={(e) => handleSlotChange(e, idx)}

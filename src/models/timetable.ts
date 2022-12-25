@@ -1,20 +1,17 @@
-export interface AttendanceSlot {
-  id: number
-  date: string
-  slotNumber: number
-  archetypeCode: string
-  archetypeName: string
-  slotCode: string
-  slotName: string
-  startTime: string
-  endTime: string
-  timeTableId: number
-  dowName: string
-  dowCode: string
-  present: boolean | null
+export interface SlotDow {
+  slotNumber?: number | string
+  slotId?: number | string
+  dayOfWeekId?: number | string
 }
-export interface AttendanceRequest {
-  accountId: number
+
+export interface CreateTimeTablePayload {
+  archetypeName: string
+  archetypeCode: string
+  slotDow: SlotDow[]
+}
+
+export interface CreateTimeTableRequest {
   classId: number
-  attendance: AttendanceSlot[]
+  numberSlot: number
+  formData: CreateTimeTablePayload
 }
