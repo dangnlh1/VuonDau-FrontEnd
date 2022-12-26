@@ -1,5 +1,4 @@
 import { GoBack } from '@/components/common/GoBack'
-import { SearchField } from '@/components/FormFields/SearchField'
 import { useClass } from '@/hooks/class'
 import { useGetStudentByClassId } from '@/hooks/useGetStudentByClassId'
 import { Action } from '@/models/common'
@@ -72,15 +71,11 @@ export default function Students() {
     <Stack spacing={3}>
       <GoBack onClick={() => navigate(-1)} />
 
-      <Stack direction="row" alignItems="center" spacing={2}>
-        <Typography variant="h5" fontWeight={700}>
-          Danh sách học sinh lớp {data?.name}
-        </Typography>
-      </Stack>
-
       <Stack direction="row" flexWrap="wrap" alignItems="center" justifyContent="space-between">
         <Box sx={{ mb: { xs: 2, sm: 0 }, width: { xs: '100%', sm: 'auto' } }}>
-          <SearchField />
+          <Typography variant="h5" fontWeight={700}>
+            Danh sách học sinh lớp {data?.name}
+          </Typography>
         </Box>
 
         <Stack
