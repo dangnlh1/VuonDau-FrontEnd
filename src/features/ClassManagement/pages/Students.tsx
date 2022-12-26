@@ -11,16 +11,11 @@ import { StudentList } from '../components/StudenList'
 
 const actionList: Action[] = [
   {
-    label: 'Bài học',
+    label: 'Danh sách bài học',
     value: 'lesson',
     variant: 'contained',
   },
 
-  {
-    label: 'Điểm danh',
-    value: 'attendance',
-    variant: 'contained',
-  },
   {
     label: 'Thời khóa biểu',
     value: 'attendance',
@@ -67,7 +62,10 @@ export default function Students() {
   function handleActionClick(action: Action) {
     if (action.value === 'lesson') {
       navigate(`/giao-vien/quan-ly-lop/${classId}/bai-hoc`)
+      return
     }
+
+    navigate(`/giao-vien/quan-ly-lop/${classId}/thoi-khoa-bieu`)
   }
 
   return (
@@ -76,7 +74,7 @@ export default function Students() {
 
       <Stack direction="row" alignItems="center" spacing={2}>
         <Typography variant="h5" fontWeight={700}>
-          {data?.name}
+          Danh sách học sinh lớp {data?.name}
         </Typography>
       </Stack>
 
@@ -93,7 +91,7 @@ export default function Students() {
         >
           {actionList.map((item, idx, arr) => (
             <Button
-              variant={item.variant}
+              variant="contained"
               key={idx}
               startIcon={item.icon}
               onClick={() => handleActionClick(item)}
