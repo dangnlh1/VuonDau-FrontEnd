@@ -1,16 +1,13 @@
 import * as React from 'react'
 import { Grid, SelectChangeEvent, Stack, Typography } from '@mui/material'
-import { useParams } from 'react-router-dom'
 import dayjs, { Dayjs } from 'dayjs'
-import { useAttendance } from '@/hooks/attendance'
 import { getCurrentDayOfWeek } from '@/utils/dateFormatting'
 import { AttendanceSlot, DayOfWeekPayload, TimetableRow } from '@/models/timetables'
-import TimetablePicker from '@/features/Classroom/components/timetable/TimetablePicker'
 import Timetable, { StyledTableCell, StyledTableRow } from '@/components/common/Timetable'
-import ColumnHeader from '@/features/Classroom/components/timetable/ColumnHeader'
-import TimetableCell from '@/features/Classroom/components/timetable/TimetableCell'
-import { useGetAccountDetailAfterLogin } from '@/hooks/accountDetailAfterLogin'
 import { useUserTimetable } from '@/hooks/userTimetable'
+import ColumnHeader from '@/components/common/ColumnHeader'
+import TimetableCell from '@/components/common/TimetableCell'
+import TimetablePicker from '@/components/common/TimetablePicker'
 
 const defaultDate: Dayjs = dayjs()
 

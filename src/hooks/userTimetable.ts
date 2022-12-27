@@ -9,6 +9,6 @@ export function useUserTimetable() {
   return {
     isLoading,
     error,
-    data,
+    data: data?.attendance,
   }
 }
