@@ -27,6 +27,8 @@ const whyUsList: WhyUsPayload[] = [
   },
 ]
 
+const classStatus = 'NEW'
+
 export function HomePage() {
   const [newCourseList, setNewCourseList] = useState<CourseData[]>([])
   const [params, setParams] = useState<FilterParams>({
@@ -36,7 +38,7 @@ export function HomePage() {
 
   const navigate = useNavigate()
 
-  const { classList } = useClasses(params)
+  const { classList } = useClasses(classStatus, params)
   const { bannerList } = useBanner()
 
   useEffect(() => {

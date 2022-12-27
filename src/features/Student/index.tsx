@@ -3,6 +3,8 @@ import HomeIcon from '@mui/icons-material/Home'
 import SchoolIcon from '@mui/icons-material/School'
 import ForumIcon from '@mui/icons-material/Forum'
 import ClassIcon from '@mui/icons-material/Class'
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+import HistoryIcon from '@mui/icons-material/History'
 import {
   createTheme,
   CssBaseline,
@@ -32,6 +34,8 @@ export const menuList: Menu[] = [
   { label: 'Học tập', path: '/hoc-sinh/hoc-tap', icon: <SchoolIcon /> },
   { label: 'Diễn đàn', path: '/hoc-sinh/dien-dan', icon: <ForumIcon /> },
   { label: 'Lớp Học', path: '/hoc-sinh/lop-hoc', icon: <ClassIcon /> },
+  { label: 'Thời Khóa Biểu', path: '/hoc-sinh/thoi-khoa-bieu', icon: <CalendarMonthIcon /> },
+  { label: 'Lịch sử giao dịch', path: '/hoc-sinh/lich-su-giao-dich', icon: <HistoryIcon /> },
 ]
 
 const settingList = ['Trang Chủ', 'Đăng xuất']
@@ -40,6 +44,8 @@ const StudentDashboard = lazy(() => import('@/features/StudentDashboard/StudentD
 const Moodle = lazy(() => import('@/features/Moodle/Moodle'))
 const Forum = lazy(() => import('@/features/Forum/Forum'))
 const ClassroomFeature = lazy(() => import('@/features/Classroom/ClassroomFeature'))
+const StudentSchedule = lazy(() => import('@/features/StudentSchedule/StudentSchedule'))
+const PaymentHistory = lazy(() => import('@/features/PaymentHistory'))
 
 export default function Teacher() {
   const role = localStorage.getItem('role')
@@ -85,6 +91,8 @@ export default function Teacher() {
             <Route path="hoc-tap" element={<Moodle />} />
             <Route path="dien-dan/*" element={<Forum />} />
             <Route path="lop-hoc/*" element={<ClassroomFeature />} />
+            <Route path="thoi-khoa-bieu" element={<StudentSchedule />} />
+            <Route path="lich-su-giao-dich" element={<PaymentHistory />} />
           </Routes>
         </StudentLayout>
       </Suspense>

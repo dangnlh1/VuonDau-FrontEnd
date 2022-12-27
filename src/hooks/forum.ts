@@ -3,10 +3,9 @@ import { FilterParams } from '@/models/common'
 import { forumApi } from '@/api/forumApi'
 import { useQuery } from 'react-query'
 
-export default function useForum(params: FilterParams) {
+export default function useForum(params: FilterParams, forumType: string) {
   const queryKey = ['/forums']
-  const { data, isLoading, error } = useQuery(queryKey, () => forumApi.getAll(params))
-  console.log('data', data);
+  const { data, isLoading, error } = useQuery(queryKey, () => forumApi.getForums(params, forumType))
 
   return {
     isLoading,

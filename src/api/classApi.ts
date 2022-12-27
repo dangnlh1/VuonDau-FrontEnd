@@ -1,5 +1,5 @@
 import { AttendanceRequest } from '@/models/timetables'
-import { ResourcePayload, TeacherPayload } from '@/models/class'
+import { ClassStatus, ResourcePayload, TeacherPayload } from '@/models/class'
 import { FilterParams, ListResponse } from '@/models/common'
 import { AddEditClassFormPayload, ClassPayload, Resource } from '@/models/class'
 import axiosClient from './axiosClient'
@@ -9,8 +9,8 @@ import { CreateCoursePayload } from '@/models/course'
 const url = '/class'
 
 export const classApi = {
-  getAll(params?: FilterParams): Promise<ListResponse<ClassPayload>> {
-    return axiosClient.get(url, { params })
+  getAll(classStatus: ClassStatus, params?: FilterParams): Promise<ListResponse<ClassPayload>> {
+    return axiosClient.get(`${url}/for-user`, { params: { ...params, classStatus } })
   },
 
   get(id: number): Promise<ClassPayload> {

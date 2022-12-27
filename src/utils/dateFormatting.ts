@@ -19,6 +19,7 @@ export function getCurrentDayOfWeek(day: Dayjs) {
     { name: 'Thứ Tư', day: firstDay.add(2, 'day') },
     { name: 'Thứ Năm', day: firstDay.add(3, 'day') },
     { name: 'Thứ Sáu', day: firstDay.add(4, 'day') },
+    { name: 'Thứ Bảy', day: firstDay.add(5, 'day') },
   ]
   return result
 }

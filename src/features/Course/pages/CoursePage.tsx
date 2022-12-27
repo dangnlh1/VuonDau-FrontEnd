@@ -8,6 +8,7 @@ import { CourseFilter } from '../components/CourseFilter'
 import { CourseList } from '../components/CourseList'
 
 const pageTitle = 'Khóa học'
+const classStatus = 'NEW'
 
 export function CoursePage() {
   const [newCourseList, setNewCourseList] = useState<CourseData[]>([])
@@ -18,7 +19,7 @@ export function CoursePage() {
 
   const navigate = useNavigate()
 
-  const { classList, pagination } = useClasses(params)
+  const { classList, pagination } = useClasses(classStatus, params)
 
   useEffect(() => {
     if (Array.isArray(classList) && classList.length > 0) {

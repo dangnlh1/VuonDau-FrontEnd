@@ -1,12 +1,14 @@
 import { FilterParams, ListResponse } from '@/models/common'
-import { ForumDetailPayload, ForumPayload } from '@/models/forum'
+import { ForumPayload } from '@/models/forum'
 
 import axiosClient from './axiosClient'
 const url = `/forums`
 
 export const forumApi = {
-  getAll(params: FilterParams): Promise<ListResponse<ForumPayload>> {
-    return axiosClient.get(`${url}/class-type`, { params })
+  getForums(params: FilterParams, forumType: string): Promise<ListResponse<ForumPayload>> {
+    return axiosClient.get(url, { params: { ...params, forumType } })
   },
-
+  getForum(id: string): Promise<ForumPayload> {
+    return axiosClient.get(`${url}/${id}`)
+  },
 }

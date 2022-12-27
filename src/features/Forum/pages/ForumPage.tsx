@@ -4,7 +4,7 @@ import { Box, Stack } from '@mui/material'
 import { Outlet, useNavigate } from 'react-router-dom'
 
 const actionList: Action[] = [
-  { label: 'Cộng dồng', value: '/cong-dong' },
+  { label: 'Môn Học', value: '/mon-hoc' },
   { label: 'Lớp Học', value: '/lop-hoc' },
 ]
 

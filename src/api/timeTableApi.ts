@@ -8,4 +8,7 @@ export const timeTableApi = {
       params: { numberSlot: data.numberSlot },
     })
   },
+  getUser(): Promise<any> {
+    return axiosClient.get(`${url}/all-time-table`)
+  },
 }

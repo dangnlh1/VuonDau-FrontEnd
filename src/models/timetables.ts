@@ -17,7 +17,7 @@ export interface CreateTimeTableRequest {
   formData: CreateTimeTablePayload
 }
 
-type DayType = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY'
+type DayType = 'MONDAY' | 'TUESDAY' | 'WEDNESDAY' | 'THURSDAY' | 'FRIDAY'|'SATURDAY'
 
 export interface AttendanceSlot {
   id: number
@@ -50,6 +50,7 @@ export interface TimetableRow {
   WEDNESDAY: AttendanceSlot | undefined
   THURSDAY: AttendanceSlot | undefined
   FRIDAY: AttendanceSlot | undefined
+  SATURDAY: AttendanceSlot | undefined
 }
 
 export interface AttendanceRequest {

@@ -9,6 +9,8 @@ import TimetablePicker from '@/features/Classroom/components/timetable/Timetable
 import Timetable, { StyledTableCell, StyledTableRow } from '@/components/common/Timetable'
 import ColumnHeader from '@/features/Classroom/components/timetable/ColumnHeader'
 import TimetableCell from '@/features/Classroom/components/timetable/TimetableCell'
+import { useGetAccountDetailAfterLogin } from '@/hooks/accountDetailAfterLogin'
+import { useUserTimetable } from '@/hooks/userTimetable'
 
 const defaultDate: Dayjs = dayjs()
 
@@ -36,7 +38,6 @@ const timetable: TimetableRow[] = [
     THURSDAY: undefined,
     FRIDAY: undefined,
     SATURDAY: undefined,
-
   },
   {
     firstRow: {
@@ -49,7 +50,6 @@ const timetable: TimetableRow[] = [
     THURSDAY: undefined,
     FRIDAY: undefined,
     SATURDAY: undefined,
-
   },
   {
     firstRow: {
@@ -62,7 +62,6 @@ const timetable: TimetableRow[] = [
     THURSDAY: undefined,
     FRIDAY: undefined,
     SATURDAY: undefined,
-
   },
   {
     firstRow: {
@@ -75,7 +74,6 @@ const timetable: TimetableRow[] = [
     THURSDAY: undefined,
     FRIDAY: undefined,
     SATURDAY: undefined,
-
   },
   {
     firstRow: {
@@ -88,7 +86,6 @@ const timetable: TimetableRow[] = [
     THURSDAY: undefined,
     FRIDAY: undefined,
     SATURDAY: undefined,
-
   },
 ]
 
@@ -96,16 +93,13 @@ const slots: string[] = ['SLOT1', 'SLOT2', 'SLOT3', 'SLOT4', 'SLOT5', 'SLOT6']
 
 const title = 'Thời Khóa Biểu'
 
-export default function ClassroomTimetable() {
+export default function StudentSchedule() {
   const [type, setType] = React.useState<number>(1)
   const [date, setDate] = React.useState<Dayjs>(defaultDate)
   const [rows, setRows] = React.useState<TimetableRow[]>(timetable)
   const [dows, setDows] = React.useState<DayOfWeekPayload[]>(getCurrentDayOfWeek(date))
 
-  const id = useParams().classId
-  if (!id) return null
-
-  const { data } = useAttendance(id)
+  const { data } = useUserTimetable()
 
   React.useEffect(() => {
     if (date) {
@@ -154,7 +148,7 @@ export default function ClassroomTimetable() {
       </Typography>
 
       <Grid container>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <TimetablePicker
             date={date}
             type={type}
@@ -162,7 +156,7 @@ export default function ClassroomTimetable() {
             handleChangeType={handleChangeType}
           />
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={8}>
           <Timetable
             dows={dows}
             rows={rows}

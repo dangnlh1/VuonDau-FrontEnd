@@ -1,3 +1,4 @@
+import { Gender } from '@/models/genders'
 import { RolePayload } from './role'
 
 export interface InfoPayload {
@@ -6,7 +7,7 @@ export interface InfoPayload {
   birthday: string
   email: string
   firstName: string
-  gender: string
+  gender: string | Gender
   id: number
   introduce: null
   lastName: string
