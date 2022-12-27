@@ -136,7 +136,6 @@ export function CreateNewClass() {
     const data: CreateTimeTableRequest = {
       classId: parseInt(classId),
       formData: {
-        archetypeCode: formValue.archetypeCode,
         archetypeName: formValue.archetypeName,
         slotDow: formValue.slotDow,
       } as CreateTimeTablePayload,
