@@ -5,6 +5,8 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt'
 import ThumbDownIcon from '@mui/icons-material/ThumbDown'
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt'
+import VoteButton from '@/features/Forum/components/button/VoteButton'
+import Comment from '@/features/Forum/components/Comment'
 
 interface QuestionProps {
   content: string
@@ -12,108 +14,132 @@ interface QuestionProps {
   downVote: number
   avatar: string
   name: string
+  comments: {
+    content: string
+    upvoteNumber: number
+    downvoteNumber: number
+  }[]
 }
 
 const defaultAvatar =
   'https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/512/external-user-interface-kiranshastry-lineal-color-kiranshastry.png'
 
 export default function Question(props: QuestionProps) {
-  const { avatar, content, downVote, name, upVote } = props
+  const { avatar, content, downVote, name, upVote, comments } = props
 
-  const [isUpVote, setIsUpVote] = useState(false)
-  const [isDownVote, setIsDownVote] = useState(false)
-  const [userUpVote, setUserUpVote] = useState(upVote)
-  const [userDownVote, setUserDownVote] = useState(downVote)
+  const theme = useTheme()
+
   const [isReply, setReply] = useState(false)
-
-  function handleClickUpVote() {
-    if (isUpVote) {
-      setUserUpVote(userUpVote - 1)
-    } else {
-      setUserUpVote(userUpVote + 1)
-    }
-
-    setIsUpVote(!isUpVote)
-  }
-
-  function handleClickDownVote() {
-    if (isDownVote) {
-      setUserDownVote(userDownVote - 1)
-    } else {
-      setUserDownVote(userDownVote + 1)
-    }
-
-    setIsDownVote(!isDownVote)
-  }
+  const [isClickTextInput, setClickTextInput] = useState(false)
+  const [isDirty, setDirty] = useState(false)
 
   function handleReply() {
     setReply(!isReply)
   }
 
+  function handleClickTextInput() {
+    setClickTextInput(true)
+  }
+  function handleCancelClickTextInput() {
+    setClickTextInput(false)
+  }
+
+  function handleChangeTextField(event: any) {
+    const value: string = event.target.value
+    if (value.length !== 0) {
+      setDirty(true)
+    } else {
+      setDirty(false)
+    }
+  }
+
+  function handleComment() {
+    //TODO: add comment function
+  }
+
+  function handleUpVote(isSelected: boolean, quantity: number) {
+    //TODO: add upVote function
+  }
+
+  function handleDownVote(isSelected: boolean, quantity: number) {
+    //TODO: add downVote function
+  }
+
   return (
-    <Stack paddingTop={2}>
-      <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Avatar src={defaultAvatar} />
-        <Stack sx={{ paddingLeft: 2 }}>
-          <Typography sx={{ fontSize: 15, fontWeight: 'bold' }}>{name}</Typography>
-          <Typography sx={{ fontSize: 12 }}>3 phút trước.</Typography>
-        </Stack>
-      </Stack>
-      <Stack sx={{ marginTop: 2, padding: 2, borderRadius: 2, background: '#fff' }}>
-        <Stack>
-          <Stack sx={{ marginY: 2 }}>
-            <Typography>{content}</Typography>
+    <Stack>
+      <Stack paddingTop={2} sx={{ background: '#fff', paddingY: 2, paddingX: 2 }}>
+        <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Avatar src={defaultAvatar} />
+          <Stack sx={{ paddingLeft: 2 }}>
+            <Typography sx={{ fontSize: 15, fontWeight: 'bold' }}>{name}</Typography>
+            <Typography sx={{ fontSize: 12 }}>3 phút trước.</Typography>
           </Stack>
-          <Divider />
-          <Stack direction={'row'} sx={{ width: '100%', paddingTop: 2 }}>
-            <Stack direction={'row'} flexGrow={1}>
-              <Button
-                color={isUpVote ? 'success' : undefined}
-                onClick={handleClickUpVote}
-                sx={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                  boxShadow: 3,
-                  borderRadius: 5,
-                }}
-                variant={isUpVote ? 'contained' : 'outlined'}
-              >
-                <ThumbUpAltIcon fontSize="small" color={!isUpVote ? 'success' : 'inherit'} />
-                <Typography variant="body1" color="inherit">
-                  {userUpVote}
-                </Typography>
-              </Button>
-              <Button
-                color={isDownVote ? 'error' : undefined}
-                onClick={handleClickDownVote}
-                sx={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                  boxShadow: 3,
-                  borderRadius: 5,
-                  marginLeft: 1,
-                }}
-                variant={isDownVote ? 'contained' : 'outlined'}
-              >
-                <ThumbDownIcon fontSize="small" color={!isDownVote ? 'error' : 'inherit'} />
-                <Typography variant="body1">{userDownVote}</Typography>
-              </Button>
-            </Stack>
+        </Stack>
+        <Stack>
+          <Stack sx={{}}>
+            <Typography variant="h5">{content}</Typography>
+          </Stack>
+          <Stack sx={{ flexDirection: 'row' }}>
+            <VoteButton defaultValue={upVote} onSelected={handleUpVote} variant="up" />
+            <VoteButton defaultValue={downVote} onSelected={handleDownVote} variant="down" />
             <Button
               onClick={handleReply}
-              variant={!isReply ? 'contained' : 'outlined'}
-              color="primary"
-              sx={{ position: 'relative', right: 0 }}
+              sx={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                marginRight: 1,
+                marginBottom: 1,
+              }}
+              variant="contained"
             >
-              Reply
+              Trả Lời
             </Button>
           </Stack>
+
           {isReply && (
             <Stack paddingTop={2}>
-              <TextField id="standard-basic" label="Standard" variant="standard" />
+              <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
+                <TextField
+                  sx={{ flexGrow: 1 }}
+                  onFocus={handleClickTextInput}
+                  onChange={handleChangeTextField}
+                  id="standard-basic"
+                  label="Thêm bình luận"
+                  variant="standard"
+                />
+              </Stack>
+
+              <Stack
+                direction={'row'}
+                sx={{ marginTop: 1, justifyContent: 'flex-end', width: '100%' }}
+              >
+                <Button onClick={handleCancelClickTextInput} variant="text">
+                  Hủy bỏ
+                </Button>
+                <Button
+                  disabled={!isDirty}
+                  onClick={handleComment}
+                  variant={isDirty ? 'contained' : 'text'}
+                  sx={{ marginLeft: 2 }}
+                >
+                  Bình luận
+                </Button>
+              </Stack>
             </Stack>
           )}
         </Stack>
+      </Stack>
+      <Stack sx={{ background: '#fff', marginTop: 2 }}>
+        {comments &&
+          comments.map((item, index) => (
+            <Comment
+              avatar=""
+              content={item.content}
+              downVote={item.downvoteNumber}
+              upVote={item.upvoteNumber}
+              name="Student"
+            />
+          ))}
       </Stack>
     </Stack>
   )

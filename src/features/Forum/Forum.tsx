@@ -12,10 +12,8 @@ export function Forum() {
     <Routes>
       <Route path="" element={<ForumPage />}>
         <Route index element={<ForumCommunity />} />
-
-        <Route path="cong-dong" element={<ForumCommunity />} />
-        <Route path="cong-dong/:questionId" element={<ForumQuestion />} />
-
+        <Route path="mon-hoc" element={<ForumCommunity />} />
+        <Route path="mon-hoc/:questionId" element={<ForumQuestion />} />
         <Route path="lop-hoc" element={<ForumClasses />} />
         <Route path="lop-hoc/:classId" element={<ForumClassDetail />}>
           <Route path=":questionId" element={<ForumQuestion />} />

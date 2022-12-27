@@ -1,3 +1,4 @@
+import Comment from '@/features/Forum/components/Comment'
 import Question from '@/features/Forum/components/Question'
 import { Avatar, Button, Stack, Typography } from '@mui/material'
 import React from 'react'
@@ -28,34 +29,25 @@ const mockQuestion = {
   ],
 }
 
+const pageTitle = 'Câu hỏi'
+
 export default function ForumQuestion() {
   const question = mockQuestion
+  const commentQuantity = 2
   const { questionId } = useParams()
   return (
-    <Stack>
+    <Stack sx={{ paddingY: 2 }}>
+      <Typography variant="h5" fontWeight={700}>
+        {pageTitle}
+      </Typography>
       <Question
         avatar=""
         content={question.content}
         downVote={question.downvoteNumber}
         upVote={question.upvoteNumber}
         name="Student"
+        comments={question.comments}
       />
-      <Stack sx={{ marginLeft: 5 }}>
-        <Question
-          avatar=""
-          content={question.content}
-          downVote={question.downvoteNumber}
-          upVote={question.upvoteNumber}
-          name="Student"
-        />
-        <Question
-          avatar=""
-          content={question.content}
-          downVote={question.downvoteNumber}
-          upVote={question.upvoteNumber}
-          name="Student"
-        />
-      </Stack>
     </Stack>
   )
 }

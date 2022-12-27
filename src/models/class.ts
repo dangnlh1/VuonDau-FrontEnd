@@ -58,7 +58,8 @@ export interface ClassPayload {
   teacher: Teacher
   resources: Resource
   students: StudentPayload[]
-  level: string
+  level?: string
+  classLevel?: string
   account?: string
 }
 
@@ -87,3 +88,5 @@ export interface ResourcePayload {
 export interface TeacherPayload {
   teacher: Teacher
 }
+
+export type ClassStatus = 'NEW' | 'REQUESTING' | 'NOSTART' | 'STARTING' | 'ENDED' | 'RECRUITING'

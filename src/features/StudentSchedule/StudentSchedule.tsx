@@ -1,14 +1,13 @@
-import ColumnHeader from '@/components/common/ColumnHeader'
-import Timetable, { StyledTableCell, StyledTableRow } from '@/components/common/Timetable'
-import TimetableCell from '@/components/common/TimetableCell'
-import TimetablePicker from '@/components/common/TimetablePicker'
-import { useAttendance } from '@/hooks/attendance'
-import { AttendanceSlot, DayOfWeekPayload, TimetableRow } from '@/models/timetables'
-import { getCurrentDayOfWeek } from '@/utils/dateFormatting'
+import * as React from 'react'
 import { Grid, SelectChangeEvent, Stack, Typography } from '@mui/material'
 import dayjs, { Dayjs } from 'dayjs'
-import * as React from 'react'
-import { useParams } from 'react-router-dom'
+import { getCurrentDayOfWeek } from '@/utils/dateFormatting'
+import { AttendanceSlot, DayOfWeekPayload, TimetableRow } from '@/models/timetables'
+import Timetable, { StyledTableCell, StyledTableRow } from '@/components/common/Timetable'
+import { useUserTimetable } from '@/hooks/userTimetable'
+import ColumnHeader from '@/components/common/ColumnHeader'
+import TimetableCell from '@/components/common/TimetableCell'
+import TimetablePicker from '@/components/common/TimetablePicker'
 
 const defaultDate: Dayjs = dayjs()
 
@@ -36,7 +35,6 @@ const timetable: TimetableRow[] = [
     THURSDAY: undefined,
     FRIDAY: undefined,
     SATURDAY: undefined,
-
   },
   {
     firstRow: {
@@ -49,7 +47,6 @@ const timetable: TimetableRow[] = [
     THURSDAY: undefined,
     FRIDAY: undefined,
     SATURDAY: undefined,
-
   },
   {
     firstRow: {
@@ -62,7 +59,6 @@ const timetable: TimetableRow[] = [
     THURSDAY: undefined,
     FRIDAY: undefined,
     SATURDAY: undefined,
-
   },
   {
     firstRow: {
@@ -75,7 +71,6 @@ const timetable: TimetableRow[] = [
     THURSDAY: undefined,
     FRIDAY: undefined,
     SATURDAY: undefined,
-
   },
   {
     firstRow: {
@@ -88,7 +83,6 @@ const timetable: TimetableRow[] = [
     THURSDAY: undefined,
     FRIDAY: undefined,
     SATURDAY: undefined,
-
   },
 ]
 
@@ -96,16 +90,13 @@ const slots: string[] = ['SLOT1', 'SLOT2', 'SLOT3', 'SLOT4', 'SLOT5', 'SLOT6']
 
 const title = 'Thời Khóa Biểu'
 
-export default function ClassroomTimetable() {
+export default function StudentSchedule() {
   const [type, setType] = React.useState<number>(1)
   const [date, setDate] = React.useState<Dayjs>(defaultDate)
   const [rows, setRows] = React.useState<TimetableRow[]>(timetable)
   const [dows, setDows] = React.useState<DayOfWeekPayload[]>(getCurrentDayOfWeek(date))
 
-  const id = useParams().classId
-  if (!id) return null
-
-  const { data } = useAttendance(id)
+  const { data } = useUserTimetable()
 
   React.useEffect(() => {
     if (date) {
@@ -154,7 +145,7 @@ export default function ClassroomTimetable() {
       </Typography>
 
       <Grid container>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <TimetablePicker
             date={date}
             type={type}
@@ -162,8 +153,7 @@ export default function ClassroomTimetable() {
             handleChangeType={handleChangeType}
           />
         </Grid>
-
-        <Grid item xs={9}>
+        <Grid item xs={8}>
           <Timetable
             dows={dows}
             rows={rows}

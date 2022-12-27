@@ -1,4 +1,3 @@
-import { Pagination } from '../models/common';
 import { FilterParams } from '@/models/common'
 import { forumApi } from '@/api/forumApi'
 import { useQuery } from 'react-query'

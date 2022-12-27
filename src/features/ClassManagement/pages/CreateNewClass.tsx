@@ -23,6 +23,8 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 
 const pageTitle = 'Tạo lớp Mới'
 
+const classStatus = 'RECRUITING'
+
 export function CreateNewClass() {
   const [tab, setTab] = React.useState(0)
   const [classId, setClassId] = React.useState('')
@@ -38,12 +40,12 @@ export function CreateNewClass() {
   const [courseId, setCourseId] = React.useState<number>()
 
   const navigate = useNavigate()
-  const { createClassByTeacherRequest } = useClasses(params)
+  const { createClassByTeacherRequest } = useClasses(classStatus, params)
 
   const { subjectByTeacherList } = useSubjectByTeacher()
   const { createNewCourse } = useCourse(params)
   const { data: courseList, refetch } = useGetCourseBySubjectId(subjectId as number)
-  const { createClassSubjectByTeacherRequest } = useClasses(params)
+  const { createClassSubjectByTeacherRequest } = useClasses(classStatus, params)
 
   const { dayList } = useDayOfWeek()
   const { slotList } = useSlot()
