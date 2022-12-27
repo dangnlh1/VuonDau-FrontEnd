@@ -1,5 +1,4 @@
 import { GoBack } from '@/components/common/GoBack'
-import { SearchField } from '@/components/FormFields/SearchField'
 import { useClass } from '@/hooks/class'
 import { useGetStudentByClassId } from '@/hooks/useGetStudentByClassId'
 import { Action } from '@/models/common'
@@ -11,16 +10,11 @@ import { StudentList } from '../components/StudenList'
 
 const actionList: Action[] = [
   {
-    label: 'Bài học',
+    label: 'Danh sách bài học',
     value: 'lesson',
     variant: 'contained',
   },
 
-  {
-    label: 'Điểm danh',
-    value: 'attendance',
-    variant: 'contained',
-  },
   {
     label: 'Thời khóa biểu',
     value: 'attendance',
@@ -67,22 +61,21 @@ export default function Students() {
   function handleActionClick(action: Action) {
     if (action.value === 'lesson') {
       navigate(`/giao-vien/quan-ly-lop/${classId}/bai-hoc`)
+      return
     }
+
+    navigate(`/giao-vien/quan-ly-lop/${classId}/thoi-khoa-bieu`)
   }
 
   return (
     <Stack spacing={3}>
       <GoBack onClick={() => navigate(-1)} />
 
-      <Stack direction="row" alignItems="center" spacing={2}>
-        <Typography variant="h5" fontWeight={700}>
-          {data?.name}
-        </Typography>
-      </Stack>
-
       <Stack direction="row" flexWrap="wrap" alignItems="center" justifyContent="space-between">
         <Box sx={{ mb: { xs: 2, sm: 0 }, width: { xs: '100%', sm: 'auto' } }}>
-          <SearchField />
+          <Typography variant="h5" fontWeight={700}>
+            Danh sách học sinh lớp {data?.name}
+          </Typography>
         </Box>
 
         <Stack
@@ -93,7 +86,7 @@ export default function Students() {
         >
           {actionList.map((item, idx, arr) => (
             <Button
-              variant={item.variant}
+              variant="contained"
               key={idx}
               startIcon={item.icon}
               onClick={() => handleActionClick(item)}

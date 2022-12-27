@@ -1,4 +1,3 @@
-import { SearchField } from '@/components/FormFields/SearchField'
 import { useClassesByTeacher } from '@/hooks/classByTeacher'
 import { ClassPayload } from '@/models/class'
 import { Action } from '@/models/common'
@@ -50,13 +49,11 @@ export function Classes() {
 
   return (
     <Stack spacing={3}>
-      <Typography variant="h5" fontWeight={700}>
-        {pageTitle}
-      </Typography>
-
       <Stack direction="row" alignItems="center" flexWrap="wrap" justifyContent="space-between">
         <Box sx={{ mb: { xs: 2, sm: 0 }, width: { xs: '100%', sm: 'auto' } }}>
-          <SearchField />
+          <Typography variant="h5" fontWeight={700}>
+            {pageTitle}
+          </Typography>
         </Box>
 
         <Stack direction="row" flexWrap="wrap" spacing={1}>

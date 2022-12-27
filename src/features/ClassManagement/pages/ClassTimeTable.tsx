@@ -1,14 +1,13 @@
-import ColumnHeader from '@/components/common/ColumnHeader'
-import Timetable, { StyledTableCell, StyledTableRow } from '@/components/common/Timetable'
-import TimetableCell from '@/components/common/TimetableCell'
+import { GoBack } from '@/components/common/GoBack'
 import TimetablePicker from '@/components/common/TimetablePicker'
 import { useAttendance } from '@/hooks/attendance'
 import { AttendanceSlot, DayOfWeekPayload, TimetableRow } from '@/models/timetables'
 import { getCurrentDayOfWeek } from '@/utils/dateFormatting'
-import { Grid, SelectChangeEvent, Stack, Typography } from '@mui/material'
+import { Box, SelectChangeEvent, Stack, Typography } from '@mui/material'
 import dayjs, { Dayjs } from 'dayjs'
 import * as React from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { ClassTimeTableList } from '../components/ClassTimeTableList'
 
 const defaultDate: Dayjs = dayjs()
 
@@ -23,7 +22,6 @@ const timetable: TimetableRow[] = [
     WEDNESDAY: undefined,
     THURSDAY: undefined,
     FRIDAY: undefined,
-    SATURDAY: undefined,
   },
   {
     firstRow: {
@@ -35,8 +33,6 @@ const timetable: TimetableRow[] = [
     WEDNESDAY: undefined,
     THURSDAY: undefined,
     FRIDAY: undefined,
-    SATURDAY: undefined,
-
   },
   {
     firstRow: {
@@ -48,8 +44,6 @@ const timetable: TimetableRow[] = [
     WEDNESDAY: undefined,
     THURSDAY: undefined,
     FRIDAY: undefined,
-    SATURDAY: undefined,
-
   },
   {
     firstRow: {
@@ -61,8 +55,6 @@ const timetable: TimetableRow[] = [
     WEDNESDAY: undefined,
     THURSDAY: undefined,
     FRIDAY: undefined,
-    SATURDAY: undefined,
-
   },
   {
     firstRow: {
@@ -74,8 +66,6 @@ const timetable: TimetableRow[] = [
     WEDNESDAY: undefined,
     THURSDAY: undefined,
     FRIDAY: undefined,
-    SATURDAY: undefined,
-
   },
   {
     firstRow: {
@@ -87,16 +77,14 @@ const timetable: TimetableRow[] = [
     WEDNESDAY: undefined,
     THURSDAY: undefined,
     FRIDAY: undefined,
-    SATURDAY: undefined,
-
   },
 ]
 
 const slots: string[] = ['SLOT1', 'SLOT2', 'SLOT3', 'SLOT4', 'SLOT5', 'SLOT6']
 
-const title = 'Thời Khóa Biểu'
+const pageTitle = 'Thời Khóa Biểu'
 
-export default function ClassroomTimetable() {
+export function ClassTimetable() {
   const [type, setType] = React.useState<number>(1)
   const [date, setDate] = React.useState<Dayjs>(defaultDate)
   const [rows, setRows] = React.useState<TimetableRow[]>(timetable)
@@ -105,6 +93,7 @@ export default function ClassroomTimetable() {
   const id = useParams().classId
   if (!id) return null
 
+  const navigate = useNavigate()
   const { data } = useAttendance(id)
 
   React.useEffect(() => {
@@ -148,58 +137,33 @@ export default function ClassroomTimetable() {
   }
 
   return (
-    <Stack>
-      <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
-        {title}
+    <Stack spacing={3}>
+      <GoBack onClick={() => navigate(-1)} />
+
+      <Typography variant="h5" fontWeight={700}>
+        {pageTitle}
       </Typography>
 
-      <Grid container>
-        <Grid item xs={3}>
-          <TimetablePicker
-            date={date}
-            type={type}
-            handleChangeDate={handleChangeDate}
-            handleChangeType={handleChangeType}
-          />
-        </Grid>
+      <Box width="100%">
+        <Stack direction="row" flexWrap="wrap" sx={{ mx: -2 }}>
+          <Box sx={{ xs: '100%', md: { width: 1 / 3 } }}>
+            <Box sx={{ p: 2 }}>
+              <TimetablePicker
+                date={date}
+                type={type}
+                handleChangeDate={handleChangeDate}
+                handleChangeType={handleChangeType}
+              />
+            </Box>
+          </Box>
 
-        <Grid item xs={9}>
-          <Timetable
-            dows={dows}
-            rows={rows}
-            renderRowCell={(item: TimetableRow, idx: number) => (
-              <StyledTableRow key={idx}>
-                <StyledTableCell component="th" scope="row" sx={{ alignItems: 'center' }}>
-                  <TimetableCell firstRow={item.firstRow} />
-                </StyledTableCell>
-                <StyledTableCell>
-                  <TimetableCell attendance={item.MONDAY} />
-                </StyledTableCell>
-                <StyledTableCell>
-                  <TimetableCell attendance={item.TUESDAY} />
-                </StyledTableCell>
-                <StyledTableCell>
-                  <TimetableCell attendance={item.WEDNESDAY} />
-                </StyledTableCell>
-                <StyledTableCell>
-                  <TimetableCell attendance={item.THURSDAY} />
-                </StyledTableCell>
-                <StyledTableCell>
-                  <TimetableCell attendance={item.FRIDAY} />
-                </StyledTableCell>
-                <StyledTableCell>
-                  <TimetableCell attendance={item.SATURDAY} />
-                </StyledTableCell>
-              </StyledTableRow>
-            )}
-            renderHeadCell={(item: DayOfWeekPayload, idx: number) => (
-              <StyledTableCell>
-                <ColumnHeader item={item} />
-              </StyledTableCell>
-            )}
-          />
-        </Grid>
-      </Grid>
+          <Box sx={{ flexGrow: 1, xs: '100%', md: { width: 2 / 3 } }}>
+            <Box sx={{ p: 2 }}>
+              <ClassTimeTableList rows={rows} dows={dows} />
+            </Box>
+          </Box>
+        </Stack>
+      </Box>
     </Stack>
   )
 }
