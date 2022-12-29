@@ -8,4 +8,10 @@ export const commentApi = {
   voteComment(data: VoteCommentRequestPayload): Promise<any> {
     return axiosClient.post(`${url}/vote`, data)
   },
+  deleteComment(id: number): Promise<any> {
+    return axiosClient.delete(`${url}/${id}`)
+  },
+  editComment(id: number): Promise<any> {
+    return axiosClient.put(`${url}/${id}`)
+  },
 }

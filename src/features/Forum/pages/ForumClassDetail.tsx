@@ -2,6 +2,7 @@ import { LessonList } from '@/features/Forum/components/LessonList'
 import useClassForum from '@/hooks/classForum'
 import { ForumLesson } from '@/models/forum'
 import { Stack, Typography } from '@mui/material'
+import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const pageTitle = 'Diễn đàn lớp'
@@ -12,13 +13,23 @@ export default function ForumClassDetail() {
 
   const navigate = useNavigate()
 
-  const { data } = useClassForum(classId + '')
+  const { data, syncLesson } = useClassForum(classId + '')
 
   const lessons = data?.forumLessonDtos || []
 
   function handleForumClick(value: ForumLesson) {
     navigate(`/hoc-sinh/dien-dan/lop-hoc/${classId}/${value.id}`)
   }
+
+  async function synchronizeLesson() {
+    if (classId) {
+      await syncLesson.mutateAsync({ id: parseInt(classId) })
+    }
+  }
+
+  useEffect(() => {
+    synchronizeLesson()
+  }, [])
 
   return (
     <Stack>

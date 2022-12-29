@@ -1,9 +1,11 @@
 import { InfoPayload } from './info'
 import { Subject } from '@/models/subject'
 import { Comment } from '@/models/comments'
+import { StringifyOptions } from 'querystring'
 
 export interface Question {
   id: number
+  title: string
   content: string
   user: InfoPayload
   subject: Subject
@@ -24,4 +26,11 @@ export interface QuestionRow {
 export interface VoteProps {
   upvoteNumber: 0
   downvoteNumber: 0
+}
+
+export interface QuestionRequest {
+  content: string
+  title: string
+  forumId: number
+  forumLessonId?: number
 }
