@@ -13,19 +13,34 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import QuestionComment from '@/features/Forum/components/QuestionComment'
 import EditorInput from '@/components/common/EditorInput'
 import { Question } from '@/models/questions'
+import { getTimeAgo } from '@/utils/timeAgo'
+import { useComment } from '@/hooks/comment'
 interface QuestionProps {
   question: Question
   open: boolean
   onOpenDialog: () => void
   onComment: (content: string, parentCommentId?: number) => void
-  onUpVote: (commentId?: number) => void
-  onDownVote: (commentId?: number) => void
+  onUpVoteQuestion: () => void
+  onDownVoteQuestion: () => void
+  onRefresh: () => void
 }
 
 const closedQuestion = 'Câu hỏi đã bị khóa bình luận.'
 
 export default function Question(props: QuestionProps) {
-  const { question, open, onComment, onDownVote, onOpenDialog, onUpVote } = props
+  const {
+    question,
+    open,
+    onComment,
+    onOpenDialog,
+    onDownVoteQuestion,
+    onUpVoteQuestion,
+    onRefresh,
+  } = props
+
+  const questionId = question.id
+
+  const timeAgo = getTimeAgo(question.created)
 
   return (
     <Stack>
@@ -36,7 +51,7 @@ export default function Question(props: QuestionProps) {
             <Typography
               sx={{ fontSize: 15, fontWeight: 'bold' }}
             >{`${question.user.firstName} ${question.user.lastName}`}</Typography>
-            <Typography sx={{ fontSize: 12 }}>3 phút trước.</Typography>
+            <Typography sx={{ fontSize: 12 }}>{timeAgo}</Typography>
           </Stack>
         </Stack>
         <Stack>
@@ -47,13 +62,13 @@ export default function Question(props: QuestionProps) {
             <VoteButton
               value={question.voteNumberReponse.upvoteNumber}
               status={question.userState}
-              onSelected={onUpVote}
+              onSelected={onUpVoteQuestion}
               variant="up"
             />
             <VoteButton
               value={question.voteNumberReponse.downvoteNumber}
               status={question.userState}
-              onSelected={onDownVote}
+              onSelected={onDownVoteQuestion}
               variant="down"
             />
             <ReplyButton label={'Trả lời'} onClick={onOpenDialog} />
@@ -70,7 +85,9 @@ export default function Question(props: QuestionProps) {
         </Stack>
         {question.comments &&
           question.comments.length > 0 &&
-          question.comments.map((item, index) => <QuestionComment key={index} comment={item} />)}
+          question.comments.map((item, index) => (
+            <QuestionComment key={index} comment={item} onRefresh={onRefresh} />
+          ))}
       </Stack>
       <Dialog open={open} onClose={onOpenDialog}>
         <DialogTitle>Trả lời câu hỏi</DialogTitle>

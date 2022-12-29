@@ -1,16 +1,24 @@
-import { CommentRequestPayload } from '@/models/comments'
+import { VoteCommentRequestPayload } from '@/models/comments'
 import { questionApi } from '@/api/questionApi'
-import { subjectApi } from '@/api/subjectApi'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { commentApi } from '@/api/commentApi'
 
 export function useQuestion(id: string) {
   const queryKey = ['/question']
-  const { data, isLoading, error } = useQuery(queryKey, () => questionApi.get(id))
+  const queryClient = useQueryClient()
 
+  const { data, isLoading, error, refetch } = useQuery(queryKey, () => questionApi.get(id))
+
+  const voteQuestion = useMutation(
+    (payload: { data: VoteCommentRequestPayload }) => questionApi.voteQuestion(payload.data),
+    {
+      onSuccess: () => queryClient.invalidateQueries(queryKey),
+    }
+  )
   return {
     question: data,
+    refetch,
     isLoading,
     error,
+    voteQuestion,
   }
 }

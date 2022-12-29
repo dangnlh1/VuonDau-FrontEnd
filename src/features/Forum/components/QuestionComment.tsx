@@ -1,26 +1,31 @@
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Button, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import VoteButton from '@/features/Forum/components/button/VoteButton'
 import ReplyButton from '@/features/Forum/components/button/ReplyButton'
-import { Comment, CommentRequestPayload } from '@/models/comments'
+import { Comment, CommentRequestPayload, VoteCommentRequestPayload } from '@/models/comments'
 import EditorInput from '@/components/common/EditorInput'
 import { useParams } from 'react-router-dom'
 import { useComment } from '@/hooks/comment'
 import { toast } from 'react-toastify'
+import { getTimeAgo } from '@/utils/timeAgo'
 
 interface QuestionCommentProps {
   comment: Comment
+  onRefresh: () => void
 }
 
-export default function QuestionComment({ comment }: QuestionCommentProps) {
+export default function QuestionComment({ comment, onRefresh }: QuestionCommentProps) {
   if (!comment) return null
   const { questionId } = useParams()
 
-  const { id, user, content, voteNumber, userState, subComments } = comment
+  const { id, user, content, voteNumber, userState, subComments, created } = comment
+
+  const timeAgo = getTimeAgo(created)
 
   const [isReply, setReply] = useState(false)
-  const { createComment } = useComment()
+  const [isShowComment, setShowComment] = useState(false)
+  const { createComment, voteComment } = useComment()
 
   function handleReply() {
     setReply(!isReply)
@@ -34,7 +39,7 @@ export default function QuestionComment({ comment }: QuestionCommentProps) {
           questionId: parseInt(questionId),
           parentCommentId: id,
         }
-        const response = await createComment.mutateAsync({ data })
+        await createComment.mutateAsync({ data })
         toast.success('Thêm câu trả lời thành công.')
         handleReply()
       }
@@ -43,12 +48,31 @@ export default function QuestionComment({ comment }: QuestionCommentProps) {
     }
   }
 
-  function handleUpVote() {
-    //TODO: add upVote function
+  function handleShowComment() {
+    setShowComment(!isShowComment)
   }
 
-  function handleDownVote() {
-    //TODO: add downVote function
+  async function handleVoteComment(vote: boolean, commentId: number) {
+    try {
+      if (questionId) {
+        const data: VoteCommentRequestPayload = {
+          vote,
+          questionId: parseInt(questionId),
+          commentId,
+        }
+        await voteComment.mutateAsync({ data })
+      }
+    } catch (error: any) {}
+  }
+
+  async function handleUpVoteComment() {
+    await handleVoteComment(true, id)
+    await onRefresh()
+  }
+
+  async function handleDownVoteComment() {
+    await handleVoteComment(false, id)
+    await onRefresh()
   }
 
   return (
@@ -65,7 +89,7 @@ export default function QuestionComment({ comment }: QuestionCommentProps) {
                 <Typography
                   sx={{ fontSize: 15, fontWeight: 'bold' }}
                 >{`${user.firstName} ${user.lastName}`}</Typography>
-                <Typography sx={{ fontSize: 12, paddingLeft: 1 }}>3 phút trước.</Typography>
+                <Typography sx={{ fontSize: 12, paddingLeft: 1 }}>{timeAgo}</Typography>
               </Stack>
               <div dangerouslySetInnerHTML={{ __html: content }} />
             </Stack>
@@ -82,22 +106,18 @@ export default function QuestionComment({ comment }: QuestionCommentProps) {
             </Stack>
             <Stack flexGrow={1}>
               <Stack direction={'row'}>
-                {voteNumber.upvoteNumber && (
-                  <VoteButton
-                    value={voteNumber.upvoteNumber}
-                    variant="up"
-                    onSelected={handleUpVote}
-                    status={userState}
-                  />
-                )}
-                {voteNumber.downvoteNumber && (
-                  <VoteButton
-                    value={voteNumber.downvoteNumber}
-                    variant="down"
-                    onSelected={handleDownVote}
-                    status={userState}
-                  />
-                )}
+                <VoteButton
+                  value={voteNumber.upvoteNumber}
+                  variant="up"
+                  onSelected={handleUpVoteComment}
+                  status={userState}
+                />
+                <VoteButton
+                  value={voteNumber.downvoteNumber}
+                  variant="down"
+                  onSelected={handleDownVoteComment}
+                  status={userState}
+                />
                 <ReplyButton label={'Phản hồi'} onClick={handleReply} />
               </Stack>
               {isReply && (
@@ -105,9 +125,21 @@ export default function QuestionComment({ comment }: QuestionCommentProps) {
                   <EditorInput onCancel={handleReply} onComment={handleComment} />
                 </Stack>
               )}
-              {subComments &&
+              {Array.isArray(subComments) &&
                 subComments.length > 0 &&
-                subComments.map((item, index) => <QuestionComment key={index} comment={item} />)}
+                (isShowComment ? (
+                  subComments.map((item, index) => (
+                    <QuestionComment key={index} comment={item} onRefresh={onRefresh} />
+                  ))
+                ) : (
+                  <Stack marginTop={1}>
+                    <Button onClick={handleShowComment} variant="contained">
+                      {!isShowComment
+                        ? `Xem thêm ${subComments.length} bình luận.`
+                        : `Rút gọn bình luận.`}
+                    </Button>
+                  </Stack>
+                ))}
             </Stack>
           </Stack>
         </Stack>

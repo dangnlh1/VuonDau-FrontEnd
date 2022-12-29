@@ -4,6 +4,7 @@ import { ForumPayload } from '@/models/forum'
 import { InfoPayload } from '@/models/info'
 import { Question, QuestionRow } from '@/models/questions'
 import { Subject } from '@/models/subject'
+import { getTimeAgo } from '@/utils/timeAgo'
 import { Button, Stack, TextField, Typography } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -20,12 +21,9 @@ const columns: GridColDef<Question>[] = [
     },
   },
   {
-    field: 'id',
+    field: 'created',
     headerName: 'Ngày tạo',
     width: 90,
-    renderCell: ({ row }) => {
-      return row.id
-    },
   },
 ]
 

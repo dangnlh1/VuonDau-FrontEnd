@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from 'react-query'
 import { commentApi } from '@/api/commentApi'
 
 export function useComment() {
-  const queryKey = ['/question']
+  const queryKey = ['/comments']
   const queryClient = useQueryClient()
 
   const createComment = useMutation(

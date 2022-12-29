@@ -29,55 +29,11 @@ const columns: GridColDef<Question>[] = [
   },
 ]
 
-const mockSubject: Subject = {
-  name: 'Toán',
-  code: 'MATH',
-  id: 0,
-}
-
-const mockUser: InfoPayload = {
-  active: true,
-  avatar: '',
-  birthday: '',
-  email: 'tranvinhan2k@gmail.com',
-  firstName: '',
-  gender: '',
-  id: 0,
-  introduce: null,
-  lastName: '',
-  phoneNumber: '',
-  role: {
-    code: 'STUDENT',
-    id: 0,
-    name: 'STUDENT',
-  },
-  username: '',
-}
-
-const rows: Question[] = [
-  {
-    id: 0,
-    content: 'Quesion 1',
-    subject: mockSubject,
-    user: mockUser,
-    downVoteNumber: 2,
-    upvoteNumber: 2,
-    closed: false,
-  },
-  {
-    id: 1,
-    content: 'Quesion 2',
-    subject: mockSubject,
-    user: mockUser,
-    downVoteNumber: 2,
-    upvoteNumber: 2,
-    closed: false,
-  },
-]
-
 export default function ForumLesson() {
-  const { subjectId } = useParams()
-  const { data, error, isLoading } = useForum(subjectId + '')
+  const { lessonId, subjectId } = useParams()
+  const { data, isLoading } = useForum(subjectId + '')
+  if (!lessonId || !subjectId) return null
+  const lesson = data?.forumLessonDtos?.find((item) => item.id === parseInt(lessonId))
   const navigate = useNavigate()
   console.log(data)
 
@@ -99,7 +55,7 @@ export default function ForumLesson() {
             LoadingOverlay: DataGridLoadingOverlay,
           }}
           loading={isLoading}
-          rows={rows || []}
+          rows={lesson?.questions || []}
           columns={columns}
           pagination
           paginationMode="server"
