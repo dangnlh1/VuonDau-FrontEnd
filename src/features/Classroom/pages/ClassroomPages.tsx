@@ -4,10 +4,11 @@ import { Box, Button, Pagination, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useClassesByStudent } from '@/hooks/classByStudent'
-import { ClassPayload } from '@/models/class'
+import { ClassPayload, ClassStatus } from '@/models/class'
 import { StudentClassList } from '@/features/Classroom/components/classroom/StudentClassList'
 
 const pageTitle = 'Quản lý lớp học'
+const status: ClassStatus = 'NEW'
 
 export interface ClassManagementProps {}
 
@@ -19,7 +20,7 @@ export default function Classes() {
 
   const navigate = useNavigate()
 
-  const { classByStudentList, pagination, isLoading } = useClassesByStudent(params)
+  const { classByStudentList, pagination, isLoading } = useClassesByStudent(status, params)
 
   function handleCardClick(value: ClassPayload) {
     navigate(`/hoc-sinh/lop-hoc/${value.id}`)

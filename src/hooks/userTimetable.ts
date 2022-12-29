@@ -1,3 +1,4 @@
+import { AttendanceSlot } from './../models/timetables'
 import { timeTableApi } from '@/api/timeTableApi'
 import { classApi } from '@/api/classApi'
 import { useQuery } from 'react-query'
@@ -9,6 +10,6 @@ export function useUserTimetable() {
   return {
     isLoading,
     error,
-    data: data?.attendance,
+    data,
   }
 }

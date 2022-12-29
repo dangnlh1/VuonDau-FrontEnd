@@ -1,3 +1,4 @@
+import { AttendanceRequest } from './../models/timetables'
 import { CreateTimeTableRequest } from '@/models/timetables'
 import axiosClient from './axiosClient'
 
@@ -8,7 +9,7 @@ export const timeTableApi = {
       params: { numberSlot: data.numberSlot },
     })
   },
-  getUser(): Promise<any> {
-    return axiosClient.get(`${url}/all-time-table`)
+  getUser(): Promise<AttendanceRequest[]> {
+    return axiosClient.get(`${url}/classes`)
   },
 }

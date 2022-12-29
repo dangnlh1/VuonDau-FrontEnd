@@ -1,5 +1,5 @@
 import { useClassesByTeacher } from '@/hooks/classByTeacher'
-import { ClassPayload } from '@/models/class'
+import { ClassPayload, ClassStatus } from '@/models/class'
 import { Action } from '@/models/common'
 import AddIcon from '@mui/icons-material/Add'
 import { Box, Button, Pagination, Stack, Typography } from '@mui/material'
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { ClassList } from '../components/ClassList'
 
 const pageTitle = 'Quản lý lớp học'
+const status: ClassStatus = 'NEW'
 
 const actionList: Action[] = [
   {
@@ -28,7 +29,7 @@ export function Classes() {
 
   const navigate = useNavigate()
 
-  const { classByTeacherList, pagination } = useClassesByTeacher(params)
+  const { classByTeacherList, pagination } = useClassesByTeacher(status, params)
 
   function handleCardClick(value: ClassPayload) {
     navigate(`/giao-vien/quan-ly-lop/${value.id}`)

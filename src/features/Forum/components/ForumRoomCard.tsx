@@ -13,6 +13,7 @@ export interface ForumRoomCardProps {
   className: string
   classCode: string
   subjectName: string
+  type: 'SUBJECT' | 'CLASS'
 }
 
 export function ForumRoomCard({
@@ -20,6 +21,7 @@ export function ForumRoomCard({
   className,
   classCode,
   subjectName,
+  type,
 }: ForumRoomCardProps) {
   return (
     <Stack
@@ -49,9 +51,13 @@ export function ForumRoomCard({
               {forumName}
             </Typography>
 
-            <Typography variant="body1">{className}</Typography>
+            {type === 'CLASS' && (
+              <>
+                <Typography variant="body1">{className}</Typography>
 
-            <Typography variant="body1">{subjectName}</Typography>
+                <Typography variant="body1">{subjectName}</Typography>
+              </>
+            )}
           </Box>
 
           <IconButton edge="end">

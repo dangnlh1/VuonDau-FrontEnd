@@ -1,34 +1,26 @@
 import { ForumList } from '@/features/Forum/components/ForumList'
-import useForum from '@/hooks/forum'
-import { ForumDetail, ForumPayload } from '@/models/forum'
+import useForums from '@/hooks/forums'
+import { ForumPayload } from '@/models/forum'
 import { Pagination, Stack, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const pageTitle = 'Diễn đàn môn học'
 const forumType = 'SUBJECT'
 const NO_FORUM_LABEL = 'Không có diễn đàn nào để hiển thị.'
 
-const mockForumList:ForumDetail = {
-  
-} 
-
-export default function ForumCommunity() {
-  const [forumId, setForumId] = useState<number | undefined>(undefined)
-
+export default function ForumSubjects() {
   const [params, setParams] = useState({
     page: 0,
     size: 12,
   })
 
-  const { forumList, pagination } = useForum(params, forumType)
+  const { forumList, pagination } = useForums(params, forumType)
 
   const navigate = useNavigate()
 
-  // const { forumList, pagination } = useForum(params) TODO: change when api updated
-
   function handleForumClick(value: ForumPayload) {
-    navigate(`/hoc-sinh/dien-dan/cong-dong/${value.id}`)
+    navigate(`/hoc-sinh/dien-dan/mon-hoc/${value.subjectId}`)
   }
 
   function handlePageChange(e: any, newPage: number) {
@@ -37,6 +29,9 @@ export default function ForumCommunity() {
       page: newPage - 1,
     }))
   }
+
+  console.log(forumList)
+
   return (
     <Stack>
       <Typography variant="h5" fontWeight={700}>

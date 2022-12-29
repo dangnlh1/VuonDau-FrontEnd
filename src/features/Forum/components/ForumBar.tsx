@@ -6,7 +6,7 @@ interface ForumBarProps {
   onActionClick: (item: Action) => void
 }
 const url = '/hoc-sinh/dien-dan'
-const resourceValue = '/cong-dong'
+const resourceValue = '/mon-hoc'
 
 export default function ForumBar({ actions, onActionClick }: ForumBarProps) {
   function handleActionClick(item: Action) {
