@@ -52,6 +52,6 @@ export const classApi = {
     return axiosClient.get(`${url}/${id}/attendance`)
   },
   getClassForum(id: string): Promise<ForumDetail> {
-    return axiosClient.get(`${url}/forum`, { params: { id } })
+    return axiosClient.get(`${url}/forum`, { params: { classId: id } })
   },
 }

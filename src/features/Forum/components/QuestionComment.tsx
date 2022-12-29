@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom'
 import { useComment } from '@/hooks/comment'
 import { toast } from 'react-toastify'
 import { getTimeAgo } from '@/utils/timeAgo'
+import DeleteButton from '@/features/Forum/components/button/CustomButton'
 
 interface QuestionCommentProps {
   comment: Comment
@@ -25,7 +26,7 @@ export default function QuestionComment({ comment, onRefresh }: QuestionCommentP
 
   const [isReply, setReply] = useState(false)
   const [isShowComment, setShowComment] = useState(false)
-  const { createComment, voteComment } = useComment()
+  const { createComment, voteComment, deleteComment, editComment } = useComment()
 
   function handleReply() {
     setReply(!isReply)
@@ -46,6 +47,36 @@ export default function QuestionComment({ comment, onRefresh }: QuestionCommentP
     } catch (error: any) {
       toast.error('Không thể trả lời câu hỏi.', error.message)
     }
+    await onRefresh()
+  }
+  async function handleDelete() {
+    try {
+      if (id) {
+        await deleteComment.mutateAsync({ id })
+        toast.success('Thêm câu trả lời thành công.')
+        handleReply()
+      }
+    } catch (error: any) {
+      toast.error('Không thể xóa câu hỏi.', error.message)
+    }
+    await onRefresh()
+  }
+  async function handleEdit() {
+    try {
+      if (id && questionId) {
+        const data: CommentRequestPayload = {
+          content,
+          questionId: parseInt(questionId),
+          parentCommentId: id,
+        }
+        await editComment.mutateAsync({ id, data })
+        toast.success('Thêm câu trả lời thành công.')
+        handleReply()
+      }
+    } catch (error: any) {
+      toast.error('Không thể sửa câu hỏi.', error.message)
+    }
+    await onRefresh()
   }
 
   function handleShowComment() {
@@ -91,7 +122,7 @@ export default function QuestionComment({ comment, onRefresh }: QuestionCommentP
                 >{`${user.firstName} ${user.lastName}`}</Typography>
                 <Typography sx={{ fontSize: 12, paddingLeft: 1 }}>{timeAgo}</Typography>
               </Stack>
-              <div dangerouslySetInnerHTML={{ __html: content }} />
+              <div style={{ fontSize: '20px' }} dangerouslySetInnerHTML={{ __html: content }} />
             </Stack>
           </Stack>
           <Stack direction={'row'} sx={{ width: '100%', height: '100%' }}>
@@ -119,26 +150,33 @@ export default function QuestionComment({ comment, onRefresh }: QuestionCommentP
                   status={userState}
                 />
                 <ReplyButton label={'Phản hồi'} onClick={handleReply} />
+                <DeleteButton label={'Xóa'} onClick={handleDelete} />
+                <DeleteButton label={'Sửa'} onClick={handleEdit} />
               </Stack>
               {isReply && (
                 <Stack flexGrow={1}>
                   <EditorInput onCancel={handleReply} onComment={handleComment} />
                 </Stack>
               )}
+              {Array.isArray(subComments) && subComments.length > 0 && !isShowComment && (
+                <Stack sx={{ alignItems: 'flex-start' }}>
+                  <Button
+                    sx={{
+                      marginLeft: 1,
+                      fontSize: '10px',
+                    }}
+                    onClick={handleShowComment}
+                    variant="outlined"
+                  >
+                    {`Xem thêm ${subComments.length} bình luận.`}
+                  </Button>
+                </Stack>
+              )}
               {Array.isArray(subComments) &&
                 subComments.length > 0 &&
-                (isShowComment ? (
-                  subComments.map((item, index) => (
-                    <QuestionComment key={index} comment={item} onRefresh={onRefresh} />
-                  ))
-                ) : (
-                  <Stack marginTop={1}>
-                    <Button onClick={handleShowComment} variant="contained">
-                      {!isShowComment
-                        ? `Xem thêm ${subComments.length} bình luận.`
-                        : `Rút gọn bình luận.`}
-                    </Button>
-                  </Stack>
+                isShowComment &&
+                subComments.map((item, index) => (
+                  <QuestionComment key={index} comment={item} onRefresh={onRefresh} />
                 ))}
             </Stack>
           </Stack>

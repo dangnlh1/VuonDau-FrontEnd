@@ -17,7 +17,7 @@ import {
 } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { DateTimePicker, DesktopDatePicker } from '@mui/x-date-pickers'
-import { Dayjs } from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import React, { useState } from 'react'
 
 const title = 'Lịch Sử Giao Dịch'
@@ -43,6 +43,9 @@ const columns: GridColDef[] = [
     field: 'success',
     headerName: 'Trạng thái',
     width: 200,
+    renderCell({ row }) {
+      return row.success ? 'Thành công' : 'Thất bại'
+    },
   },
 ]
 
@@ -77,8 +80,8 @@ const mockRows = [
 export default function PaymentHistory() {
   const [classIds, setClassIds] = useState<number[]>([])
   const [teacherIds, setTeacherIds] = useState<number[]>([])
-  const [toDate, setToDate] = useState<Dayjs>()
-  const [fromDate, setFormDate] = useState<Dayjs>()
+  const [toDate, setToDate] = useState<Dayjs>(dayjs('01/01/2001'))
+  const [fromDate, setFormDate] = useState<Dayjs>(dayjs())
 
   const { revenues, refetch, isLoading } = useRevenue({
     classIds,
@@ -146,7 +149,13 @@ export default function PaymentHistory() {
         </Stack>
       </Stack>
       <Stack>
-        <DataGrid loading={isLoading} autoHeight columns={columns} rows={revenues || []} />
+        <DataGrid
+          loading={isLoading}
+          autoHeight
+          columns={columns}
+          rows={revenues || []}
+          getRowId={(row) => row.classId}
+        />
       </Stack>
     </Stack>
   )

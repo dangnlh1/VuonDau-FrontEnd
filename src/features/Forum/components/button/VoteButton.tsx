@@ -19,14 +19,14 @@ export default function VoteButton({ value, variant, status, onSelected }: VoteB
   const Icon = () =>
     variant === 'up' ? (
       status === 1 ? (
-        <ThumbUpAltIcon />
+        <ThumbUpAltIcon sx={{ fontSize: '15px' }} />
       ) : (
-        <ThumbUpAltOutlined />
+        <ThumbUpAltOutlined sx={{ fontSize: '15px' }} />
       )
     ) : status === -1 ? (
-      <ThumbDownAlt />
+      <ThumbDownAlt sx={{ fontSize: '15px' }} />
     ) : (
-      <ThumbDownAltOutlined />
+      <ThumbDownAltOutlined sx={{ fontSize: '15px' }} />
     )
 
   function handleClick() {
@@ -44,6 +44,7 @@ export default function VoteButton({ value, variant, status, onSelected }: VoteB
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginRight: 1,
+        fontSize: '10px',
       }}
       size={'small'}
       variant={'text'}

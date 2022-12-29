@@ -15,7 +15,7 @@ export default function ForumQuestion() {
   const { questionId } = useParams()
 
   const { question, voteQuestion, refetch } = useQuestion(questionId + '')
-  const { createComment, voteComment } = useComment()
+  const { createComment } = useComment()
 
   console.log(question)
 
@@ -30,6 +30,7 @@ export default function ForumQuestion() {
         }
         if (parentCommentId) data.parentCommentId = parentCommentId
         await createComment.mutateAsync({ data })
+        await refetch()
         toast.success('Thêm câu trả lời thành công.')
       }
     } catch (error: any) {
