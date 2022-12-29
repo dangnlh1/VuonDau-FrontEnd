@@ -21,6 +21,7 @@ export function ForumList({ forumList, onCardClick }: ForumListProps) {
           >
             <Box sx={{ p: 2, height: '100%' }}>
               <ForumRoomCard
+                type={item.type}
                 forumName={item.name}
                 className={item.className}
                 classCode={item.classCode}

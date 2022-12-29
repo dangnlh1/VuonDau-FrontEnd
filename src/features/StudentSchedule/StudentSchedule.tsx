@@ -107,12 +107,15 @@ export default function StudentSchedule() {
 
   React.useEffect(() => {
     if (data && dows) {
-      data.map((item: AttendanceSlot) => {
+      let response: AttendanceSlot[] = []
+      data?.map((item) => (response = response.concat(item.attendance)))
+      response.map((item: AttendanceSlot) => {
         const currentDate = dayjs(item.date)
         const isBefore = dows[0].day.isBefore(currentDate, 'day')
-        const isAfter = dows[4].day.isAfter(currentDate, 'day')
+        const isAfter = dows[dows.length - 1].day.isAfter(currentDate, 'day')
         const isSame =
-          dows[0].day.isSame(currentDate, 'day') || dows[4].day.isSame(currentDate, 'day')
+          dows[0].day.isSame(currentDate, 'day') ||
+          dows[dows.length - 1].day.isSame(currentDate, 'day')
         if ((isBefore && isAfter) || isSame) {
           handleAddSlotToTimeTable(item)
         }

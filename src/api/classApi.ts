@@ -1,3 +1,4 @@
+import { ForumDetail } from './../models/forum'
 import { AttendanceRequest } from '@/models/timetables'
 import { ClassStatus, ResourcePayload, TeacherPayload } from '@/models/class'
 import { FilterParams, ListResponse } from '@/models/common'
@@ -17,8 +18,11 @@ export const classApi = {
     return axiosClient.get(`${url}/${id}/class-detail`)
   },
 
-  getAllClassByTeacher(params: FilterParams): Promise<ListResponse<ClassPayload>> {
-    return axiosClient.get(`${url}/account`, { params })
+  getAllClassByTeacher(
+    status: ClassStatus,
+    params: FilterParams
+  ): Promise<ListResponse<ClassPayload>> {
+    return axiosClient.get(`${url}/search-class/account`, { params: { ...params, status } })
   },
 
   createClassByTeacherRequest(data: AddEditClassFormPayload): Promise<any> {
@@ -46,5 +50,8 @@ export const classApi = {
 
   getClassAttendance(id: string): Promise<AttendanceRequest> {
     return axiosClient.get(`${url}/${id}/attendance`)
+  },
+  getClassForum(id: string): Promise<ForumDetail> {
+    return axiosClient.get(`${url}/forum`, { params: { id } })
   },
 }

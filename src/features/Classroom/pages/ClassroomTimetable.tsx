@@ -154,7 +154,7 @@ export default function ClassroomTimetable() {
       </Typography>
 
       <Grid container>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <TimetablePicker
             date={date}
             type={type}
@@ -163,7 +163,7 @@ export default function ClassroomTimetable() {
           />
         </Grid>
 
-        <Grid item xs={9}>
+        <Grid item xs={8}>
           <Timetable
             dows={dows}
             rows={rows}

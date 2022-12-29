@@ -1,146 +1,84 @@
-import { Avatar, Button, Divider, Stack, TextField, Typography, useTheme } from '@mui/material'
-import React, { useState } from 'react'
+import {
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Stack,
+  Typography,
+} from '@mui/material'
 
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt'
-import ThumbDownIcon from '@mui/icons-material/ThumbDown'
-import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt'
 import VoteButton from '@/features/Forum/components/button/VoteButton'
-import Comment from '@/features/Forum/components/Comment'
-
+import ReplyButton from '@/features/Forum/components/button/ReplyButton'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import QuestionComment from '@/features/Forum/components/QuestionComment'
+import EditorInput from '@/components/common/EditorInput'
+import { Question } from '@/models/questions'
 interface QuestionProps {
-  content: string
-  upVote: number
-  downVote: number
-  avatar: string
-  name: string
-  comments: {
-    content: string
-    upvoteNumber: number
-    downvoteNumber: number
-  }[]
+  question: Question
+  open: boolean
+  onOpenDialog: () => void
+  onComment: (content: string, parentCommentId?: number) => void
+  onUpVote: (commentId?: number) => void
+  onDownVote: (commentId?: number) => void
 }
 
-const defaultAvatar =
-  'https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/512/external-user-interface-kiranshastry-lineal-color-kiranshastry.png'
+const closedQuestion = 'Câu hỏi đã bị khóa bình luận.'
 
 export default function Question(props: QuestionProps) {
-  const { avatar, content, downVote, name, upVote, comments } = props
-
-  const theme = useTheme()
-
-  const [isReply, setReply] = useState(false)
-  const [isClickTextInput, setClickTextInput] = useState(false)
-  const [isDirty, setDirty] = useState(false)
-
-  function handleReply() {
-    setReply(!isReply)
-  }
-
-  function handleClickTextInput() {
-    setClickTextInput(true)
-  }
-  function handleCancelClickTextInput() {
-    setClickTextInput(false)
-  }
-
-  function handleChangeTextField(event: any) {
-    const value: string = event.target.value
-    if (value.length !== 0) {
-      setDirty(true)
-    } else {
-      setDirty(false)
-    }
-  }
-
-  function handleComment() {
-    //TODO: add comment function
-  }
-
-  function handleUpVote(isSelected: boolean, quantity: number) {
-    //TODO: add upVote function
-  }
-
-  function handleDownVote(isSelected: boolean, quantity: number) {
-    //TODO: add downVote function
-  }
+  const { question, open, onComment, onDownVote, onOpenDialog, onUpVote } = props
 
   return (
     <Stack>
-      <Stack paddingTop={2} sx={{ background: '#fff', paddingY: 2, paddingX: 2 }}>
+      <Stack paddingTop={2} sx={{ background: '#fff', paddingY: 2, paddingX: 2, marginTop: 1 }}>
         <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Avatar src={defaultAvatar} />
+          <AccountCircleIcon fontSize="large" />
           <Stack sx={{ paddingLeft: 2 }}>
-            <Typography sx={{ fontSize: 15, fontWeight: 'bold' }}>{name}</Typography>
+            <Typography
+              sx={{ fontSize: 15, fontWeight: 'bold' }}
+            >{`${question.user.firstName} ${question.user.lastName}`}</Typography>
             <Typography sx={{ fontSize: 12 }}>3 phút trước.</Typography>
           </Stack>
         </Stack>
         <Stack>
-          <Stack sx={{}}>
-            <Typography variant="h5">{content}</Typography>
+          <Stack sx={{ padding: 1 }}>
+            <Typography variant="body1">{question.content}</Typography>
           </Stack>
           <Stack sx={{ flexDirection: 'row' }}>
-            <VoteButton defaultValue={upVote} onSelected={handleUpVote} variant="up" />
-            <VoteButton defaultValue={downVote} onSelected={handleDownVote} variant="down" />
-            <Button
-              onClick={handleReply}
-              sx={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                marginRight: 1,
-                marginBottom: 1,
-              }}
-              variant="contained"
-            >
-              Trả Lời
-            </Button>
+            <VoteButton
+              value={question.voteNumberReponse.upvoteNumber}
+              status={question.userState}
+              onSelected={onUpVote}
+              variant="up"
+            />
+            <VoteButton
+              value={question.voteNumberReponse.downvoteNumber}
+              status={question.userState}
+              onSelected={onDownVote}
+              variant="down"
+            />
+            <ReplyButton label={'Trả lời'} onClick={onOpenDialog} />
           </Stack>
-
-          {isReply && (
-            <Stack paddingTop={2}>
-              <Stack sx={{ flexDirection: 'row', alignItems: 'center' }}>
-                <TextField
-                  sx={{ flexGrow: 1 }}
-                  onFocus={handleClickTextInput}
-                  onChange={handleChangeTextField}
-                  id="standard-basic"
-                  label="Thêm bình luận"
-                  variant="standard"
-                />
-              </Stack>
-
-              <Stack
-                direction={'row'}
-                sx={{ marginTop: 1, justifyContent: 'flex-end', width: '100%' }}
-              >
-                <Button onClick={handleCancelClickTextInput} variant="text">
-                  Hủy bỏ
-                </Button>
-                <Button
-                  disabled={!isDirty}
-                  onClick={handleComment}
-                  variant={isDirty ? 'contained' : 'text'}
-                  sx={{ marginLeft: 2 }}
-                >
-                  Bình luận
-                </Button>
-              </Stack>
-            </Stack>
-          )}
         </Stack>
       </Stack>
       <Stack sx={{ background: '#fff', marginTop: 2 }}>
-        {comments &&
-          comments.map((item, index) => (
-            <Comment
-              avatar=""
-              content={item.content}
-              downVote={item.downvoteNumber}
-              upVote={item.upvoteNumber}
-              name="Student"
-            />
-          ))}
+        <Stack sx={{ marginX: 2, paddingY: 2 }}>
+          {question.comments.length > 0 ? (
+            <Typography variant="h6">{`Tổng ${question.comments.length} câu trả lời.`}</Typography>
+          ) : (
+            <Typography variant="h6">Chưa có câu trả lời</Typography>
+          )}
+        </Stack>
+        {question.comments &&
+          question.comments.length > 0 &&
+          question.comments.map((item, index) => <QuestionComment key={index} comment={item} />)}
       </Stack>
+      <Dialog open={open} onClose={onOpenDialog}>
+        <DialogTitle>Trả lời câu hỏi</DialogTitle>
+        <DialogContent>
+          <DialogContentText paddingY={2}>{question.content}</DialogContentText>
+          <EditorInput onCancel={onOpenDialog} onComment={onComment} />
+        </DialogContent>
+      </Dialog>
     </Stack>
   )
 }

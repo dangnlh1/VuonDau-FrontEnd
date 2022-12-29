@@ -1,12 +1,13 @@
 import { classApi } from '@/api/classApi'
+import { ClassStatus } from '@/models/class'
 import { FilterParams, Pagination } from '@/models/common'
 import { useQuery, useQueryClient } from 'react-query'
 
-export function useClassesByTeacher(params: FilterParams) {
+export function useClassesByTeacher(status: ClassStatus, params: FilterParams) {
   const queryKey = ['/classesByTeacher', params]
   const queryClient = useQueryClient()
   const { data, isLoading, error, refetch } = useQuery(queryKey, () =>
-    classApi.getAllClassByTeacher(params)
+    classApi.getAllClassByTeacher(status, params)
   )
 
   return {
