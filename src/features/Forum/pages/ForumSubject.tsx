@@ -1,17 +1,30 @@
 import { DataGridLoadingOverlay } from '@/components/common/DataGridLoadingOverlay'
+import EditorInput from '@/components/common/EditorInput'
+import { useCreateQuestion } from '@/hooks/createQuestion'
 import useForum from '@/hooks/subjectForum'
 import { ForumPayload } from '@/models/forum'
 import { InfoPayload } from '@/models/info'
-import { Question, QuestionRow } from '@/models/questions'
+import { Question, QuestionRequest, QuestionRow } from '@/models/questions'
 import { Subject } from '@/models/subject'
 import { getTimeAgo } from '@/utils/timeAgo'
-import { Button, Stack, TextField, Typography } from '@mui/material'
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const columns: GridColDef<Question>[] = [
   { field: 'id', headerName: 'ID', width: 90 },
-  { field: 'content', headerName: 'Câu hỏi', width: 600, flex: 1 },
+  { field: 'title', headerName: 'Câu hỏi', width: 600, flex: 1 },
   {
     field: 'user',
     headerName: 'Người Hỏi',
@@ -28,13 +41,40 @@ const columns: GridColDef<Question>[] = [
 ]
 
 export default function ForumSubject() {
+  const [open, setOpen] = useState(false)
+  const [title, setTitle] = useState('')
   const { subjectId } = useParams()
-  const { data, error, isLoading } = useForum(subjectId + '')
+  const { data, isLoading } = useForum(subjectId + '')
+  const { createQuestion } = useCreateQuestion()
   const navigate = useNavigate()
-  console.log(data)
+
+  if (!data) return null
 
   function handleRowClick(row: any) {
     navigate(`/hoc-sinh/dien-dan/mon-hoc/${subjectId}/${row.id}`)
+  }
+
+  function handleOpenDialog() {
+    setOpen(!open)
+  }
+
+  function handleChangeTitle(event: any) {
+    setTitle(event.target.value)
+  }
+
+  async function handleCreateQuestion(content: string) {
+    try {
+      const params: QuestionRequest = {
+        title,
+        content,
+        forumId: data?.id || 0,
+      }
+      await createQuestion.mutateAsync(params)
+      toast.success('Tạo câu hỏi thành công.')
+      setOpen(!open)
+    } catch (error) {
+      toast.error('Tạo câu hỏi không thành công.')
+    }
   }
 
   return (
@@ -47,10 +87,17 @@ export default function ForumSubject() {
       </Stack>
 
       <Stack direction={'row'} marginTop={1}>
-        <Stack flexGrow={1} marginRight={2}>
+        <Stack flexGrow={1} marginRight={1}>
           <TextField label="Tìm kiếm câu hỏi" variant="outlined" sx={{ background: '#fff' }} />
         </Stack>
-        <Button variant="contained">Tìm Kiếm</Button>
+        <Stack marginRight={1}>
+          <Button variant="contained">Tìm Kiếm</Button>
+        </Stack>
+        <Stack marginRight={1}>
+          <Button variant="contained" onClick={handleOpenDialog}>
+            Tạo Câu Hỏi
+          </Button>
+        </Stack>
       </Stack>
 
       <Stack sx={{ background: '#fff' }} height={'100%'} width={'100%'} marginTop={2}>
@@ -68,6 +115,15 @@ export default function ForumSubject() {
           autoHeight
         />
       </Stack>
+      <Dialog open={open} onClose={handleOpenDialog}>
+        <DialogTitle>Thêm Câu Hỏi Của Bạn</DialogTitle>
+        <DialogContent>
+          <Stack paddingY={1}>
+            <TextField label="Thêm tựa đề" value={title} onChange={handleChangeTitle}></TextField>
+          </Stack>
+          <EditorInput onCancel={handleOpenDialog} onComment={handleCreateQuestion} />
+        </DialogContent>
+      </Dialog>
     </Stack>
   )
 }

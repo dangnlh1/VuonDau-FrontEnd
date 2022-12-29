@@ -38,8 +38,6 @@ export default function Question(props: QuestionProps) {
     onRefresh,
   } = props
 
-  const questionId = question.id
-
   const timeAgo = getTimeAgo(question.created)
 
   return (
@@ -54,9 +52,15 @@ export default function Question(props: QuestionProps) {
             <Typography sx={{ fontSize: 12 }}>{timeAgo}</Typography>
           </Stack>
         </Stack>
-        <Stack>
-          <Stack sx={{ padding: 1 }}>
-            <Typography variant="body1">{question.content}</Typography>
+        <Stack padding={1}>
+          <Stack>
+            <Typography sx={{ fontWeight: 'bold' }}>{question.title}</Typography>
+          </Stack>
+          <Stack>
+            <div
+              style={{ fontSize: '25px' }}
+              dangerouslySetInnerHTML={{ __html: question.content }}
+            />
           </Stack>
           <Stack sx={{ flexDirection: 'row' }}>
             <VoteButton
@@ -92,7 +96,12 @@ export default function Question(props: QuestionProps) {
       <Dialog open={open} onClose={onOpenDialog}>
         <DialogTitle>Trả lời câu hỏi</DialogTitle>
         <DialogContent>
-          <DialogContentText paddingY={2}>{question.content}</DialogContentText>
+          <DialogContentText paddingY={2}>
+            <div
+              style={{ fontSize: '25px' }}
+              dangerouslySetInnerHTML={{ __html: question.title }}
+            />
+          </DialogContentText>
           <EditorInput onCancel={onOpenDialog} onComment={onComment} />
         </DialogContent>
       </Dialog>

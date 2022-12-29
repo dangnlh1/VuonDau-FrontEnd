@@ -18,9 +18,24 @@ export function useComment() {
       onSuccess: () => queryClient.invalidateQueries(queryKey),
     }
   )
+  const deleteComment = useMutation(
+    (payload: { id: number }) => commentApi.deleteComment(payload.id),
+    {
+      onSuccess: () => queryClient.invalidateQueries(queryKey),
+    }
+  )
+  const editComment = useMutation(
+    (payload: { id: number; data: CommentRequestPayload }) =>
+      commentApi.editComment(payload.id),
+    {
+      onSuccess: () => queryClient.invalidateQueries(queryKey),
+    }
+  )
 
   return {
     createComment,
     voteComment,
+    deleteComment,
+    editComment,
   }
 }

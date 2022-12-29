@@ -11,4 +11,7 @@ export const forumApi = {
   getForum(id: string): Promise<ForumPayload> {
     return axiosClient.get(`${url}/${id}`)
   },
+  synchronizeLesson(classId: any): Promise<any> {
+    return axiosClient.get(`${url}/synchronize-lesson`, { params: { classId } })
+  },
 }
