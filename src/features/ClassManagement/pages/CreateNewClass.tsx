@@ -21,6 +21,13 @@ import { CreateNewCourseForm } from '../components/CreateNewCourse'
 import { CreateTimeTableData, CreateTimeTableForm } from '../components/CreateTimeTableForm'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 
+import Stepper from '@mui/material/Stepper'
+import Step from '@mui/material/Step'
+import StepLabel from '@mui/material/StepLabel'
+import Button from '@mui/material/Button'
+
+const steps = ['Tạo lớp học', 'Tạo khóa học', 'Tạo thời khóa biểu']
+
 const pageTitle = 'Tạo lớp Mới'
 
 export function CreateNewClass() {
@@ -31,8 +38,6 @@ export function CreateNewClass() {
     size: 12,
   })
 
-  const [isCreateCourseDisable, setIsCreateCourseDisable] = React.useState(true)
-  const [isCreateTimeTableDisable, setIsCreateTimeTableDisable] = React.useState(true)
   const [showNewCreateCourseForm, setShowNewCreateCourseForm] = React.useState(false)
   const [subjectId, setSubjectId] = React.useState<number>()
   const [courseId, setCourseId] = React.useState<number>()
@@ -53,10 +58,6 @@ export function CreateNewClass() {
     refetch()
   }, [subjectId, courseId])
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTab(newValue)
-  }
-
   // handle create class
   async function handleCreateClass(formValues: AddEditClassFormPayload) {
     const data: AddEditClassFormPayload = {
@@ -71,8 +72,7 @@ export function CreateNewClass() {
         if (classId) {
           toast.success('Tạo lớp học thành công')
           setClassId(classId)
-          setTab(2)
-          setIsCreateCourseDisable(false)
+          setTab(1)
           return
         }
 
@@ -117,8 +117,7 @@ export function CreateNewClass() {
       .mutateAsync({ id: parseInt(classId as string), data: formValues })
       .then((classId) => {
         if (classId) {
-          setTab(4)
-          setIsCreateTimeTableDisable(false)
+          setTab(2)
           toast.success('Tạo khóa học thành công')
           return
         }
@@ -147,6 +146,7 @@ export function CreateNewClass() {
         if (response) {
           toast.success('Tạo thời khóa biểu thành công!')
           navigate('/giao-vien/quan-ly-lop')
+          setTab(0)
           return
         }
         toast.error('Tạo thời khóa biểu thất bại!')
@@ -176,42 +176,20 @@ export function CreateNewClass() {
         {pageTitle}
       </Typography>
 
-      <Box>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={tab} onChange={handleTabChange} aria-label="basic tabs example">
-            <Tab label="Tạo lớp học" {...a11yProps(0)} sx={{ color: 'primary.main' }} />
-
-            <Stack direction="row" alignItems="center">
-              <KeyboardDoubleArrowRightIcon
-                sx={{ color: !isCreateCourseDisable ? 'primary.main' : 'inherit' }}
-              />
-            </Stack>
-            <Tab
-              disabled={isCreateCourseDisable}
-              label="Tạo khóa học"
-              {...a11yProps(2)}
-              sx={{ color: !isCreateCourseDisable ? 'primary.main' : 'inherit' }}
-            />
-            <Stack direction="row" alignItems="center">
-              <KeyboardDoubleArrowRightIcon
-                sx={{ color: !isCreateTimeTableDisable ? 'primary.main' : 'inherit' }}
-              />
-            </Stack>
-
-            <Tab
-              disabled={isCreateTimeTableDisable}
-              label="Tạo thời khóa biểu"
-              {...a11yProps(4)}
-              sx={{ color: !isCreateTimeTableDisable ? 'primary.main' : 'inherit' }}
-            />
-          </Tabs>
+      <Stack sx={{ borderBottom: 1, borderColor: 'divider' }} spacing={3}>
+        <Box sx={{ width: '100%', mx: -1 }}>
+          <Stepper activeStep={tab}>
+            {steps.map((label, index) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
         </Box>
 
-        <TabPanel value={tab} index={0}>
-          <AddEditClassForm onSubmit={handleCreateClass} />
-        </TabPanel>
+        {tab === 0 && <AddEditClassForm onSubmit={handleCreateClass} />}
 
-        <TabPanel value={tab} index={2}>
+        {tab === 1 && (
           <CreateCourseForm
             courseId={courseId}
             subjectId={subjectId}
@@ -221,16 +199,16 @@ export function CreateNewClass() {
             onSubmit={handleCreateCourse}
             onCreateNewCourse={() => setShowNewCreateCourseForm(true)}
           />
-        </TabPanel>
+        )}
 
-        <TabPanel value={tab} index={4}>
+        {tab === 2 && (
           <CreateTimeTableForm
             slotList={slotList}
             dayList={dayList}
             onSubmit={handleCreateTimeTable}
           />
-        </TabPanel>
-      </Box>
+        )}
+      </Stack>
 
       <CustomizedDialogs
         open={showNewCreateCourseForm}

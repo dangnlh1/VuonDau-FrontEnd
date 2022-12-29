@@ -13,6 +13,10 @@ export const classApi = {
     return axiosClient.get(url, { params })
   },
 
+  getAllClassByAccount(params?: FilterParams): Promise<ListResponse<ClassPayload>> {
+    return axiosClient.get(`${url}/search-class/account`, { params })
+  },
+
   get(id: number): Promise<ClassPayload> {
     return axiosClient.get(`${url}/${id}/class-detail`)
   },

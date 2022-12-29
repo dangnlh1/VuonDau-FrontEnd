@@ -1,8 +1,10 @@
+import { a11yProps, TabPanel } from '@/components/common/TabPanel'
+import { useGetClassByAccount } from '@/hooks/classByAccount'
 import { useClassesByTeacher } from '@/hooks/classByTeacher'
 import { ClassPayload } from '@/models/class'
 import { Action } from '@/models/common'
 import AddIcon from '@mui/icons-material/Add'
-import { Box, Button, Pagination, Stack, Typography } from '@mui/material'
+import { Box, Button, Pagination, Stack, Tab, Tabs, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ClassList } from '../components/ClassList'
@@ -26,9 +28,24 @@ export function Classes() {
     size: 12,
   })
 
+  const [classByAccountParams, setClassByAccountParams] = useState({
+    page: 0,
+    size: 12,
+    status: 'REQUESTING',
+  })
+
+  const [tab, setTab] = useState(0)
+
   const navigate = useNavigate()
 
   const { classByTeacherList, pagination } = useClassesByTeacher(params)
+
+  const { classByAccountList, pagination: classByAccountPagination } =
+    useGetClassByAccount(classByAccountParams)
+
+  function handleChange(event: React.SyntheticEvent, newValue: number) {
+    setTab(newValue)
+  }
 
   function handleCardClick(value: ClassPayload) {
     navigate(`/giao-vien/quan-ly-lop/${value.id}`)
@@ -42,6 +59,13 @@ export function Classes() {
 
   function handlePageChange(e: any, newPage: number) {
     setParams((params) => ({
+      ...params,
+      page: newPage - 1,
+    }))
+  }
+
+  function handlePageOfClassByAccountChange(e: any, newPage: number) {
+    setClassByAccountParams((params) => ({
       ...params,
       page: newPage - 1,
     }))
@@ -70,26 +94,60 @@ export function Classes() {
         </Stack>
       </Stack>
 
-      {Array.isArray(classByTeacherList) && classByTeacherList.length > 0 && (
-        <Stack>
-          <Typography variant="body1" fontStyle="italic">
-            Tổng số: {classByTeacherList?.length}/ {pagination.total} lớp
-          </Typography>
-          <ClassList classList={classByTeacherList} onCardClick={handleCardClick} />
-        </Stack>
-      )}
+      <Box>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={tab} onChange={handleChange} aria-label="basic tabs example">
+            <Tab label="Danh sách lớp học" {...a11yProps(0)} />
+            <Tab label="Danh sách lớp chờ duyệt" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
 
-      {classByTeacherList && (
-        <Stack alignItems="center" sx={{ py: 2 }}>
-          <Pagination
-            variant="outlined"
-            shape="rounded"
-            page={params?.page + 1}
-            count={pagination?.totalPages}
-            onChange={handlePageChange}
-          />
-        </Stack>
-      )}
+        <TabPanel value={tab} index={0}>
+          {Array.isArray(classByTeacherList) && classByTeacherList.length > 0 && (
+            <Stack>
+              <Typography variant="body1" fontStyle="italic">
+                Tổng số: {classByTeacherList?.length}/ {pagination.total} lớp
+              </Typography>
+              <ClassList classList={classByTeacherList} onCardClick={handleCardClick} />
+            </Stack>
+          )}
+
+          {classByTeacherList && (
+            <Stack alignItems="center" sx={{ py: 2 }}>
+              <Pagination
+                variant="outlined"
+                shape="rounded"
+                page={params?.page + 1}
+                count={pagination?.totalPages}
+                onChange={handlePageChange}
+              />
+            </Stack>
+          )}
+        </TabPanel>
+
+        <TabPanel value={tab} index={1}>
+          {Array.isArray(classByAccountList) && classByAccountList.length > 0 && (
+            <Stack>
+              <Typography variant="body1" fontStyle="italic">
+                Tổng số: {classByAccountList?.length} / {classByAccountPagination.total} lớp
+              </Typography>
+              <ClassList classList={classByAccountList} onCardClick={handleCardClick} />
+            </Stack>
+          )}
+
+          {classByTeacherList && (
+            <Stack alignItems="center" sx={{ py: 2 }}>
+              <Pagination
+                variant="outlined"
+                shape="rounded"
+                page={classByAccountParams?.page + 1}
+                count={classByAccountPagination?.totalPages}
+                onChange={handlePageOfClassByAccountChange}
+              />
+            </Stack>
+          )}
+        </TabPanel>
+      </Box>
     </Stack>
   )
 }
