@@ -53,8 +53,8 @@ export function CreateTimeTableForm({ slotList, dayList, onSubmit }: CreateTimeT
     setValue('slotDow', slotDow)
   }
 
-  function handleNumberSlotChange(value: number) {
-    setSlotInWeek(value)
+  function handleNumberSlotChange(value: string | number) {
+    setSlotInWeek(value as number)
   }
 
   function handleFormSubmit(formValue: CreateTimeTableData) {

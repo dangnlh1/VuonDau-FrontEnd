@@ -12,3 +12,21 @@ export interface RevenuePayload {
   transactionNo: string
   success: boolean
 }
+
+export interface EstimatesSalaryForTeacherPayload {
+  estimatesSalaryOneMonthForTeacher: number
+  estimatesSalaryManyMonthForTeacher: number
+  estimatesSalaryOneMonthForSystem: number
+  estimatesSalaryManyMonthForSystem: number
+}
+
+export interface EstimatesSalaryForTeacherResponse {
+  status: string
+  data: EstimatesSalaryForTeacherPayload[]
+}
+
+export interface EstimatesSalaryForTeacherParams {
+  priceEachStudent: number
+  numberStudent: number
+  numberMonth: number
+}

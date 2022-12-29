@@ -2,10 +2,13 @@ import { DateTimePickerField } from '@/components/FormFields/DateTimePickerField
 import { InputField } from '@/components/FormFields/InputField'
 import { SelectField } from '@/components/FormFields/SelectField'
 import { classLevelOptionList } from '@/constants/info'
+import { useGetEstimatesSalaryForTeacher } from '@/hooks/getEstimatesSalaryForTeacher'
 import { AddEditClassFormPayload } from '@/models/class'
 import { OptionPayload } from '@/models/option'
+import { formatCurrency } from '@/utils/common'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Box, Button, Divider, Stack } from '@mui/material'
+import { Box, Button, Divider, Stack, Typography } from '@mui/material'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
@@ -42,9 +45,23 @@ export interface CreateNewClassProps {
 }
 
 export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProps) {
+  const [isClassTypeDisable, setIsClassTypeDisable] = useState(false)
+  const [startDate, setStartDate] = useState(0)
+  const [endDate, setEndDate] = useState(0)
+  const [unitPrice, setUnitPrice] = useState(0)
+  const [maxNumberStudent, setMaxNumberStudent] = useState(0)
+  const [getEstimatesSalaryForTeacherParams, setGetEstimatesSalaryForTeacherParams] = useState({
+    priceEachStudent: 0,
+    numberStudent: 0,
+    numberMonth: 0,
+  })
+
+  const { data } = useGetEstimatesSalaryForTeacher(getEstimatesSalaryForTeacherParams)
+
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { isValid, isDirty },
   } = useForm({
     defaultValues: {
@@ -62,16 +79,49 @@ export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProp
     resolver: yupResolver(schema),
   })
 
+  const howManyMonth = Math.ceil((endDate - startDate) / (60 * 60 * 24 * 1000) / 30)
+
+  useEffect(() => {
+    setGetEstimatesSalaryForTeacherParams({
+      priceEachStudent: unitPrice,
+      numberStudent: maxNumberStudent,
+      numberMonth: howManyMonth,
+    })
+  }, [unitPrice, howManyMonth, maxNumberStudent])
+
   function handleFormSubmit(formValue: AddEditClassFormPayload) {
     onSubmit?.(formValue)
   }
 
   function handleStartDateChange(date: any) {
-    console.log('date__:', date)
+    const timeTemple = new Date(date.$d).getTime()
+    setStartDate(timeTemple)
   }
 
   function handleEndDateChange(date: any) {
-    console.log('date__:', date)
+    const timeTemple = new Date(date.$d).getTime()
+    setEndDate(timeTemple)
+  }
+
+  function handleMaxNumberStudentChange(value: any) {
+    setMaxNumberStudent(value)
+  }
+
+  function handleUnitPriceChange(value: any) {
+    setUnitPrice(value)
+  }
+
+  function handleClassTypeChange(value: number | string) {
+    if (value === 'ONE') {
+      setValue('minNumberStudent', 1)
+      setValue('maxNumberStudent', 1)
+      setMaxNumberStudent(1)
+      setIsClassTypeDisable(true)
+
+      return
+    }
+
+    setIsClassTypeDisable(false)
   }
 
   return (
@@ -100,6 +150,7 @@ export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProp
             control={control}
             label="Loại lớp học"
             optionList={classTypeOptionList}
+            onOptionChange={handleClassTypeChange}
           />
         </Box>
       </Stack>
@@ -110,6 +161,7 @@ export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProp
           control={control}
           label="Số học sinh tối thiểu"
           type="number"
+          disabled={isClassTypeDisable}
         />
       </Box>
 
@@ -119,6 +171,8 @@ export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProp
           control={control}
           label="Số học sinh tối đa"
           type="number"
+          disabled={isClassTypeDisable}
+          onChange={handleMaxNumberStudentChange}
         />
       </Box>
 
@@ -143,7 +197,24 @@ export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProp
       </Stack>
 
       <Box>
-        <InputField name="unitPrice" control={control} label="Giá tiền" type="number" />
+        <InputField
+          name="unitPrice"
+          control={control}
+          label="Giá tiền"
+          type="number"
+          onChange={handleUnitPriceChange}
+        />
+      </Box>
+      <Box>
+        <Typography variant="body1" fontStyle="italic">
+          <b>Ước tính lương/tháng:</b>{' '}
+          {formatCurrency(data?.estimatesSalaryOneMonthForTeacher || 0)}
+        </Typography>
+
+        <Typography variant="body1" fontStyle="italic">
+          <b>Ước tính lương/{howManyMonth} tháng:</b>{' '}
+          {formatCurrency(data?.estimatesSalaryManyMonthForTeacher || 0)}
+        </Typography>
       </Box>
 
       <Divider />
