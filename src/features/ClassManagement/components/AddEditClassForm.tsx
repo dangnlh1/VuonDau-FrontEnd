@@ -66,6 +66,14 @@ export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProp
     onSubmit?.(formValue)
   }
 
+  function handleStartDateChange(date: any) {
+    console.log('date__:', date)
+  }
+
+  function handleEndDateChange(date: any) {
+    console.log('date__:', date)
+  }
+
   return (
     <Stack component="form" onSubmit={handleSubmit(handleFormSubmit)} noValidate spacing={2}>
       <Box>
@@ -116,11 +124,21 @@ export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProp
 
       <Stack direction="row" alignItems="flex-start" spacing={2}>
         <Box sx={{ width: 1 / 2 }}>
-          <DateTimePickerField control={control} name="startDate" label="Ngày bắt đầu" />
+          <DateTimePickerField
+            control={control}
+            name="startDate"
+            label="Ngày bắt đầu"
+            onChange={(date: any) => handleStartDateChange?.(date)}
+          />
         </Box>
 
         <Box sx={{ width: 1 / 2 }}>
-          <DateTimePickerField control={control} name="endDate" label="Ngày kết thúc" />
+          <DateTimePickerField
+            control={control}
+            name="endDate"
+            label="Ngày kết thúc"
+            onChange={(date: any) => handleEndDateChange?.(date)}
+          />
         </Box>
       </Stack>
 

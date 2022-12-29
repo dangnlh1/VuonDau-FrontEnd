@@ -15,6 +15,7 @@ export interface ListResponse<T> {
 export interface FilterParams {
   page?: number
   size?: number
+  status?: string
   sort?: string[]
   numberSlot?: number
 }
@@ -30,10 +31,10 @@ export interface RegisterPayload {
   genderCode: string
 }
 export interface Pagination {
-  page: number
-  size: number
-  totalPages: number
-  total: number
+  page?: number
+  size?: number
+  totalPages?: number
+  total?: number
 }
 
 export interface City {

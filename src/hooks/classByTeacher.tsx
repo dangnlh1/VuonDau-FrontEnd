@@ -6,6 +6,7 @@ import { useQuery, useQueryClient } from 'react-query'
 export function useClassesByTeacher(status: ClassStatus, params: FilterParams) {
   const queryKey = ['/classesByTeacher', params]
   const queryClient = useQueryClient()
+
   const { data, isLoading, error, refetch } = useQuery(queryKey, () =>
     classApi.getAllClassByTeacher(status, params)
   )

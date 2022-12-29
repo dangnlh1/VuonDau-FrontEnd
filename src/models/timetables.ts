@@ -7,7 +7,6 @@ export interface SlotDow {
 
 export interface CreateTimeTablePayload {
   archetypeName: string
-  archetypeCode: string
   slotDow: SlotDow[]
 }
 

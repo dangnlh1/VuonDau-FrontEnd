@@ -27,8 +27,8 @@ const numberSlotOptionList = [
 
 const schema = yup.object({
   archetypeName: yup.string().required('Vui lòng chọn môn học!'),
-  archetypeCode: yup.string().required('Vui lòng chọn khóa học!'),
   numberSlot: yup.string().required('Vui lòng chọn khóa học!'),
+  slotDow: yup.array().required('Vui lòng chọn khóa học!'),
 })
 
 export interface CreateTimeTableFormProps {
@@ -43,7 +43,6 @@ export function CreateTimeTableForm({ slotList, dayList, onSubmit }: CreateTimeT
   const { control, handleSubmit, setValue } = useForm({
     defaultValues: {
       archetypeName: '',
-      archetypeCode: '',
       numberSlot: slotInWeek,
       slotDow: [] as SlotDow[],
     },
@@ -66,10 +65,6 @@ export function CreateTimeTableForm({ slotList, dayList, onSubmit }: CreateTimeT
     <Stack component="form" noValidate onSubmit={handleSubmit(handleFormSubmit)} spacing={2}>
       <Box>
         <InputField control={control} name="archetypeName" label="Tên thời khóa biểu" />
-      </Box>
-
-      <Box>
-        <InputField control={control} name="archetypeCode" label="Mã" />
       </Box>
 
       <Box>
