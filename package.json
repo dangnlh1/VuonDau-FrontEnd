@@ -54,6 +54,7 @@
     "dayjs": "^1.11.7",
     "history": "4.10.1",
     "immer": "^8.0.1",
+    "javascript-time-ago": "^2.5.9",
     "jquery": "^3.5.1",
     "js-base64": "^3.7.2",
     "keycloak-js": "^20.0.1",

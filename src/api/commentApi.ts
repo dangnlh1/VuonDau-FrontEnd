@@ -6,6 +6,6 @@ export const commentApi = {
     return axiosClient.post(url, data)
   },
   voteComment(data: VoteCommentRequestPayload): Promise<any> {
-    return axiosClient.post(`${url}/vote`, { params: { request: data } })
+    return axiosClient.post(`${url}/vote`, data)
   },
 }

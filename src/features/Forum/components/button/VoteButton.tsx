@@ -30,10 +30,10 @@ export default function VoteButton({ value, variant, status, onSelected }: VoteB
     )
 
   function handleClick() {
-    if (status !== 0) {
-    } else {
-      onSelected()
-    }
+    // if (status !== 0) {
+    // } else {
+    onSelected()
+    // }
   }
 
   return (

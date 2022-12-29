@@ -14,7 +14,7 @@ export default function ForumQuestion() {
 
   const { questionId } = useParams()
 
-  const { question } = useQuestion(questionId + '')
+  const { question, voteQuestion, refetch } = useQuestion(questionId + '')
   const { createComment, voteComment } = useComment()
 
   console.log(question)
@@ -43,8 +43,7 @@ export default function ForumQuestion() {
           vote,
           questionId: parseInt(questionId),
         }
-        if (commentId) data.commentId = commentId
-        await voteComment.mutateAsync({ data })
+        await voteQuestion.mutateAsync({ data })
       }
     } catch (error: any) {}
   }
@@ -58,20 +57,12 @@ export default function ForumQuestion() {
     setOpen(!open)
   }
 
-  async function handleUpVote(commentId?: number) {
-    if (commentId) {
-      await handleVoteQuestion(true, commentId)
-    } else {
-      await handleVoteQuestion(true)
-    }
+  async function handleUpVoteQuestion() {
+    await handleVoteQuestion(true)
   }
 
-  async function handleDownVote(commentId?: number) {
-    if (commentId) {
-      await handleVoteQuestion(false, commentId)
-    } else {
-      await handleVoteQuestion(false)
-    }
+  async function handleDownVoteQuestion() {
+    await handleVoteQuestion(false)
   }
 
   return (
@@ -85,8 +76,9 @@ export default function ForumQuestion() {
         open={open}
         onOpenDialog={handleTriggerDialog}
         onComment={handleComment}
-        onUpVote={handleUpVote}
-        onDownVote={handleDownVote}
+        onUpVoteQuestion={handleUpVoteQuestion}
+        onDownVoteQuestion={handleDownVoteQuestion}
+        onRefresh={refetch}
       />
     </Stack>
   )
