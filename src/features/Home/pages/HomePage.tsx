@@ -12,6 +12,10 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CourseList } from '../components/CourseList'
 
+import banner1 from '@/assets/images/banner1.png'
+import banner2 from '@/assets/images/banner2.jpg'
+import banner3 from '@/assets/images/banner3.jpg'
+
 const whyUsList: WhyUsPayload[] = [
   {
     label: 'Học các kỹ năng theo yêu cầu với nhiều khóa học video.',
@@ -26,6 +30,8 @@ const whyUsList: WhyUsPayload[] = [
     icon: <ScheduleIcon fontSize="large" />,
   },
 ]
+
+const currentBannerList = [banner1, banner2, banner3]
 
 const classStatus = 'NEW'
 
@@ -65,12 +71,13 @@ export function HomePage() {
   function handleCardClick(courseId: number) {
     navigate(`/trang-chu/${courseId}`)
   }
+  // (bannerList?.map((item) => item.linkUrl) as string[])
 
   return (
     <Box>
       <Container>
         <Box sx={{ my: 2 }}>
-          <Banner bannerList={bannerList} />
+          <Banner bannerList={currentBannerList} />
         </Box>
 
         <Box sx={{ my: 2 }}>

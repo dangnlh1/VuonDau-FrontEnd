@@ -1,12 +1,11 @@
+import { alpha, Box, Stack } from '@mui/material'
 import { Autoplay, Navigation, Pagination } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { alpha, Box, Stack } from '@mui/material'
-import { BannerPayload } from '@/models/banner'
 
 export interface BannerProps {
-  bannerList?: BannerPayload[]
+  bannerList?: string[]
 }
 
 export function Banner({ bannerList }: BannerProps) {
@@ -43,7 +42,7 @@ export function Banner({ bannerList }: BannerProps) {
                     height: '100%',
                     width: '100%',
 
-                    backgroundImage: `url(${item.linkUrl})`,
+                    backgroundImage: `url(${item})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
