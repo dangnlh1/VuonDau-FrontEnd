@@ -1,7 +1,6 @@
 import {
   EstimatesSalaryForTeacherParams,
   EstimatesSalaryForTeacherPayload,
-  EstimatesSalaryForTeacherResponse,
   RevenuePayload,
   RevenueRequest,
 } from '@/models/revenues'

@@ -56,7 +56,7 @@ export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProp
     numberMonth: 0,
   })
 
-  const { data } = useGetEstimatesSalaryForTeacher(getEstimatesSalaryForTeacherParams)
+  const { data, refetch } = useGetEstimatesSalaryForTeacher(getEstimatesSalaryForTeacherParams)
 
   const {
     control,
@@ -87,6 +87,8 @@ export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProp
       numberStudent: maxNumberStudent,
       numberMonth: howManyMonth,
     })
+
+    refetch()
   }, [unitPrice, howManyMonth, maxNumberStudent])
 
   function handleFormSubmit(formValue: AddEditClassFormPayload) {
@@ -205,6 +207,7 @@ export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProp
           onChange={handleUnitPriceChange}
         />
       </Box>
+
       <Box>
         <Typography variant="body1" fontStyle="italic">
           <b>Ước tính lương/tháng:</b>{' '}
