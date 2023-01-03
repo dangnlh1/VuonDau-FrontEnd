@@ -1,7 +1,7 @@
 import { NavPayload, RegisterPayload } from '@/models/navMenu'
 import { Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Stack } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import { Logo } from '../common/Logo'
+import { FullLogo } from '../common/Logo'
 
 export interface SideBarProps {
   navList?: NavPayload[]
@@ -38,7 +38,7 @@ export function SideBar({ navList, open, onClose, registerList, onRegisterClick 
         }}
       >
         <Stack alignItems="center" width="100%" sx={{ my: 3 }}>
-          <Logo />
+          <FullLogo />
         </Stack>
 
         <Divider />

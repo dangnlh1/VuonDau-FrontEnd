@@ -10,6 +10,7 @@ import { PageLoading } from '../common/PageLoading'
 import { Footer } from './Footer'
 import { Header } from './Header'
 import { SideBar } from './SideBar'
+
 const settingList = ['Dashboard', 'Logout']
 export interface MainLayoutProps {
   children?: ReactNode
@@ -38,16 +39,16 @@ const lastNavList: NavPayload[] = [
   },
 ]
 
-const loginList: RegisterPayload[] = [
+const registerList: RegisterPayload[] = [
   {
     label: 'Đăng nhập',
     value: 'login',
+    variant: 'contained',
   },
-]
-const registerList: RegisterPayload[] = [
   {
     label: 'Tạo tài khoản',
-    value: 'register',
+    value: 'sign-up',
+    variant: 'outlined',
   },
 ]
 
@@ -93,15 +94,11 @@ export function MainLayout({ children }: MainLayoutProps) {
     setUser(data)
   }, [data])
 
-  const handleClickOpen = () => {
-    setOpenRoleDialog(true)
-  }
-
-  const handleClose = () => {
+  function handleClose() {
     setOpenRoleDialog(false)
   }
 
-  const handleNavigate = (value: string) => {
+  function handleNavigate(value: string) {
     navigate(value)
   }
 
@@ -112,10 +109,9 @@ export function MainLayout({ children }: MainLayoutProps) {
       } catch (error) {
         console.log(error)
       }
-      return
     }
 
-    navigate('/dang-ky-hoc-sinh')
+    setOpenRoleDialog(true)
   }
 
   function handleToggleDrawer() {
@@ -148,7 +144,6 @@ export function MainLayout({ children }: MainLayoutProps) {
       <Header
         firstNavList={firstNavList}
         registerList={registerList}
-        loginList={loginList}
         roleList={roleList}
         user={user as InfoPayload}
         openChooseRoleDialog={openRoleDialog}
@@ -156,12 +151,9 @@ export function MainLayout({ children }: MainLayoutProps) {
         onRegisterClick={handleRegisterClick}
         onToggleDrawer={handleToggleDrawer}
         onSettingMenuClick={handleSettingMenuClick}
-        onClickOpenDialog={handleClickOpen}
         onCloseDialog={handleClose}
         onNavigate={handleNavigate}
       />
-
-      <Toolbar />
 
       <SideBar
         navList={[...firstNavList, ...lastNavList]}
@@ -170,7 +162,9 @@ export function MainLayout({ children }: MainLayoutProps) {
         onRegisterClick={handleRegisterClick}
         open={showDrawer}
       />
+
       <Box flexGrow={1}>{children}</Box>
+
       <Footer />
       <PageLoading />
     </Stack>

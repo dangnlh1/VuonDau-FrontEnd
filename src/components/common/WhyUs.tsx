@@ -1,4 +1,4 @@
-import { alpha, Box, Button, Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import { ReactNode } from 'react'
 
 export interface WhyUsPayload {
@@ -23,7 +23,10 @@ export function WhyUs({ whyUsList }: WhyUsProps) {
                 sx={{
                   p: 3,
                   borderRadius: 1,
-                  bgcolor: (theme) => alpha(theme.palette.common.black, 0.1),
+
+                  color: (theme) => theme.palette.common.white,
+                  bgcolor: (theme) => theme.palette.primary.main,
+                  cursor: 'pointer',
 
                   '&:hover': {
                     boxShadow: (theme) => theme.shadows[10],

@@ -9,7 +9,7 @@ import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { FullLogo, Logo } from '../common/Logo'
+import { FullLogo } from '../common/Logo'
 
 export interface AdminHeader {
   settingList?: string[]
@@ -35,15 +35,9 @@ function AdminHeader({ settingList, onSettingMenuClick }: AdminHeader) {
   return (
     <AppBar position="static" color="inherit" sx={{ boxShadow: 0 }}>
       <Toolbar>
-        <Box sx={{ display: { xs: 'none', lg: 'flex' }, mr: 2 }}>
+        <Box sx={{ mr: 2 }}>
           <Link to="/giao-vien">
             <FullLogo />
-          </Link>
-        </Box>
-
-        <Box sx={{ display: { lg: 'none' } }}>
-          <Link to="/giao-vien">
-            <Logo />
           </Link>
         </Box>
 

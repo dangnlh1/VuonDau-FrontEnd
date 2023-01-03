@@ -1,26 +1,19 @@
 import { Box, Stack, Typography } from '@mui/material'
-import logo from '@/assets/images/favicon.png'
-
-export function Logo() {
-  return <Box component="img" alt="logo" src={logo} height={45} width={45} />
-}
+import logo from '@/assets/images/logo.jpg'
+import mobileLogo from '@/assets/images/xs-logo.jpg'
 
 export function FullLogo() {
   return (
-    <Stack direction="row" alignItems="center" spacing={1}>
-      <Logo />
+    <Stack direction="row" alignItems="center" width={150}>
+      <Box component="img" alt="logo" src={logo} width="100%" />
+    </Stack>
+  )
+}
 
-      <Typography
-        variant="h6"
-        noWrap
-        sx={{
-          fontWeight: 700,
-          fontFamily: 'monospace',
-          textDecoration: 'none',
-        }}
-      >
-        VƯỜN ĐẬU
-      </Typography>
+export function MobileLogo() {
+  return (
+    <Stack direction="row" alignItems="center" width={64}>
+      <Box component="img" alt="logo" src={mobileLogo} width="100%" />
     </Stack>
   )
 }

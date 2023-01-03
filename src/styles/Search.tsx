@@ -5,8 +5,8 @@ export const Search = styled('div')(({ theme }) => ({
   position: 'relative',
 
   width: '100%',
-  border: '1.5px solid',
-  borderColor: alpha(theme.palette.common.black, 0.3),
+  border: '2px solid',
+  borderColor: theme.palette.primary.main,
   borderRadius: theme.shape.borderRadius,
 
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -35,7 +35,7 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
   '& .MuiInputBase-input': {
     width: '100%',
     padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    paddingLeft: `calc(1em + ${theme.spacing(1)})`,
     transition: theme.transitions.create('width'),
   },
 }))
