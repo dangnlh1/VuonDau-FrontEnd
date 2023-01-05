@@ -11,10 +11,11 @@ import { Box, Container, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CourseList } from '../components/CourseList'
-
 import banner1 from '@/assets/images/banner1.png'
 import banner2 from '@/assets/images/banner2.jpg'
 import banner3 from '@/assets/images/banner3.jpg'
+import { useSubject } from '@/hooks/subject'
+import { SubjectList } from '../components/SubjectList'
 
 const whyUsList: WhyUsPayload[] = [
   {
@@ -46,6 +47,7 @@ export function HomePage() {
 
   const { classList } = useClasses(classStatus, params)
   const { bannerList } = useBanner()
+  const { subjectList } = useSubject()
 
   useEffect(() => {
     if (Array.isArray(classList) && classList.length > 0) {
@@ -71,27 +73,30 @@ export function HomePage() {
   function handleCardClick(courseId: number) {
     navigate(`/trang-chu/${courseId}`)
   }
-  // (bannerList?.map((item) => item.linkUrl) as string[])
 
   return (
     <Box>
       <Container>
-        <Box sx={{ my: 2 }}>
+        <Box sx={{ my: 3 }}>
           <Banner bannerList={currentBannerList} />
         </Box>
 
-        <Box sx={{ my: 2 }}>
+        <Box sx={{ my: 3 }}>
           <WhyUs whyUsList={whyUsList} />
         </Box>
 
-        <Box sx={{ my: 2 }}>
+        <Box sx={{ my: 3 }}>
+          <SubjectList subjectList={subjectList || []} />
+        </Box>
+
+        <Box sx={{ my: 3 }}>
           <Typography variant="h5" fontWeight={700}>
             Best seller
           </Typography>
           <CourseList courseList={newCourseList} onCardClick={handleCardClick} />
         </Box>
 
-        <Box sx={{ my: 2 }}>
+        <Box sx={{ my: 3 }}>
           <Typography variant="h5" fontWeight={700}>
             Khóa học đề xuất
           </Typography>
