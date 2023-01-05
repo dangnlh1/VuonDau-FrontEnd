@@ -63,7 +63,7 @@ export function Header({
 
   return (
     <AppBar
-      position="sticky"
+      position="fixed"
       color="inherit"
       sx={{
         '.active': {

@@ -163,7 +163,9 @@ export function MainLayout({ children }: MainLayoutProps) {
         open={showDrawer}
       />
 
-      <Box flexGrow={1}>{children}</Box>
+      <Box flexGrow={1} sx={{ mt: '102px' }}>
+        {children}
+      </Box>
 
       <Footer />
       <PageLoading />
