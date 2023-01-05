@@ -7,7 +7,7 @@ import { useSlot } from '@/hooks/slot'
 import { useSubjectByTeacher } from '@/hooks/subjectByTeacher'
 import { useTimeTable } from '@/hooks/timeTable'
 import { useGetCourseBySubjectId } from '@/hooks/useGetCourseBySubjectId'
-import { AddEditClassFormPayload } from '@/models/class'
+import { AddEditClassFormPayload, ClassStatus } from '@/models/class'
 import { CreateCoursePayload, CreateNewCoursePayload } from '@/models/course'
 import { CreateTimeTablePayload, CreateTimeTableRequest } from '@/models/timetables'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined'
@@ -19,18 +19,16 @@ import { AddEditClassForm } from '../components/AddEditClassForm'
 import { CreateCourseForm } from '../components/CreateCourseForm'
 import { CreateNewCourseForm } from '../components/CreateNewCourse'
 import { CreateTimeTableData, CreateTimeTableForm } from '../components/CreateTimeTableForm'
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
 import StepLabel from '@mui/material/StepLabel'
-import Button from '@mui/material/Button'
 
 const steps = ['Tạo lớp học', 'Tạo khóa học', 'Tạo thời khóa biểu']
 
 const pageTitle = 'Tạo lớp Mới'
 
-const classStatus = 'RECRUITING'
+const classStatus: ClassStatus = 'RECRUITING'
 
 export function CreateNewClass() {
   const [tab, setTab] = React.useState(0)
@@ -38,6 +36,7 @@ export function CreateNewClass() {
   const [params, setParams] = React.useState({
     page: 0,
     size: 12,
+    classStatus,
   })
 
   const [showNewCreateCourseForm, setShowNewCreateCourseForm] = React.useState(false)
@@ -45,12 +44,12 @@ export function CreateNewClass() {
   const [courseId, setCourseId] = React.useState<number>()
 
   const navigate = useNavigate()
-  const { createClassByTeacherRequest } = useClasses(classStatus, params)
+  const { createClassByTeacherRequest } = useClasses(params)
 
   const { subjectByTeacherList } = useSubjectByTeacher()
   const { createNewCourse } = useCourse(params)
   const { data: courseList, refetch } = useGetCourseBySubjectId(subjectId as number)
-  const { createClassSubjectByTeacherRequest } = useClasses(classStatus, params)
+  const { createClassSubjectByTeacherRequest } = useClasses(params)
 
   const { dayList } = useDayOfWeek()
   const { slotList } = useSlot()

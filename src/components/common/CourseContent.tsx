@@ -24,7 +24,7 @@ export function CourseContent({ resourceList, title, onItemClick }: CourseConten
         {title}
       </Typography>
 
-      <Stack>
+      <Stack sx={{ background: '#fff' }}>
         {Array.isArray(resourceList) &&
           resourceList.length > 0 &&
           resourceList?.map((item, idx) => (

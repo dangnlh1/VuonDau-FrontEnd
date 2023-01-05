@@ -15,12 +15,18 @@ export default function ClassroomTeacher() {
       <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
         Giáo viên
       </Typography>
-      <Stack direction="row">
+      <Stack direction="row" sx={{ background: '#fff', padding: 2 }}>
         <Stack sx={{ width: '20%' }}>
-          <Box component={'img'} alt="image" src={data.avatar ? data.avatar : noImageTeacher} />
+          <Box
+            sx={{ border: '1px solid grey', borderRadius: 1, height: '100%', width: '100%' }}
+            component={'img'}
+            alt="anh dai dien cua giao vien"
+            src={data.avatar ? data.avatar : noImageTeacher}
+            onError={(error: any) => (error.target.src = noImageTeacher)}
+          />
         </Stack>
         <Stack paddingLeft={2} flexGrow={1}>
-          <Stack paddingY={2}>
+          <Stack>
             <Typography variant="h3">{`${data.firstName} ${data.lastName}`}</Typography>
           </Stack>
           <Divider />

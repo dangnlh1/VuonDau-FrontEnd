@@ -1,13 +1,10 @@
-import { useClass } from '@/hooks/class'
-import { useClasses } from '@/hooks/classes'
+import { useClassesByStudentNoPaging } from '@/hooks/classByStudentNoPaging'
 import { useRevenue } from '@/hooks/revenue'
 import { formatCurrency } from '@/utils/common'
-import { BreakfastDiningOutlined } from '@mui/icons-material'
 import {
   Button,
-  Chip,
   FormControl,
-  FormHelperText,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
@@ -16,9 +13,10 @@ import {
   Typography,
 } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import { DateTimePicker, DesktopDatePicker } from '@mui/x-date-pickers'
+import { DesktopDatePicker } from '@mui/x-date-pickers'
 import dayjs, { Dayjs } from 'dayjs'
-import React, { useState } from 'react'
+import { useState } from 'react'
+import SearchIcon from '@mui/icons-material/Search'
 
 const title = 'Lịch Sử Giao Dịch'
 
@@ -89,6 +87,9 @@ export default function PaymentHistory() {
     dateFrom: fromDate?.toISOString(),
     dateTo: toDate?.toISOString(),
   })
+  const { classes } = useClassesByStudentNoPaging('NEW')
+  console.log(classes)
+
   const rows = mockRows
 
   function handleChangeClass(event: any) {
@@ -108,7 +109,16 @@ export default function PaymentHistory() {
       <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
         {title}
       </Typography>
-      <Stack direction={'row'} sx={{ paddingY: 1 }}>
+      <Stack
+        direction={'row'}
+        sx={{
+          paddingY: 2,
+          paddingX: 3,
+          background: '#fff',
+          marginY: 1,
+          alignItems: 'center',
+        }}
+      >
         <FormControl sx={{ minWidth: 120, paddingRight: 1 }}>
           <InputLabel id="demo-simple-select-helper-label">Lớp học</InputLabel>
           <Select
@@ -118,12 +128,10 @@ export default function PaymentHistory() {
             label="Lớp học"
             onChange={handleChangeClass}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={0}>Lớp thầy Phương</MenuItem>
-            <MenuItem value={1}>Lớp cô Thảo</MenuItem>
-            <MenuItem value={2}>Lớp cô Hồng</MenuItem>
+            {classes &&
+              classes.map((item, index) => {
+                return <MenuItem value={item.id}>{item.name}</MenuItem>
+              })}
           </Select>
         </FormControl>
         <Stack sx={{ paddingRight: 1 }}>
@@ -143,12 +151,12 @@ export default function PaymentHistory() {
           />
         </Stack>
         <Stack>
-          <Button onClick={handleSearch} variant="contained">
-            Tìm kiếm
-          </Button>
+          <IconButton sx={{ background: '#000' }} onClick={handleSearch}>
+            <SearchIcon sx={{ color: '#fff' }} />
+          </IconButton>
         </Stack>
       </Stack>
-      <Stack>
+      <Stack sx={{ background: '#fff' }}>
         <DataGrid
           loading={isLoading}
           autoHeight

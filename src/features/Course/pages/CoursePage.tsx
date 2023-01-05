@@ -1,5 +1,6 @@
 import { CourseData } from '@/components/common/CourseCard'
 import { useClasses } from '@/hooks/classes'
+import { ClassStatus } from '@/models/class'
 import { FilterParams } from '@/models/common'
 import { Box, Container, Pagination, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
@@ -8,18 +9,19 @@ import { CourseFilter } from '../components/CourseFilter'
 import { CourseList } from '../components/CourseList'
 
 const pageTitle = 'Khóa học'
-const classStatus = 'NEW'
+const classStatus: ClassStatus = 'NEW'
 
 export function CoursePage() {
   const [newCourseList, setNewCourseList] = useState<CourseData[]>([])
   const [params, setParams] = useState<FilterParams>({
     page: 0,
     size: 10,
+    classStatus,
   })
 
   const navigate = useNavigate()
 
-  const { classList, pagination } = useClasses(classStatus, params)
+  const { classList, pagination } = useClasses(params)
 
   useEffect(() => {
     if (Array.isArray(classList) && classList.length > 0) {

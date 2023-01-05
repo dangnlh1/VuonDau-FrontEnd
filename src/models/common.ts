@@ -1,3 +1,4 @@
+import { ClassStatus } from '@/models/class'
 import { ReactNode } from 'react'
 
 export interface ListResponse<T> {
@@ -18,6 +19,7 @@ export interface FilterParams {
   status?: string
   sort?: string[]
   numberSlot?: number
+  classStatus?: ClassStatus
 }
 export interface RegisterPayload {
   account: {

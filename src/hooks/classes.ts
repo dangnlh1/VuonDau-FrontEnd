@@ -4,10 +4,10 @@ import { FilterParams, Pagination } from '@/models/common'
 import { CreateCoursePayload } from '@/models/course'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 
-export function useClasses(classStatus: ClassStatus, params: FilterParams) {
+export function useClasses(params: FilterParams) {
   const queryKey = ['/classes', params]
   const queryClient = useQueryClient()
-  const { data, isLoading, error } = useQuery(queryKey, () => classApi.getAll(classStatus, params))
+  const { data, isLoading, error } = useQuery(queryKey, () => classApi.getAll(params))
 
   const createClassByTeacherRequest = useMutation(
     (data: AddEditClassFormPayload) => classApi.createClassByTeacherRequest(data),
