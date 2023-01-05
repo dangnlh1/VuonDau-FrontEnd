@@ -113,13 +113,13 @@ export function TeacherRegister() {
             toast.error('Đăng ký không thành công!')
           } catch (error) {
             console.log(error)
-            toast.error('Đăng ký không thành công!')
+            toast.error(`${error}`)
           }
         }
       })
       .catch((error) => {
         console.log('error', error)
-        toast.error(error.err_message)
+        toast.error(`${error}`)
       })
   }
 

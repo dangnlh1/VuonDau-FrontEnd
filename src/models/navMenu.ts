@@ -16,4 +16,5 @@ export interface LoginPayload {
 export interface RegisterPayload {
   label: string
   value: string
+  variant: 'outlined' | 'contained' | 'text'
 }

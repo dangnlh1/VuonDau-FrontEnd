@@ -22,6 +22,7 @@ const timetable: TimetableRow[] = [
     WEDNESDAY: undefined,
     THURSDAY: undefined,
     FRIDAY: undefined,
+    SATURDAY: undefined,
   },
   {
     firstRow: {
@@ -33,6 +34,7 @@ const timetable: TimetableRow[] = [
     WEDNESDAY: undefined,
     THURSDAY: undefined,
     FRIDAY: undefined,
+    SATURDAY: undefined,
   },
   {
     firstRow: {
@@ -44,6 +46,7 @@ const timetable: TimetableRow[] = [
     WEDNESDAY: undefined,
     THURSDAY: undefined,
     FRIDAY: undefined,
+    SATURDAY: undefined,
   },
   {
     firstRow: {
@@ -55,6 +58,7 @@ const timetable: TimetableRow[] = [
     WEDNESDAY: undefined,
     THURSDAY: undefined,
     FRIDAY: undefined,
+    SATURDAY: undefined,
   },
   {
     firstRow: {
@@ -66,6 +70,7 @@ const timetable: TimetableRow[] = [
     WEDNESDAY: undefined,
     THURSDAY: undefined,
     FRIDAY: undefined,
+    SATURDAY: undefined,
   },
   {
     firstRow: {
@@ -77,6 +82,7 @@ const timetable: TimetableRow[] = [
     WEDNESDAY: undefined,
     THURSDAY: undefined,
     FRIDAY: undefined,
+    SATURDAY: undefined,
   },
 ]
 

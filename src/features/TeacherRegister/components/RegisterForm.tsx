@@ -48,8 +48,7 @@ const schema = yup.object({
       is: (x: number) => !Boolean(x),
       then: yup.string().required('Vui lòng nhập mật khẩu.'),
     })
-    .test('len', 'Mật khẩu tối thiểu 8 ký tự', (value) => value && value.length > 6)
-    .matches(passwordRegex, 'Mật khẩu gồm ít nhất 1 chữ hoa, chữ thường, số và ký tự đặc biệt'),
+    .test('len', 'Mật khẩu tối thiểu 8 ký tự', (value) => value && value.length > 6),
 
   passwordConfirmation: yup.string().when('id', {
     is: (x: number) => !Boolean(x),

@@ -15,9 +15,9 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 let theme = createTheme({
   palette: {
     primary: {
-      main: '#9c27b0',
-      light: '#d05ce3',
-      dark: '#6a0080',
+      main: '#2e7d32',
+      light: '#60ad5e',
+      dark: '#005005',
       contrastText: '#fff',
     },
   },

@@ -10,7 +10,7 @@ import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { FullLogo, Logo } from '../common/Logo'
+import { FullLogo, MobileLogo } from '../common/Logo'
 
 export interface StudentHeaderProps {
   user?: InfoPayload
@@ -45,7 +45,7 @@ function StudentHeader({ settingList, onSettingMenuClick, user }: StudentHeaderP
 
         <Box sx={{ display: { lg: 'none' } }}>
           <Link to="/hoc-sinh">
-            <Logo />
+            <MobileLogo />
           </Link>
         </Box>
 

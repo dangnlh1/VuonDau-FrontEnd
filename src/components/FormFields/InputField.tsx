@@ -10,6 +10,7 @@ export interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   multiline?: boolean
   rows?: number
   maxRows?: number
+  onChange?: (value: any) => void
 }
 
 export function InputField({
@@ -21,17 +22,23 @@ export function InputField({
 
   InputProps,
   InputLabelProps,
+  onChange,
   inputProps,
 
   ...otherTextFieldProps
 }: InputFieldProps & TextFieldProps) {
   const {
-    field: { value, onChange, onBlur, ref },
+    field: { value, onChange: controllerOnChange, onBlur, ref },
     fieldState: { invalid, error },
   } = useController({
     name,
     control,
   })
+
+  function handleChange(e: any) {
+    controllerOnChange(e)
+    onChange?.(e.target.value)
+  }
 
   return (
     <Box>
@@ -40,7 +47,7 @@ export function InputField({
         fullWidth
         size="small"
         value={value || ''}
-        onChange={onChange}
+        onChange={handleChange}
         onBlur={onBlur}
         inputRef={ref}
         variant="outlined"
