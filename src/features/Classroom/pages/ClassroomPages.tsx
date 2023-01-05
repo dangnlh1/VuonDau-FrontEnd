@@ -1,5 +1,5 @@
 import { SearchField } from '@/components/FormFields/SearchField'
-import { Action } from '@/models/common'
+import { Action, FilterParams } from '@/models/common'
 import { Box, Button, Pagination, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -16,11 +16,12 @@ export default function Classes() {
   const [params, setParams] = useState({
     page: 0,
     size: 10,
+    classStatus: status,
   })
 
   const navigate = useNavigate()
 
-  const { classByStudentList, pagination, isLoading } = useClassesByStudent(status, params)
+  const { classByStudentList, pagination } = useClassesByStudent(params)
 
   function handleCardClick(value: ClassPayload) {
     navigate(`/hoc-sinh/lop-hoc/${value.id}`)

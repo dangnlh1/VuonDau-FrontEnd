@@ -1,5 +1,6 @@
 import { DataGridLoadingOverlay } from '@/components/common/DataGridLoadingOverlay'
 import EditorInput from '@/components/common/EditorInput'
+import ForumSearchBar from '@/features/Forum/components/ForumSearchBar'
 import { useCreateQuestion } from '@/hooks/createQuestion'
 import useForum from '@/hooks/subjectForum'
 import { ForumPayload } from '@/models/forum'
@@ -77,6 +78,10 @@ export default function ForumSubject() {
     }
   }
 
+  function handleSearchQuestion(value: string) {
+    //TODO: add search forum api
+  }
+
   return (
     <Stack sx={{ height: '100%' }}>
       <Stack>
@@ -86,19 +91,11 @@ export default function ForumSubject() {
         <Typography variant="h3">{data?.name}</Typography>
       </Stack>
 
-      <Stack direction={'row'} marginTop={1}>
-        <Stack flexGrow={1} marginRight={1}>
-          <TextField label="Tìm kiếm câu hỏi" variant="outlined" sx={{ background: '#fff' }} />
-        </Stack>
-        <Stack marginRight={1}>
-          <Button variant="contained">Tìm Kiếm</Button>
-        </Stack>
-        <Stack marginRight={1}>
-          <Button variant="contained" onClick={handleOpenDialog}>
-            Tạo Câu Hỏi
-          </Button>
-        </Stack>
-      </Stack>
+      <ForumSearchBar
+        searchLabel="Tìm kiếm câu hỏi"
+        onCreateQuestion={handleOpenDialog}
+        onSearchQuestion={handleSearchQuestion}
+      />
 
       <Stack sx={{ background: '#fff' }} height={'100%'} width={'100%'} marginTop={2}>
         <DataGrid

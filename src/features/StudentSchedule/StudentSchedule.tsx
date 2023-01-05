@@ -106,6 +106,7 @@ export default function StudentSchedule() {
   }, [date])
 
   React.useEffect(() => {
+    setRows([...timetable])
     if (data && dows) {
       let response: AttendanceSlot[] = []
       data?.map((item) => (response = response.concat(item.attendance)))

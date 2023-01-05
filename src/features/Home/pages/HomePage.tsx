@@ -3,6 +3,7 @@ import { CourseData } from '@/components/common/CourseCard'
 import { WhyUs, WhyUsPayload } from '@/components/common/WhyUs'
 import { useBanner } from '@/hooks/banner'
 import { useClasses } from '@/hooks/classes'
+import { ClassStatus } from '@/models/class'
 import { FilterParams } from '@/models/common'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import ScheduleIcon from '@mui/icons-material/Schedule'
@@ -27,18 +28,19 @@ const whyUsList: WhyUsPayload[] = [
   },
 ]
 
-const classStatus = 'NEW'
+const classStatus: ClassStatus = 'NEW'
 
 export function HomePage() {
   const [newCourseList, setNewCourseList] = useState<CourseData[]>([])
   const [params, setParams] = useState<FilterParams>({
     page: 0,
     size: 4,
+    classStatus,
   })
 
   const navigate = useNavigate()
 
-  const { classList } = useClasses(classStatus, params)
+  const { classList } = useClasses(params)
   const { bannerList } = useBanner()
 
   useEffect(() => {

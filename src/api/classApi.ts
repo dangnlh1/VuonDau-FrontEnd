@@ -10,8 +10,12 @@ import { CreateCoursePayload } from '@/models/course'
 const url = '/class'
 
 export const classApi = {
-  getAll(classStatus: ClassStatus, params?: FilterParams): Promise<ListResponse<ClassPayload>> {
-    return axiosClient.get(`${url}/for-user`, { params: { ...params, classStatus } })
+  getAll(params?: FilterParams): Promise<ListResponse<ClassPayload>> {
+    return axiosClient.get(`${url}/for-user`, { params })
+  },
+
+  getClassesByAccountNoPaging(classStatus: ClassStatus): Promise<ClassPayload[]> {
+    return axiosClient.get(`${url}/search-class/account/list`, { params: { status: classStatus } })
   },
 
   getAllClassByAccount(params?: FilterParams): Promise<ListResponse<ClassPayload>> {
@@ -22,11 +26,8 @@ export const classApi = {
     return axiosClient.get(`${url}/${id}/class-detail`)
   },
 
-  getAllClassByTeacher(
-    status: ClassStatus,
-    params: FilterParams
-  ): Promise<ListResponse<ClassPayload>> {
-    return axiosClient.get(`${url}/search-class/account`, { params: { ...params, status } })
+  getAllClassByTeacher(params: FilterParams): Promise<ListResponse<ClassPayload>> {
+    return axiosClient.get(`${url}/search-class/account`, { params })
   },
 
   createClassByTeacherRequest(data: AddEditClassFormPayload): Promise<any> {
