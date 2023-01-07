@@ -89,4 +89,4 @@ export interface TeacherPayload {
   teacher: Teacher
 }
 
-export type ClassStatus = 'NEW' | 'REQUESTING' | 'NOSTART' | 'STARTING' | 'ENDED' | 'RECRUITING'
+export type ClassStatus =  'REQUESTING' | 'NOTSTART' | 'STARTING' | 'ENDED' | 'RECRUITING'|'WAITING'|'All'

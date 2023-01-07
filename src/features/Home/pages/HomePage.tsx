@@ -35,7 +35,7 @@ const whyUsList: WhyUsPayload[] = [
   },
 ]
 
-const classStatus: ClassStatus = 'NEW'
+const status: ClassStatus = 'RECRUITING'
 const currentBannerList = [banner1, banner2, banner3]
 
 export function HomePage() {
@@ -46,7 +46,7 @@ export function HomePage() {
   const [params, setParams] = useState<FilterParams>({
     page: 0,
     size: 4,
-    classStatus: 'NEW',
+    status,
   })
 
   const navigate = useNavigate()

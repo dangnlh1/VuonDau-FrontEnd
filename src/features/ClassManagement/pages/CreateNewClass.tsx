@@ -28,7 +28,7 @@ const steps = ['Tạo lớp học', 'Tạo khóa học', 'Tạo thời khóa bi�
 
 const pageTitle = 'Tạo lớp Mới'
 
-const classStatus: ClassStatus = 'RECRUITING'
+const status: ClassStatus = 'RECRUITING'
 
 export function CreateNewClass() {
   const [tab, setTab] = React.useState(0)
@@ -36,7 +36,7 @@ export function CreateNewClass() {
   const [params, setParams] = React.useState({
     page: 0,
     size: 12,
-    classStatus,
+    status,
   })
 
   const [showNewCreateCourseForm, setShowNewCreateCourseForm] = React.useState(false)

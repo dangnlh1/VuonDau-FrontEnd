@@ -18,6 +18,9 @@ export interface CourseContentProps {
 }
 
 export function CourseContent({ resourceList, title, onItemClick }: CourseContentProps) {
+  function handleRedirectLink(link: string) {
+    window.open(link, '_blank')
+  }
   return (
     <Box>
       <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
@@ -31,7 +34,7 @@ export function CourseContent({ resourceList, title, onItemClick }: CourseConten
             <ListWidthCollapse title={item.name} key={idx} onItemClick={() => onItemClick?.(idx)}>
               {item.modules?.map((item, idx) => (
                 <List component="div" disablePadding key={idx}>
-                  <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemButton onClick={() => handleRedirectLink(item.url)} sx={{ pl: 4 }}>
                     <ListItemIcon>
                       <OndemandVideoIcon />
                     </ListItemIcon>

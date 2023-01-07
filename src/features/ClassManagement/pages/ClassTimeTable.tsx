@@ -36,15 +36,23 @@ export default function ClassTimeTable() {
       <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
         {title}
       </Typography>
-      <Stack sx={{ background: '#fff', padding: 2, borderRadius: 1, marginBottom: 1 }}>
-        <CustomDay value={date} onChangeDate={handleChangeDate} />
-        <Stack sx={{ paddingTop: 1 }}>
+      <Stack
+        sx={{
+          borderRadius: 1,
+          marginBottom: 1,
+          flexDirection: 'row',
+        }}
+      >
+        <Stack sx={{ paddingRight: 2 }}>
+          <CustomDay value={date} onChangeDate={handleChangeDate} />
+        </Stack>
+        <Stack sx={{ flexGrow: 1 }}>
           {daysOfWeek.dayList && rows && schedule.data && (
             <ScheduleTable
-              columns={daysOfWeek.dayList}
-              rows={rows}
               date={date}
               schedule={schedule.data}
+              columns={daysOfWeek.dayList}
+              rows={rows}
             />
           )}
         </Stack>

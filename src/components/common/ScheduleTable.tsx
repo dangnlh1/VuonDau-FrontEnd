@@ -118,7 +118,7 @@ const ScheduleTable = ({ columns, rows, date, schedules, schedule }: ScheduleTab
                           background: theme.palette.primary.light,
                           justifyContent: 'center',
                           alignItems: 'center',
-                          height: 70,
+                          height: 95,
                         }}
                         component="th"
                         scope="row"
@@ -137,7 +137,7 @@ const ScheduleTable = ({ columns, rows, date, schedules, schedule }: ScheduleTab
                         return (
                           <TableCell
                             sx={{
-                              width: 220,
+                              width: 130,
                               background: idx % 2 === 0 ? '#eee' : '#fff',
                             }}
                             key={idx}
