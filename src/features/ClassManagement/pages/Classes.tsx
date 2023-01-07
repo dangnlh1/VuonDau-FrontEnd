@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { ClassList } from '../components/ClassList'
 
 const pageTitle = 'Quản lý lớp học'
-const classStatus: ClassStatus = 'NEW'
+const status: ClassStatus = 'STARTING'
 
 const actionList: Action[] = [
   {
@@ -27,7 +27,7 @@ export function Classes() {
   const [params, setParams] = useState({
     page: 0,
     size: 12,
-    classStatus,
+    status,
   })
 
   const [classByAccountParams, setClassByAccountParams] = useState({

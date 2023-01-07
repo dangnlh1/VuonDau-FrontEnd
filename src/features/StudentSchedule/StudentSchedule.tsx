@@ -33,8 +33,6 @@ export default function StudentSchedule() {
       </Typography>
       <Stack
         sx={{
-          background: '#f2f2f2',
-          padding: 2,
           borderRadius: 1,
           marginBottom: 1,
           flexDirection: 'row',

@@ -1,22 +1,38 @@
 import { SearchField } from '@/components/FormFields/SearchField'
-import { Action, FilterParams } from '@/models/common'
-import { Box, Button, Pagination, Stack, Typography } from '@mui/material'
+import { Box, Pagination, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useClassesByStudent } from '@/hooks/classByStudent'
 import { ClassPayload, ClassStatus } from '@/models/class'
 import { StudentClassList } from '@/features/Classroom/components/classroom/StudentClassList'
+import { SelectCustom } from '@/components/FormFields/SelectCustom'
+import { OptionPayload } from '@/models/option'
 
 const pageTitle = 'Quản lý lớp học'
-const classStatus: ClassStatus = 'NEW'
+const status: ClassStatus = 'STARTING'
 
 export interface ClassManagementProps {}
+
+const optionList: OptionPayload[] = [
+  {
+    label: 'Lớp chưa bắt đầu',
+    value: 'NOTSTART',
+  },
+  {
+    label: 'Lớp đang học',
+    value: 'STARTING',
+  },
+  {
+    label: 'Lớp đã học',
+    value: 'END',
+  },
+]
 
 export default function Classes() {
   const [params, setParams] = useState({
     page: 0,
     size: 10,
-    classStatus,
+    status,
   })
 
   const navigate = useNavigate()
@@ -33,15 +49,28 @@ export default function Classes() {
       page: newPage - 1,
     }))
   }
+  function handleStatusChange(e: any) {
+    setParams((params) => ({
+      ...params,
+      status: e.target.value,
+    }))
+  }
 
   return (
     <Stack spacing={3}>
       <Typography variant="h5" fontWeight={700}>
         {pageTitle}
       </Typography>
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
+      <Stack direction="row" alignItems="center" justifyContent="flex-start">
         <Box>
           <SearchField />
+        </Box>
+        <Box paddingLeft={1} marginTop={'3px'}>
+          <SelectCustom
+            onChange={handleStatusChange}
+            optionList={optionList}
+            currentValue={params.status}
+          />
         </Box>
       </Stack>
 

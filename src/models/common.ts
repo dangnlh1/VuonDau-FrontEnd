@@ -20,7 +20,6 @@ export interface FilterParams {
   sort?: string[]
   numberSlot?: number
   subject?: number
-  classStatus?: ClassStatus
   classType?: TypeOfClass
 }
 export interface RegisterPayload {

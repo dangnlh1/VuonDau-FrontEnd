@@ -9,14 +9,14 @@ import { CourseFilter } from '../components/CourseFilter'
 import { CourseList } from '../components/CourseList'
 
 const pageTitle = 'Khóa học'
-const classStatus: ClassStatus = 'NEW'
+const status: ClassStatus = 'RECRUITING'
 
 export function CoursePage() {
   const [newCourseList, setNewCourseList] = useState<CourseData[]>([])
   const [params, setParams] = useState<FilterParams>({
     page: 0,
     size: 10,
-    classStatus,
+    status,
   })
 
   const navigate = useNavigate()
