@@ -3,6 +3,7 @@ import { AttendanceRequest, AttendanceSlot } from '@/models/timetables'
 import { checkDayInWeek, dateFormatting } from '@/utils/dateFormatting'
 import { ScheduleCell, ScheduleRow } from '@/utils/table'
 import {
+  Chip,
   Paper,
   Stack,
   Table,
@@ -12,6 +13,7 @@ import {
   TableHead,
   TableRow,
   Typography,
+  useTheme,
 } from '@mui/material'
 import dayjs, { Dayjs } from 'dayjs'
 import { useEffect, useState } from 'react'
@@ -25,6 +27,8 @@ interface ScheduleTableProps {
 }
 
 const ScheduleTable = ({ columns, rows, date, schedules, schedule }: ScheduleTableProps) => {
+  const theme = useTheme()
+
   const [displayRows, setDisplayRows] = useState<ScheduleRow[]>()
 
   function handleAddStudySlot(attendance: AttendanceSlot) {
@@ -86,47 +90,93 @@ const ScheduleTable = ({ columns, rows, date, schedules, schedule }: ScheduleTab
   return (
     <Stack height={'100%'}>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Slots</TableCell>
-              {columns.map((column, idx) => (
-                <TableCell key={idx}>{column.name}</TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row: ScheduleRow) => (
-              <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell component="th" scope="row">
-                  <Stack>
-                    <Typography variant="body1">{`${row.name} (${row.time})`}</Typography>
-                  </Stack>
-                </TableCell>
-                {row.dowArray.map((slot, idx) => {
-                  return (
-                    <TableCell key={idx} component="th" scope="row">
-                      <Stack
+        <Table aria-label="simple table">
+          {displayRows ? (
+            <>
+              <TableHead sx={{ background: theme.palette.primary.main }}>
+                <TableRow>
+                  <TableCell sx={{ textAlign: 'center' }}>
+                    <Typography sx={{ fontSize: '18px', fontWeight: 'bold' }} color={'white'}>
+                      Giờ học
+                    </Typography>
+                  </TableCell>
+                  {columns.map((column, idx) => (
+                    <TableCell sx={{ textAlign: 'center' }} key={idx}>
+                      <Typography sx={{ fontSize: '18px', fontWeight: 'bold' }} color={'white'}>
+                        {column.name}
+                      </Typography>
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {displayRows &&
+                  displayRows.map((row: ScheduleRow) => (
+                    <TableRow key={row.id}>
+                      <TableCell
                         sx={{
-                          width: 120,
-                          height: 100,
+                          background: theme.palette.primary.light,
                           justifyContent: 'center',
                           alignItems: 'center',
+                          height: 70,
                         }}
+                        component="th"
+                        scope="row"
                       >
-                        <Typography variant="body1">
-                          {slot.isStudied &&
-                            ` ${slot.name} - ${slot.date} - ${
-                              slot.isPresent ? 'Đã điểm danh' : 'Chưa điểm danh'
-                            } `}
+                        <Typography
+                          textAlign={'center'}
+                          sx={{ fontSize: '18px', fontWeight: 'bold', color: '#fff' }}
+                        >
+                          {row.name}
                         </Typography>
-                      </Stack>
-                    </TableCell>
-                  )
-                })}
-              </TableRow>
-            ))}
-          </TableBody>
+                        <Typography textAlign={'center'} sx={{ fontSize: '13px' }}>
+                          {row.time}
+                        </Typography>
+                      </TableCell>
+                      {row.dowArray.map((slot, idx) => {
+                        return (
+                          <TableCell
+                            sx={{
+                              width: 220,
+                              background: idx % 2 === 0 ? '#eee' : '#fff',
+                            }}
+                            key={idx}
+                            component="th"
+                            scope="row"
+                          >
+                            {slot.isStudied && (
+                              <Stack
+                                sx={{
+                                  alignItems: 'center',
+                                }}
+                              >
+                                <Typography sx={{ fontSize: '13px' }}>{slot.date}</Typography>
+                                <Typography sx={{ fontSize: '15px', fontWeight: 'bold' }}>
+                                  {slot.name.toUpperCase()}
+                                </Typography>
+                                <Typography
+                                  sx={{
+                                    fontSize: '13px',
+                                    fontWeight: 'bold',
+                                    color: slot.isPresent ? '#18ffad' : '#ff5238',
+                                  }}
+                                >
+                                  {slot.isPresent ? 'Đã điểm danh' : 'Chưa điểm danh'}
+                                </Typography>
+                              </Stack>
+                            )}
+                          </TableCell>
+                        )
+                      })}
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </>
+          ) : (
+            <Stack>
+              <Typography textAlign={'center'}>Dữ liệu đang được tải...</Typography>
+            </Stack>
+          )}
         </Table>
       </TableContainer>
     </Stack>

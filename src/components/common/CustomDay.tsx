@@ -9,6 +9,7 @@ import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker'
 import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay'
 import { DatePicker } from '@mui/x-date-pickers'
 import { checkDayInWeek } from '@/utils/dateFormatting'
+import { Stack, Typography } from '@mui/material'
 
 dayjs.extend(isBetweenPlugin)
 
@@ -70,7 +71,13 @@ export default function CustomDay({ onChangeDate, value }: CustomDayProps) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker
+      <Stack>
+        <Typography variant="h6" textAlign={'center'}>
+          Chọn tuần học
+        </Typography>
+      </Stack>
+      <StaticDatePicker
+        displayStaticWrapperAs="desktop"
         label="Chọn tuần học"
         value={value}
         onChange={onChangeDate}

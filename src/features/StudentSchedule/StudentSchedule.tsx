@@ -31,10 +31,19 @@ export default function StudentSchedule() {
       <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
         {title}
       </Typography>
-      <Stack sx={{ background: '#fff', padding: 2, borderRadius: 1, marginBottom: 1 }}>
-        <CustomDay value={date} onChangeDate={handleChangeDate} />
-
-        <Stack sx={{ paddingTop: 1 }}>
+      <Stack
+        sx={{
+          background: '#f2f2f2',
+          padding: 2,
+          borderRadius: 1,
+          marginBottom: 1,
+          flexDirection: 'row',
+        }}
+      >
+        <Stack sx={{ paddingRight: 2 }}>
+          <CustomDay value={date} onChangeDate={handleChangeDate} />
+        </Stack>
+        <Stack sx={{ flexGrow: 1 }}>
           {daysOfWeek.dayList && rows && schedule.data && (
             <ScheduleTable
               date={date}
