@@ -5,8 +5,8 @@ import axiosClient from './axiosClient'
 const url = `/forums`
 
 export const forumApi = {
-  getForums(params: FilterParams, forumType: string): Promise<ListResponse<ForumPayload>> {
-    return axiosClient.get(url, { params: { ...params, forumType } })
+  getForums(params: FilterParams): Promise<ListResponse<ForumPayload>> {
+    return axiosClient.get(url, { params })
   },
   getForum(id: string): Promise<ForumPayload> {
     return axiosClient.get(`${url}/${id}`)

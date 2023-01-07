@@ -20,6 +20,7 @@ export interface FilterParams {
   sort?: string[]
   numberSlot?: number
   classStatus?: ClassStatus
+  forumType?:string
 }
 export interface RegisterPayload {
   account: {

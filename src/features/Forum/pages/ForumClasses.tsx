@@ -15,11 +15,12 @@ export default function ForumClasses() {
   const [params, setParams] = useState({
     page: 0,
     size: 12,
+    forumType,
   })
 
   const navigate = useNavigate()
 
-  const { forumList, pagination } = useForums(params, forumType)
+  const { forumList, pagination } = useForums(params)
 
   console.log(forumList)
 
