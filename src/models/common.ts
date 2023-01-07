@@ -1,4 +1,4 @@
-import { ClassStatus } from '@/models/class'
+import { ClassStatus, TypeOfClass } from '@/models/class'
 import { ReactNode } from 'react'
 
 export interface ListResponse<T> {
@@ -19,8 +19,9 @@ export interface FilterParams {
   status?: string
   sort?: string[]
   numberSlot?: number
+  subject?: number
   classStatus?: ClassStatus
-  forumType?:string
+  classType?: TypeOfClass
 }
 export interface RegisterPayload {
   account: {
