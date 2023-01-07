@@ -1,5 +1,4 @@
 import { classApi } from '@/api/classApi'
-import { ClassStatus } from '@/models/class'
 import { FilterParams, Pagination } from '@/models/common'
 import { useQuery, useQueryClient } from 'react-query'
 

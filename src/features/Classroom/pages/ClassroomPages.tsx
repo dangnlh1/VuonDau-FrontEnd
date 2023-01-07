@@ -8,7 +8,7 @@ import { ClassPayload, ClassStatus } from '@/models/class'
 import { StudentClassList } from '@/features/Classroom/components/classroom/StudentClassList'
 
 const pageTitle = 'Quản lý lớp học'
-const status: ClassStatus = 'NEW'
+const classStatus: ClassStatus = 'NEW'
 
 export interface ClassManagementProps {}
 
@@ -16,7 +16,7 @@ export default function Classes() {
   const [params, setParams] = useState({
     page: 0,
     size: 10,
-    classStatus: status,
+    classStatus,
   })
 
   const navigate = useNavigate()

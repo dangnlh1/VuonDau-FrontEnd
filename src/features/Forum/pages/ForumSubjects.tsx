@@ -13,9 +13,10 @@ export default function ForumSubjects() {
   const [params, setParams] = useState({
     page: 0,
     size: 12,
+    forumType,
   })
 
-  const { forumList, pagination } = useForums(params, forumType)
+  const { forumList, pagination } = useForums(params)
 
   const navigate = useNavigate()
 
