@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import { useDayOfWeek } from '@/hooks/dayOfWeek'
 import { useSlot } from '@/hooks/slot'
 import { getTableRows, ScheduleCell, ScheduleRow } from '@/utils/table'
@@ -40,12 +40,11 @@ export default function ClassTimeTable() {
         sx={{
           borderRadius: 1,
           marginBottom: 1,
-          flexDirection: 'row',
         }}
       >
-        <Stack sx={{ paddingRight: 2 }}>
+        <Box sx={{ paddingBottom: 1 }}>
           <CustomDay value={date} onChangeDate={handleChangeDate} />
-        </Stack>
+        </Box>
         <Stack sx={{ flexGrow: 1 }}>
           {daysOfWeek.dayList && rows && schedule.data && (
             <ScheduleTable

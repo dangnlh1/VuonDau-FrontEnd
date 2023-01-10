@@ -4,6 +4,7 @@ import { checkDayInWeek, dateFormatting } from '@/utils/dateFormatting'
 import { ScheduleCell, ScheduleRow } from '@/utils/table'
 import {
   Chip,
+  makeStyles,
   Paper,
   Stack,
   Table,
@@ -17,7 +18,6 @@ import {
 } from '@mui/material'
 import dayjs, { Dayjs } from 'dayjs'
 import { useEffect, useState } from 'react'
-
 interface ScheduleTableProps {
   date: Dayjs
   schedules?: AttendanceRequest[]
@@ -90,19 +90,21 @@ const ScheduleTable = ({ columns, rows, date, schedules, schedule }: ScheduleTab
   return (
     <Stack height={'100%'}>
       <TableContainer component={Paper}>
-        <Table aria-label="simple table">
+        <Table size="small" aria-label="simple table">
           {displayRows ? (
             <>
               <TableHead sx={{ background: theme.palette.primary.main }}>
                 <TableRow>
-                  <TableCell sx={{ textAlign: 'center', width: '100px' }}>
-                    <Typography sx={{ fontSize: '18px', fontWeight: 'bold' }} color={'white'}>
+                  <TableCell
+                    sx={{ textAlign: 'center', padding: '5px', margin: '5px', width: '95px' }}
+                  >
+                    <Typography sx={{ fontSize: '13px', fontWeight: 'bold' }} color={'white'}>
                       Giờ học
                     </Typography>
                   </TableCell>
                   {columns.map((column, idx) => (
-                    <TableCell sx={{ textAlign: 'center' }} key={idx}>
-                      <Typography sx={{ fontSize: '18px', fontWeight: 'bold' }} color={'white'}>
+                    <TableCell sx={{ textAlign: 'center', padding: 0, margin: 0 }} key={idx}>
+                      <Typography sx={{ fontSize: '13px', fontWeight: 'bold' }} color={'white'}>
                         {column.name}
                       </Typography>
                     </TableCell>
@@ -118,20 +120,21 @@ const ScheduleTable = ({ columns, rows, date, schedules, schedule }: ScheduleTab
                           background: theme.palette.primary.light,
                           justifyContent: 'center',
                           alignItems: 'center',
-                          height: 95,
+                          padding: '5px',
+                          margin: 0,
                         }}
                         component="th"
                         scope="row"
                       >
                         <Typography
                           textAlign={'center'}
-                          sx={{ fontSize: '18px', fontWeight: 'bold', color: '#fff' }}
+                          sx={{ fontSize: '13px', fontWeight: 'bold', color: '#fff' }}
                         >
                           {row.name}
                         </Typography>
                         <Typography
                           textAlign={'center'}
-                          sx={{ fontSize: '13px', fontWeight: 'bold' }}
+                          sx={{ fontSize: '10px', fontWeight: 'bold' }}
                         >
                           {row.time}
                         </Typography>

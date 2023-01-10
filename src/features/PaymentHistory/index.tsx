@@ -15,10 +15,6 @@ const title = 'Lịch Sử Giao Dịch'
 
 const columns: GridColDef[] = [
   {
-    field: 'classId',
-    headerName: 'ID',
-  },
-  {
     field: 'orderInfo',
     headerName: 'Nội dung',
     flex: 1,
@@ -58,7 +54,6 @@ export default function PaymentHistory() {
     dateTo: toDate?.toISOString(),
   })
   const { classes } = useClassesByStudentNoPaging('All')
-  console.log(classes)
 
   function handleSuccess(data: any) {
     console.log('data', data)
@@ -79,10 +74,19 @@ export default function PaymentHistory() {
     await refetch()
   }
 
-  const classOptionList: OptionPayload[] | undefined = classes?.map((item) => ({
-    label: item.name,
-    value: item.id,
-  }))
+  let classOptionList: OptionPayload[] = [
+    {
+      label: 'Tất cả lớp',
+      value: 'all',
+    },
+  ]
+
+  classes?.map((item) =>
+    classOptionList.push({
+      label: item.name,
+      value: item.id,
+    })
+  )
 
   return (
     <Stack>
@@ -103,9 +107,9 @@ export default function PaymentHistory() {
           <SelectField
             label="Lớp học"
             control={control}
+            defaultValue={classOptionList[0].value}
             optionList={classOptionList}
             name={'class'}
-            defaultValue={classOptionList && classOptionList[0].value}
           />
         </Box>
         <Box paddingRight={1}>
@@ -132,6 +136,13 @@ export default function PaymentHistory() {
           columns={columns}
           rows={revenues || []}
           getRowId={(row) => row.classId}
+          components={{
+            NoRowsOverlay: () => (
+              <Stack height="100%" alignItems="center" justifyContent="center">
+                Bạn chưa có giao dịch nào.
+              </Stack>
+            ),
+          }}
         />
       </Stack>
     </Stack>

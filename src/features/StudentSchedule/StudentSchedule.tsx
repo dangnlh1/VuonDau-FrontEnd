@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import { useUserTimetable } from '@/hooks/userTimetable'
 import { useDayOfWeek } from '@/hooks/dayOfWeek'
 import { useSlot } from '@/hooks/slot'
@@ -35,12 +35,11 @@ export default function StudentSchedule() {
         sx={{
           borderRadius: 1,
           marginBottom: 1,
-          flexDirection: 'row',
         }}
       >
-        <Stack sx={{ paddingRight: 2 }}>
+        <Box sx={{ paddingBottom: 1 }}>
           <CustomDay value={date} onChangeDate={handleChangeDate} />
-        </Stack>
+        </Box>
         <Stack sx={{ flexGrow: 1 }}>
           {daysOfWeek.dayList && rows && schedule.data && (
             <ScheduleTable

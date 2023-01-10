@@ -20,9 +20,9 @@ import { StudentLayout } from '@/components/layout/StudentLayout'
 let theme = createTheme({
   palette: {
     primary: {
-      main: '#154373',
-      light: '#236ebe',
-      dark: '#071626',
+      main: '#2e7d32',
+      light: '#60ad5e',
+      dark: '#005005',
       contrastText: '#fff',
     },
   },

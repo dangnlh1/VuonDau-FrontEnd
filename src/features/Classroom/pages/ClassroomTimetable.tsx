@@ -40,7 +40,6 @@ export default function ClassroomTimetable() {
         sx={{
           borderRadius: 1,
           marginBottom: 1,
-          flexDirection: 'row',
         }}
       >
         <Stack sx={{ paddingRight: 2 }}>

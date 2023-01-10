@@ -24,6 +24,7 @@ export function SelectField({
   label,
   optionList,
   onOptionChange,
+  defaultValue,
   ...otherSelectProps
 }: SelectFieldProps & SelectProps) {
   const {
@@ -34,17 +35,18 @@ export function SelectField({
     control,
   })
 
-  function handleChange(e: any) { 
+  function handleChange(e: any) {
     onChange(e)
     onOptionChange?.(e.target.value)
   }
+  console.log('defaultValue', defaultValue)
 
   return (
     <React.Fragment>
       <InputLabel sx={{ fontWeight: 900, fontSize: 14 }}>{label}</InputLabel>
       <FormControl fullWidth size="small" error={invalid}>
         <Select
-          value={value || ''}
+          value={value || defaultValue}
           name={name}
           onChange={handleChange}
           onBlur={onBlur}

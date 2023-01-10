@@ -23,11 +23,11 @@ export function HomeDetail() {
 
   async function handleBuyCourse() {
     try {
-      if (courseId && data?.finalPrice) {
+      if (courseId && data?.unitPrice) {
         const userName = localStorage.getItem('session')
         const params: PaymentPayload = {
           classId: parseInt(courseId),
-          amount: `${data?.finalPrice}`,
+          amount: `${data?.unitPrice}`,
           ordertype: '250000',
           vnp_OrderInfo: `Chuyển khoản tiền học phí lớp học ${data.name}`,
           sessionId: `${userName}`,
@@ -37,7 +37,7 @@ export function HomeDetail() {
         const response = await paymentClass.mutateAsync(params)
         openWindow(response.paymentUrl)
       } else {
-        toast.error('Lỗi không có FinalPrice')
+        toast.error('Lỗi không có UnitPrice')
       }
     } catch (error) {
       toast.error((error as Error).message)

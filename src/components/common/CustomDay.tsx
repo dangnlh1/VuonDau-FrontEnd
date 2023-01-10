@@ -71,11 +71,11 @@ export default function CustomDay({ onChangeDate, value }: CustomDayProps) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Stack>
+      {/* <Stack>
         <Typography variant="h6" textAlign={'center'}>
           Chọn tuần học
         </Typography>
-      </Stack>
+      </Stack> */}
       <DatePicker
         // displayStaticWrapperAs="desktop"
         label="Chọn tuần học"

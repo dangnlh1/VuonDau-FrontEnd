@@ -1,6 +1,6 @@
 import { classApi } from '@/api/classApi'
 import { ClassPayload } from '@/models/class'
-import { Box, Button, Stack } from '@mui/material'
+import { Box, Button, Stack, Tab, Tabs } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
