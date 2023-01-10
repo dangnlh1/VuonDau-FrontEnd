@@ -117,10 +117,6 @@ export function Header({
             <SearchIcon />
           </IconButton>
 
-          <IconButton color="inherit" sx={{ mr: { xs: user ? 0 : -1, lg: 0 } }}>
-            <ShoppingCartOutlinedIcon />
-          </IconButton>
-
           {!user && (
             <Stack direction="row" sx={{ display: { xs: 'none', lg: 'flex' } }}>
               {Array.isArray(registerList) &&
@@ -194,6 +190,7 @@ export function Header({
           <Stack
             direction="row"
             sx={{
+              justifyContent: 'center',
               display: { xs: 'none', lg: 'flex' },
               '& a': {
                 borderBottom: '2px solid',
