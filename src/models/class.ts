@@ -70,15 +70,17 @@ export interface AddEditClassFormPayload {
   name: string
   code: string
   level?: string
+  courseId: string
+  eachStudentPayPrice: number
 
   classLevel: string
   classType: string
 
-  startDate: string
-  endDate: string
   minNumberStudent: number
   maxNumberStudent: number
-  unitPrice: number
+
+  startDate: string
+  endDate: string
 }
 
 export interface ResourcePayload {
@@ -89,4 +91,11 @@ export interface TeacherPayload {
   teacher: Teacher
 }
 
-export type ClassStatus =  'REQUESTING' | 'NOTSTART' | 'STARTING' | 'ENDED' | 'RECRUITING'|'WAITING'|'All'
+export type ClassStatus =
+  | 'REQUESTING'
+  | 'NOTSTART'
+  | 'STARTING'
+  | 'ENDED'
+  | 'RECRUITING'
+  | 'WAITING'
+  | 'All'

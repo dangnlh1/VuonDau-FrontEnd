@@ -24,7 +24,7 @@ import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
 import StepLabel from '@mui/material/StepLabel'
 
-const steps = ['Tạo lớp học', 'Tạo khóa học', 'Tạo thời khóa biểu']
+const steps = ['Tạo lớp học', 'Tạo thời khóa biểu']
 
 const pageTitle = 'Tạo lớp Mới'
 
@@ -61,14 +61,8 @@ export function CreateNewClass() {
 
   // handle create class
   async function handleCreateClass(formValues: AddEditClassFormPayload) {
-    const data: AddEditClassFormPayload = {
-      ...formValues,
-      startDate: new Date(formValues.startDate).toISOString(),
-      endDate: new Date(formValues.endDate).toISOString(),
-    }
-
     await createClassByTeacherRequest
-      .mutateAsync(data)
+      .mutateAsync(formValues)
       .then((classId) => {
         if (classId) {
           toast.success('Tạo lớp học thành công')
@@ -146,7 +140,7 @@ export function CreateNewClass() {
       .then((response) => {
         if (response) {
           toast.success('Tạo thời khóa biểu thành công!')
-          navigate('/giao-vien/quan-ly-lop')
+          navigate('/giao-vien/quan-ly-lop?key=cho-duyet')
           setTab(0)
           return
         }
@@ -178,7 +172,7 @@ export function CreateNewClass() {
       </Typography>
 
       <Stack sx={{ borderBottom: 1, borderColor: 'divider' }} spacing={3}>
-        <Box sx={{ width: '100%', mx: -1 }}>
+        <Box sx={{ width: '50%', mx: -1 }}>
           <Stepper activeStep={tab}>
             {steps.map((label, index) => (
               <Step key={label}>
@@ -188,21 +182,16 @@ export function CreateNewClass() {
           </Stepper>
         </Box>
 
-        {tab === 0 && <AddEditClassForm onSubmit={handleCreateClass} />}
-
-        {tab === 1 && (
-          <CreateCourseForm
-            courseId={courseId}
-            subjectId={subjectId}
-            subjectList={subjectByTeacherList || []}
+        {tab === 0 && (
+          <AddEditClassForm
+            onSubmit={handleCreateClass}
             courseList={courseList || []}
+            subjectList={subjectByTeacherList || []}
             onSubjectChange={(value) => setSubjectId(value)}
-            onSubmit={handleCreateCourse}
-            onCreateNewCourse={() => setShowNewCreateCourseForm(true)}
           />
         )}
 
-        {tab === 2 && (
+        {tab === 1 && (
           <CreateTimeTableForm
             slotList={slotList}
             dayList={dayList}

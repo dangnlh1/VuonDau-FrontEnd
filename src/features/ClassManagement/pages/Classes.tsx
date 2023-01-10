@@ -5,7 +5,7 @@ import { ClassPayload, ClassStatus } from '@/models/class'
 import { Action } from '@/models/common'
 import AddIcon from '@mui/icons-material/Add'
 import { Box, Button, Pagination, Stack, Tab, Tabs, Typography } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ClassList } from '../components/ClassList'
 
@@ -39,8 +39,16 @@ export function Classes() {
   const [tab, setTab] = useState(0)
 
   const navigate = useNavigate()
+  const urlParams = new URLSearchParams(window.location.search)
+  const key = urlParams.get('key')
 
   const { classByTeacherList, pagination } = useClassesByTeacher(params)
+
+  useEffect(() => {
+    if (key === 'cho-duyet') {
+      setTab(1)
+    }
+  }, [key])
 
   const { classByAccountList, pagination: classByAccountPagination } =
     useGetClassByAccount(classByAccountParams)
