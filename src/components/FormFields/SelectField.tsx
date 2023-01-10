@@ -15,7 +15,7 @@ export interface SelectFieldProps {
   control: Control<any>
   label?: string
   optionList?: OptionPayload[]
-  onOptionChange?: (value: number | string) => void
+  onOptionChange?: (value: any) => void
 }
 
 export function SelectField({

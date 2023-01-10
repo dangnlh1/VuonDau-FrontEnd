@@ -68,7 +68,7 @@ export function CreateCourseForm({
               }))) ||
             []
           }
-          onOptionChange={(value: number) => onSubjectChange?.(value)}
+          onOptionChange={(value) => onSubjectChange?.(value)}
         />
       </Box>
 

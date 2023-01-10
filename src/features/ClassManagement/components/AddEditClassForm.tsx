@@ -4,7 +4,9 @@ import { SelectField } from '@/components/FormFields/SelectField'
 import { classLevelOptionList } from '@/constants/info'
 import { useGetEstimatesSalaryForTeacher } from '@/hooks/getEstimatesSalaryForTeacher'
 import { AddEditClassFormPayload } from '@/models/class'
+import { CoursePayload } from '@/models/course'
 import { OptionPayload } from '@/models/option'
+import { Subject } from '@/models/subject'
 import { formatCurrency } from '@/utils/common'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Box, Button, Divider, Stack, Typography } from '@mui/material'
@@ -36,15 +38,22 @@ const schema = yup.object({
 })
 
 export interface CreateNewClassProps {
-  classData?: AddEditClassFormPayload
-
+  courseList?: CoursePayload[]
+  subjectList?: Subject[]
   onSubmit?: (formValue: AddEditClassFormPayload) => void
   onSubjectChange?: (value: number) => void
-  onCancelClick?: () => void
-  onCreateNewCourse?: () => void
 }
 
-export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProps) {
+interface FormData extends AddEditClassFormPayload {
+  subjectId: string
+}
+
+export function AddEditClassForm({
+  subjectList,
+  courseList,
+  onSubmit,
+  onSubjectChange,
+}: CreateNewClassProps) {
   const [isClassTypeDisable, setIsClassTypeDisable] = useState(false)
   const [startDate, setStartDate] = useState(0)
   const [endDate, setEndDate] = useState(0)
@@ -73,7 +82,9 @@ export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProp
       classType: '',
       minNumberStudent: 0,
       maxNumberStudent: 0,
-      unitPrice: 0,
+      courseId: '',
+      subjectId: '',
+      eachStudentPayPrice: 0,
     },
 
     resolver: yupResolver(schema),
@@ -91,8 +102,23 @@ export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProp
     refetch()
   }, [unitPrice, howManyMonth, maxNumberStudent])
 
-  function handleFormSubmit(formValue: AddEditClassFormPayload) {
-    onSubmit?.(formValue)
+  function handleFormSubmit(formValues: FormData) {
+    const data: AddEditClassFormPayload = {
+      name: formValues.name,
+      code: formValues.code,
+      startDate: new Date(formValues.startDate).toISOString(),
+      endDate: new Date(formValues.endDate).toISOString(),
+
+      classLevel: formValues.classLevel,
+      classType: formValues.classType,
+
+      minNumberStudent: formValues.minNumberStudent,
+      maxNumberStudent: formValues.maxNumberStudent,
+      courseId: formValues.courseId,
+      eachStudentPayPrice: formValues.eachStudentPayPrice,
+    }
+
+    onSubmit?.(data)
   }
 
   function handleStartDateChange(date: any) {
@@ -200,13 +226,45 @@ export function AddEditClassForm({ onSubmit, onCancelClick }: CreateNewClassProp
 
       <Box>
         <InputField
-          name="unitPrice"
+          name="eachStudentPayPrice"
           control={control}
           label="Giá tiền"
           type="number"
           onChange={handleUnitPriceChange}
         />
       </Box>
+
+      <Box>
+        <SelectField
+          name="subjectId"
+          control={control}
+          label="Môn học"
+          optionList={
+            (Array.isArray(subjectList) &&
+              subjectList.map((item) => ({
+                label: item.name,
+                value: item.id,
+              }))) ||
+            []
+          }
+          onOptionChange={(value) => onSubjectChange?.(value)}
+        />
+      </Box>
+
+      {Array.isArray(courseList) && courseList.length > 0 && (
+        <Box>
+          <SelectField
+            fullWidth
+            name="courseId"
+            control={control}
+            label="Khóa học"
+            optionList={courseList.map((item) => ({
+              label: item.name as string,
+              value: item.id as number,
+            }))}
+          />
+        </Box>
+      )}
 
       <Box>
         <Typography variant="body1" fontStyle="italic">
