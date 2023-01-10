@@ -10,13 +10,15 @@ import { useComment } from '@/hooks/comment'
 import { toast } from 'react-toastify'
 import { getTimeAgo } from '@/utils/timeAgo'
 import DeleteButton from '@/features/Forum/components/button/CustomButton'
+import { InfoPayload } from '@/models/info'
 
 interface QuestionCommentProps {
+  currentUser: InfoPayload
   comment: Comment
   onRefresh: () => void
 }
 
-export default function QuestionComment({ comment, onRefresh }: QuestionCommentProps) {
+export default function QuestionComment({ currentUser, comment, onRefresh }: QuestionCommentProps) {
   if (!comment) return null
   const { questionId } = useParams()
 
@@ -150,8 +152,7 @@ export default function QuestionComment({ comment, onRefresh }: QuestionCommentP
                   status={userState}
                 />
                 <ReplyButton label={'Phản hồi'} onClick={handleReply} />
-                <DeleteButton label={'Xóa'} onClick={handleDelete} />
-                <DeleteButton label={'Sửa'} onClick={handleEdit} />
+                {user.id === currentUser.id && <DeleteButton label={'Sửa'} onClick={handleEdit} />}
               </Stack>
               {isReply && (
                 <Stack flexGrow={1}>
@@ -176,7 +177,12 @@ export default function QuestionComment({ comment, onRefresh }: QuestionCommentP
                 subComments.length > 0 &&
                 isShowComment &&
                 subComments.map((item, index) => (
-                  <QuestionComment key={index} comment={item} onRefresh={onRefresh} />
+                  <QuestionComment
+                    currentUser={currentUser}
+                    key={index}
+                    comment={item}
+                    onRefresh={onRefresh}
+                  />
                 ))}
             </Stack>
           </Stack>

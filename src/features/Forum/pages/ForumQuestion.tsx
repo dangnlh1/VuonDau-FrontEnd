@@ -1,4 +1,5 @@
 import Question from '@/features/Forum/components/Question'
+import { useGetAccountDetailAfterLogin } from '@/hooks/accountDetailAfterLogin'
 import { useComment } from '@/hooks/comment'
 import { useQuestion } from '@/hooks/question'
 import { CommentRequestPayload, VoteCommentRequestPayload } from '@/models/comments'
@@ -16,6 +17,7 @@ export default function ForumQuestion() {
 
   const { question, voteQuestion, refetch } = useQuestion(questionId + '')
   const { createComment } = useComment()
+  const profile = useGetAccountDetailAfterLogin()
 
   console.log(question)
 
@@ -72,15 +74,18 @@ export default function ForumQuestion() {
         {pageTitle}
       </Typography>
 
-      <Question
-        question={question}
-        open={open}
-        onOpenDialog={handleTriggerDialog}
-        onComment={handleComment}
-        onUpVoteQuestion={handleUpVoteQuestion}
-        onDownVoteQuestion={handleDownVoteQuestion}
-        onRefresh={refetch}
-      />
+      {profile.data && (
+        <Question
+          user={profile.data}
+          question={question}
+          open={open}
+          onOpenDialog={handleTriggerDialog}
+          onComment={handleComment}
+          onUpVoteQuestion={handleUpVoteQuestion}
+          onDownVoteQuestion={handleDownVoteQuestion}
+          onRefresh={refetch}
+        />
+      )}
     </Stack>
   )
 }

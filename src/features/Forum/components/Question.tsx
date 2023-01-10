@@ -14,8 +14,9 @@ import QuestionComment from '@/features/Forum/components/QuestionComment'
 import EditorInput from '@/components/common/EditorInput'
 import { Question } from '@/models/questions'
 import { getTimeAgo } from '@/utils/timeAgo'
-import { useComment } from '@/hooks/comment'
+import { InfoPayload } from '@/models/info'
 interface QuestionProps {
+  user: InfoPayload
   question: Question
   open: boolean
   onOpenDialog: () => void
@@ -29,6 +30,7 @@ const closedQuestion = 'Câu hỏi đã bị khóa bình luận.'
 
 export default function Question(props: QuestionProps) {
   const {
+    user,
     question,
     open,
     onComment,
@@ -39,6 +41,8 @@ export default function Question(props: QuestionProps) {
   } = props
 
   const timeAgo = getTimeAgo(question.created)
+
+  function handleCloseQuestion() {}
 
   return (
     <Stack>
@@ -76,6 +80,9 @@ export default function Question(props: QuestionProps) {
               variant="down"
             />
             <ReplyButton label={'Trả lời'} onClick={onOpenDialog} />
+            {user && user.id === question.user.id && (
+              <ReplyButton label={'Trả lời'} onClick={onOpenDialog} />
+            )}
           </Stack>
         </Stack>
       </Stack>
@@ -90,7 +97,7 @@ export default function Question(props: QuestionProps) {
         {question.comments &&
           question.comments.length > 0 &&
           question.comments.map((item, index) => (
-            <QuestionComment key={index} comment={item} onRefresh={onRefresh} />
+            <QuestionComment currentUser={user} key={index} comment={item} onRefresh={onRefresh} />
           ))}
       </Stack>
       <Dialog open={open} onClose={onOpenDialog}>

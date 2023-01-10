@@ -95,7 +95,7 @@ const ScheduleTable = ({ columns, rows, date, schedules, schedule }: ScheduleTab
             <>
               <TableHead sx={{ background: theme.palette.primary.main }}>
                 <TableRow>
-                  <TableCell sx={{ textAlign: 'center' }}>
+                  <TableCell sx={{ textAlign: 'center', width: '100px' }}>
                     <Typography sx={{ fontSize: '18px', fontWeight: 'bold' }} color={'white'}>
                       Giờ học
                     </Typography>
@@ -129,7 +129,10 @@ const ScheduleTable = ({ columns, rows, date, schedules, schedule }: ScheduleTab
                         >
                           {row.name}
                         </Typography>
-                        <Typography textAlign={'center'} sx={{ fontSize: '13px' }}>
+                        <Typography
+                          textAlign={'center'}
+                          sx={{ fontSize: '13px', fontWeight: 'bold' }}
+                        >
                           {row.time}
                         </Typography>
                       </TableCell>

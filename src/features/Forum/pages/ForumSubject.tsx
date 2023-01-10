@@ -1,5 +1,6 @@
 import { DataGridLoadingOverlay } from '@/components/common/DataGridLoadingOverlay'
 import EditorInput from '@/components/common/EditorInput'
+import { SearchField } from '@/components/FormFields/SearchField'
 import ForumSearchBar from '@/features/Forum/components/ForumSearchBar'
 import { useCreateQuestion } from '@/hooks/createQuestion'
 import useForum from '@/hooks/subjectForum'
@@ -7,9 +8,12 @@ import { ForumPayload } from '@/models/forum'
 import { InfoPayload } from '@/models/info'
 import { Question, QuestionRequest, QuestionRow } from '@/models/questions'
 import { Subject } from '@/models/subject'
+import { dateFormatting } from '@/utils/dateFormatting'
 import { getTimeAgo } from '@/utils/timeAgo'
 import {
+  Box,
   Button,
+  Chip,
   Dialog,
   DialogContent,
   DialogContentText,
@@ -38,6 +42,21 @@ const columns: GridColDef<Question>[] = [
     field: 'created',
     headerName: 'Ngày tạo',
     width: 90,
+    renderCell: ({ row }) => {
+      return dateFormatting(row.created)
+    },
+  },
+  {
+    field: 'closed',
+    headerName: 'Trạng thái',
+    width: 100,
+    renderCell: ({ row }) => {
+      return row.closed ? (
+        <Chip label="Đã đóng câu hỏi" color="error" />
+      ) : (
+        <Chip label="Đang mở" color="success" />
+      )
+    },
   },
 ]
 
@@ -70,11 +89,13 @@ export default function ForumSubject() {
         content,
         forumId: data?.id || 0,
       }
-      await createQuestion.mutateAsync(params)
+      const responseQuestion = await createQuestion.mutateAsync(params)
       toast.success('Tạo câu hỏi thành công.')
+      navigate(`/hoc-sinh/dien-dan/mon-hoc/${subjectId}/${responseQuestion.id}`)
       setOpen(!open)
     } catch (error) {
       toast.error('Tạo câu hỏi không thành công.')
+      console.error(error)
     }
   }
 
@@ -91,11 +112,16 @@ export default function ForumSubject() {
         <Typography variant="h3">{data?.name}</Typography>
       </Stack>
 
-      <ForumSearchBar
-        searchLabel="Tìm kiếm câu hỏi"
-        onCreateQuestion={handleOpenDialog}
-        onSearchQuestion={handleSearchQuestion}
-      />
+      <Stack flexDirection={'row'}>
+        <Box paddingRight={1}>
+          <SearchField />
+        </Box>
+        <Box>
+          <Button onClick={handleOpenDialog} variant="contained">
+            Tạo câu hỏi
+          </Button>
+        </Box>
+      </Stack>
 
       <Stack sx={{ background: '#fff' }} height={'100%'} width={'100%'} marginTop={2}>
         <DataGrid

@@ -34,7 +34,7 @@ export function SelectField({
     control,
   })
 
-  function handleChange(e: any) {
+  function handleChange(e: any) { 
     onChange(e)
     onOptionChange?.(e.target.value)
   }

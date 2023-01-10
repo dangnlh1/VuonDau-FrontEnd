@@ -76,8 +76,8 @@ export default function CustomDay({ onChangeDate, value }: CustomDayProps) {
           Chọn tuần học
         </Typography>
       </Stack>
-      <StaticDatePicker
-        displayStaticWrapperAs="desktop"
+      <DatePicker
+        // displayStaticWrapperAs="desktop"
         label="Chọn tuần học"
         value={value}
         onChange={onChangeDate}

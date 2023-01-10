@@ -1,22 +1,15 @@
 import { useClassesByStudentNoPaging } from '@/hooks/classByStudentNoPaging'
 import { useRevenue } from '@/hooks/revenue'
 import { formatCurrency } from '@/utils/common'
-import {
-  Button,
-  FormControl,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Box, Button, IconButton, Stack, Typography } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import { DesktopDatePicker } from '@mui/x-date-pickers'
 import dayjs, { Dayjs } from 'dayjs'
 import { useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search'
+import { OptionPayload } from '@/models/option'
+import { DateTimePickerField } from '@/components/FormFields/DateTimePickerField'
+import { useForm } from 'react-hook-form'
+import { SelectField } from '@/components/FormFields/SelectField'
 
 const title = 'Lịch Sử Giao Dịch'
 
@@ -42,40 +35,17 @@ const columns: GridColDef[] = [
     headerName: 'Trạng thái',
     width: 200,
     renderCell({ row }) {
-      return row.success ? 'Thành công' : 'Thất bại'
+      return row.success ? (
+        <Typography color="#3ce26b">Thành công</Typography>
+      ) : (
+        <Typography color="#ff5238">Thất bại</Typography>
+      )
     },
   },
 ]
 
-//TODO: delete when have api
-const mockRows = [
-  {
-    id: 0,
-    content: 'Giao dich tien te',
-    amount: '250000',
-    status: 1,
-  },
-  {
-    id: 1,
-    content: 'Giao dich tien te',
-    amount: '250000',
-    status: 1,
-  },
-  {
-    id: 2,
-    content: 'Giao dich tien te',
-    amount: '250000',
-    status: -1,
-  },
-  {
-    id: 3,
-    content: 'Giao dich tien te',
-    amount: '250000',
-    status: 0,
-  },
-]
-
 export default function PaymentHistory() {
+  const { control, handleSubmit } = useForm()
   const [classIds, setClassIds] = useState<number[]>([])
   const [teacherIds, setTeacherIds] = useState<number[]>([])
   const [toDate, setToDate] = useState<Dayjs>(dayjs('01/01/2001'))
@@ -87,14 +57,18 @@ export default function PaymentHistory() {
     dateFrom: fromDate?.toISOString(),
     dateTo: toDate?.toISOString(),
   })
-  const { classes } = useClassesByStudentNoPaging('NEW')
+  const { classes } = useClassesByStudentNoPaging('All')
   console.log(classes)
 
-  const rows = mockRows
+  function handleSuccess(data: any) {
+    console.log('data', data)
+  }
+  function handleError(error: any) {}
 
   function handleChangeClass(event: any) {
     setClassIds(event.target.value)
   }
+
   function handleChangeToDate(value: Dayjs | undefined | null) {
     if (value) setToDate(value)
   }
@@ -104,6 +78,12 @@ export default function PaymentHistory() {
   async function handleSearch() {
     await refetch()
   }
+
+  const classOptionList: OptionPayload[] | undefined = classes?.map((item) => ({
+    label: item.name,
+    value: item.id,
+  }))
+
   return (
     <Stack>
       <Typography variant="h5" fontWeight={700} sx={{ mb: 2 }}>
@@ -115,46 +95,35 @@ export default function PaymentHistory() {
           paddingY: 2,
           paddingX: 3,
           background: '#fff',
+          height: '100%',
           marginY: 1,
-          alignItems: 'center',
         }}
       >
-        <FormControl sx={{ minWidth: 120, paddingRight: 1 }}>
-          <InputLabel id="demo-simple-select-helper-label">Lớp học</InputLabel>
-          <Select
-            labelId="demo-simple-select-helper-label"
-            id="demo-simple-select-helper"
-            value={classIds}
+        <Box paddingRight={1}>
+          <SelectField
             label="Lớp học"
-            onChange={handleChangeClass}
+            control={control}
+            optionList={classOptionList}
+            name={'class'}
+            defaultValue={classOptionList && classOptionList[0].value}
+          />
+        </Box>
+        <Box paddingRight={1}>
+          <DateTimePickerField control={control} name="toDate" label="Ngày bắt đầu" />
+        </Box>
+        <Box paddingRight={1}>
+          <DateTimePickerField control={control} name="fromDate" label="Ngày kết thúc" />
+        </Box>
+
+        <Box marginTop={'22px'}>
+          <Button
+            onClick={handleSubmit(handleSuccess, handleError)}
+            color="primary"
+            variant="contained"
           >
-            {classes &&
-              classes.map((item, index) => {
-                return <MenuItem value={item.id}>{item.name}</MenuItem>
-              })}
-          </Select>
-        </FormControl>
-        <Stack sx={{ paddingRight: 1 }}>
-          <DesktopDatePicker
-            label="Ngày bắt đầu"
-            value={toDate}
-            onChange={handleChangeToDate}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </Stack>
-        <Stack sx={{ paddingRight: 1 }}>
-          <DesktopDatePicker
-            label="Ngày kết thúc"
-            value={fromDate}
-            onChange={handleChangeFromDate}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </Stack>
-        <Stack>
-          <IconButton sx={{ background: '#000' }} onClick={handleSearch}>
-            <SearchIcon sx={{ color: '#fff' }} />
-          </IconButton>
-        </Stack>
+            Tìm kiếm
+          </Button>
+        </Box>
       </Stack>
       <Stack sx={{ background: '#fff' }}>
         <DataGrid
