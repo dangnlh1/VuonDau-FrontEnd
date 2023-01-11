@@ -73,7 +73,7 @@ export function Header({
     >
       <Container>
         <Toolbar disableGutters sx={{ py: 1 }}>
-          <Box sx={{ display: { lg: 'none' }, mr: 2 }}>
+          <Box sx={{ display: { lg: 'none' }, width: 1 / 3 }}>
             <IconButton
               edge="start"
               size="large"
@@ -84,15 +84,20 @@ export function Header({
             </IconButton>
           </Box>
 
-          <Box flexGrow={1} sx={{ mr: 2 }}>
+          <Stack
+            direction="row"
+            justifyContent={{ xs: 'center', md: 'flex-start' }}
+            alignItems="center"
+            sx={{ width: 1 / 3 }}
+          >
             <Link to="/trang-chu">
               <FullLogo />
             </Link>
-          </Box>
+          </Stack>
 
-          <Box flexGrow={1}>
-            <Box sx={{ display: { xs: 'none', lg: 'flex' }, mx: 2 }} component="form">
-              <Search sx={{ maxWidth: 300, borderRadius: '4px 0 0 4px' }}>
+          <Box sx={{ width: { md: 1 / 3 } }}>
+            <Box sx={{ display: { xs: 'none', lg: 'flex' } }} component="form">
+              <Search sx={{ flexGrow: 1, borderRadius: '4px 0 0 4px' }}>
                 <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
               </Search>
 
@@ -112,6 +117,8 @@ export function Header({
               />
             </Box>
           </Box>
+
+          <Box flexGrow={1} />
 
           <IconButton color="inherit" sx={{ display: { lg: 'none' } }}>
             <SearchIcon />
@@ -191,6 +198,7 @@ export function Header({
             direction="row"
             sx={{
               justifyContent: 'center',
+              alignItems: 'center',
               display: { xs: 'none', lg: 'flex' },
               '& a': {
                 borderBottom: '2px solid',
@@ -203,7 +211,7 @@ export function Header({
               firstNavList.length > 0 &&
               firstNavList.map((item, idx) => (
                 <NavLink to={item.link as string} key={idx}>
-                  <Button color="inherit" sx={{ textTransform: 'none' }}>
+                  <Button size="large" color="inherit" sx={{ textTransform: 'none' }}>
                     {item.label}
                   </Button>
                 </NavLink>

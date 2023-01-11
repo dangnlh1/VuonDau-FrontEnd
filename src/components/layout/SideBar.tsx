@@ -1,5 +1,14 @@
 import { NavPayload, RegisterPayload } from '@/models/navMenu'
-import { Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Stack } from '@mui/material'
+import {
+  Button,
+  Divider,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Stack,
+} from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import { FullLogo } from '../common/Logo'
 
@@ -64,14 +73,16 @@ export function SideBar({ navList, open, onClose, registerList, onRegisterClick 
           registerList.length > 0 &&
           registerList.map((item, idx) => (
             <ListItem key={idx}>
-              <ListItemButton
+              <Button
+                fullWidth
+                variant={idx === 0 ? 'contained' : 'outlined'}
                 onClick={() => {
                   onRegisterClick?.(item.value)
                   onClose?.()
                 }}
               >
                 <ListItemText primary={item.label} />
-              </ListItemButton>
+              </Button>
             </ListItem>
           ))}
       </List>

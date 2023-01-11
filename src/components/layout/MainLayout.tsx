@@ -29,6 +29,10 @@ const firstNavList: NavPayload[] = [
     label: 'Giới thiệu',
     link: 'gioi-thieu',
   },
+  {
+    label: 'Liên hệ',
+    link: 'lien-he',
+  },
 ]
 
 const lastNavList: NavPayload[] = [
@@ -163,7 +167,7 @@ export function MainLayout({ children }: MainLayoutProps) {
         open={showDrawer}
       />
 
-      <Box flexGrow={1} sx={{ mt: '102px' }}>
+      <Box flexGrow={1} sx={{ mt: { xs: '65px', md: '102px' } }}>
         {children}
       </Box>
 
