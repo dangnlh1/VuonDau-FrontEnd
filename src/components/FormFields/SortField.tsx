@@ -16,7 +16,7 @@ export interface SortProps {
 export function SortField({
   label,
   hideOptionAll,
-  defaultValue = 'All',
+  defaultValue = 'Tất cả',
   optionList,
   actionKey,
   onChange,

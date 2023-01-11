@@ -3,14 +3,16 @@ import { useGetClassByAccount } from '@/hooks/classByAccount'
 import { useClassesByTeacher } from '@/hooks/classByTeacher'
 import { ClassPayload, ClassStatus } from '@/models/class'
 import { Action, FilterParams } from '@/models/common'
+import { OptionPayload } from '@/models/option'
 import AddIcon from '@mui/icons-material/Add'
 import { Box, Button, Pagination, Stack, Tab, Tabs, Typography } from '@mui/material'
+import { param } from 'jquery'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ClassFilter } from '../components/ClassFilter'
 import { ClassList } from '../components/ClassList'
 
 const pageTitle = 'Quản lý lớp học'
-const status: ClassStatus = 'STARTING'
 
 const actionList: Action[] = [
   {
@@ -23,39 +25,29 @@ const actionList: Action[] = [
 
 export interface ClassManagementProps {}
 
+const statusList: OptionPayload[] = [
+  {
+    label: 'Danh sách lớp đang dạy',
+    value: 'STARTING',
+  },
+  {
+    label: 'Danh sách lớp chờ duyệt',
+    value: 'REQUESTING',
+  },
+  {
+    label: 'Danh sách lớp chờ sắp mở',
+    value: 'NOTSTART',
+  },
+]
+
 export function Classes() {
-  const [params, setParams] = useState({
+  const [params, setParams] = useState<FilterParams>({
     page: 0,
     size: 12,
-    status,
   })
-
-  const [classByAccountParams, setClassByAccountParams] = useState<FilterParams>({
-    page: 0,
-    size: 12,
-    status: 'REQUESTING',
-  })
-
-  const [tab, setTab] = useState(0)
 
   const navigate = useNavigate()
-  const urlParams = new URLSearchParams(window.location.search)
-  const key = urlParams.get('key')
-
   const { classByTeacherList, pagination } = useClassesByTeacher(params)
-
-  useEffect(() => {
-    if (key === 'cho-duyet') {
-      setTab(1)
-    }
-  }, [key])
-
-  const { classByAccountList, pagination: classByAccountPagination } =
-    useGetClassByAccount(classByAccountParams)
-
-  function handleChange(event: React.SyntheticEvent, newValue: number) {
-    setTab(newValue)
-  }
 
   function handleCardClick(value: ClassPayload) {
     navigate(`/giao-vien/quan-ly-lop/${value.id}`)
@@ -74,11 +66,8 @@ export function Classes() {
     }))
   }
 
-  function handlePageOfClassByAccountChange(e: any, newPage: number) {
-    setClassByAccountParams((params) => ({
-      ...params,
-      page: newPage - 1,
-    }))
+  function handleFilterChange(params: FilterParams) {
+    setParams(params)
   }
 
   return (
@@ -105,37 +94,32 @@ export function Classes() {
       </Stack>
 
       <Box>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={tab} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="Danh sách lớp học" {...a11yProps(0)} />
-            <Tab label="Danh sách lớp chờ duyệt" {...a11yProps(1)} />
-          </Tabs>
-        </Box>
+        <ClassFilter optionList={statusList} params={params} onFilterChange={handleFilterChange} />
+      </Box>
 
-        <TabPanel value={tab} index={0}>
-          {Array.isArray(classByTeacherList) && classByTeacherList.length > 0 && (
-            <Stack>
-              <Typography variant="body1" fontStyle="italic">
-                Tổng số: {classByTeacherList?.length}/ {pagination.total} lớp
-              </Typography>
-              <ClassList classList={classByTeacherList} onCardClick={handleCardClick} />
-            </Stack>
-          )}
+      <Box>
+        {Array.isArray(classByTeacherList) && classByTeacherList.length > 0 && (
+          <Stack>
+            <Typography variant="body1" fontStyle="italic">
+              Tổng số: {classByTeacherList?.length}/ {pagination.total} lớp
+            </Typography>
+            <ClassList classList={classByTeacherList} onCardClick={handleCardClick} />
+          </Stack>
+        )}
 
-          {classByTeacherList && (
-            <Stack alignItems="center" sx={{ py: 2 }}>
-              <Pagination
-                variant="outlined"
-                shape="rounded"
-                page={params?.page + 1}
-                count={pagination?.totalPages}
-                onChange={handlePageChange}
-              />
-            </Stack>
-          )}
-        </TabPanel>
+        {classByTeacherList && (
+          <Stack alignItems="center" sx={{ py: 2 }}>
+            <Pagination
+              variant="outlined"
+              shape="rounded"
+              page={(params.page || 0) + 1}
+              count={pagination?.totalPages}
+              onChange={handlePageChange}
+            />
+          </Stack>
+        )}
 
-        <TabPanel value={tab} index={1}>
+        {/* <TabPanel value={tab} index={1}>
           {Array.isArray(classByAccountList) && classByAccountList.length > 0 && (
             <Stack>
               <Typography variant="body1" fontStyle="italic">
@@ -156,7 +140,7 @@ export function Classes() {
               />
             </Stack>
           )}
-        </TabPanel>
+        </TabPanel> */}
       </Box>
     </Stack>
   )

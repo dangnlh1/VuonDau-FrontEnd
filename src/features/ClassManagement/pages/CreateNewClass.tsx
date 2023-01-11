@@ -140,7 +140,7 @@ export function CreateNewClass() {
       .then((response) => {
         if (response) {
           toast.success('Tạo thời khóa biểu thành công!')
-          navigate('/giao-vien/quan-ly-lop?key=cho-duyet')
+          navigate('/giao-vien/quan-ly-lop')
           setTab(0)
           return
         }
