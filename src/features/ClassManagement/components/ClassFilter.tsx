@@ -12,8 +12,11 @@ export interface ClassFilterProps {
 }
 
 export function ClassFilter({ params, optionList, onFilterChange }: ClassFilterProps) {
-  function handleSearchChange(value?: string) {
-    //
+  function handleSearchChange(value: string) {
+    onFilterChange?.({
+      ...params,
+      q: value,
+    })
   }
 
   function handleSortChange(value?: string) {
@@ -25,12 +28,12 @@ export function ClassFilter({ params, optionList, onFilterChange }: ClassFilterP
 
   return (
     <Stack direction="row" alignItems="center" flexWrap="wrap" justifyContent="space-between">
-      <Box sx={{ with: { xs: '100%', sm: 300 } }}>
+      <Box sx={{ with: { xs: '100%', sm: 300 }, mb: { xs: 2, md: 0 } }}>
         <SearchField onSearchChange={handleSearchChange} />
       </Box>
 
-      <Box sx={{ with: { xs: '100%', sm: 350, minWidth: 350 } }}>
-        <SortField actionKey="Sắp sếp theo" onChange={handleSortChange} optionList={optionList} />
+      <Box sx={{ with: { xs: '100%', sm: 250, minWidth: 250 } }}>
+        <SortField onChange={handleSortChange} optionList={optionList} />
       </Box>
     </Stack>
   )

@@ -5,7 +5,7 @@ import React from 'react'
 
 export interface SearchFieldProps {
   placeholder?: string
-  onSearchChange?: (value?: string) => void
+  onSearchChange?: (value: string) => void
 }
 
 export function SearchField({ placeholder = 'Tìm kiếm...', onSearchChange }: SearchFieldProps) {

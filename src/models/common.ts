@@ -21,6 +21,7 @@ export interface FilterParams {
   numberSlot?: number
   subject?: number
   classType?: TypeOfClass
+  q?: string // search
 }
 export interface RegisterPayload {
   account: {
