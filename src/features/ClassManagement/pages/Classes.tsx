@@ -2,7 +2,7 @@ import { a11yProps, TabPanel } from '@/components/common/TabPanel'
 import { useGetClassByAccount } from '@/hooks/classByAccount'
 import { useClassesByTeacher } from '@/hooks/classByTeacher'
 import { ClassPayload, ClassStatus } from '@/models/class'
-import { Action } from '@/models/common'
+import { Action, FilterParams } from '@/models/common'
 import AddIcon from '@mui/icons-material/Add'
 import { Box, Button, Pagination, Stack, Tab, Tabs, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
@@ -30,7 +30,7 @@ export function Classes() {
     status,
   })
 
-  const [classByAccountParams, setClassByAccountParams] = useState({
+  const [classByAccountParams, setClassByAccountParams] = useState<FilterParams>({
     page: 0,
     size: 12,
     status: 'REQUESTING',
@@ -150,7 +150,7 @@ export function Classes() {
               <Pagination
                 variant="outlined"
                 shape="rounded"
-                page={classByAccountParams?.page + 1}
+                page={(classByAccountParams?.page || 0) + 1}
                 count={classByAccountPagination?.totalPages}
                 onChange={handlePageOfClassByAccountChange}
               />

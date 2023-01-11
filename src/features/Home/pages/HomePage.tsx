@@ -35,7 +35,6 @@ const whyUsList: WhyUsPayload[] = [
   },
 ]
 
-const status: ClassStatus = 'RECRUITING'
 const currentBannerList = [banner1, banner2, banner3]
 
 export function HomePage() {
@@ -46,7 +45,7 @@ export function HomePage() {
   const [params, setParams] = useState<FilterParams>({
     page: 0,
     size: 4,
-    status,
+    status: 'NOTSTART',
   })
 
   const navigate = useNavigate()
@@ -55,6 +54,7 @@ export function HomePage() {
   const { classList: courseOneInOneList } = useClasses({
     page: 0,
     size: 4,
+    status: 'NOTSTART',
     classType: 'ONE',
   })
   const { subjectList } = useSubject()

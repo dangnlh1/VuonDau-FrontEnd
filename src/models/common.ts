@@ -16,7 +16,7 @@ export interface ListResponse<T> {
 export interface FilterParams {
   page?: number
   size?: number
-  status?: string
+  status?: ClassStatus
   sort?: string[]
   numberSlot?: number
   subject?: number
