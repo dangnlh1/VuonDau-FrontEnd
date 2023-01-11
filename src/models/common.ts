@@ -50,3 +50,9 @@ export interface Action {
   icon?: ReactNode
   variant?: 'outlined' | 'contained' | 'text'
 }
+
+export interface TabPayload {
+  id: number
+  label: string
+  status: ClassStatus
+}

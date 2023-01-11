@@ -97,8 +97,6 @@ export default function PaymentHistory() {
         direction={'row'}
         sx={{
           paddingY: 2,
-          paddingX: 3,
-          background: '#fff',
           height: '100%',
           marginY: 1,
         }}

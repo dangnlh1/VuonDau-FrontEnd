@@ -8,9 +8,16 @@ import { StudentClassList } from '@/features/Classroom/components/classroom/Stud
 import { SelectCustom } from '@/components/FormFields/SelectCustom'
 import { OptionPayload } from '@/models/option'
 import { a11yProps, TabPanel } from '@/components/common/TabPanel'
+import { TabPayload } from '@/models/common'
 
 const pageTitle = 'Quản lý lớp học'
 const status: ClassStatus = 'STARTING'
+
+const TabList: TabPayload[] = [
+  { id: 0, label: 'Danh sách lớp đã học', status: 'NOTSTART' },
+  { id: 0, label: 'Danh sách lớp đang học', status: 'STARTING' },
+  { id: 0, label: 'Danh sách lớp chuẩn bị học', status: 'ENDED' },
+]
 
 export interface ClassManagementProps {}
 
@@ -35,6 +42,7 @@ export default function Classes() {
     size: 10,
     status,
   })
+  const [tab, setTab] = useState(0)
 
   const navigate = useNavigate()
 
@@ -42,6 +50,10 @@ export default function Classes() {
 
   function handleCardClick(value: ClassPayload) {
     navigate(`/hoc-sinh/lop-hoc/${value.id}`)
+  }
+
+  function handleChange(event: React.SyntheticEvent, newValue: number) {
+    setTab(newValue)
   }
 
   function handlePageChange(e: any, newPage: number) {
@@ -74,7 +86,13 @@ export default function Classes() {
           />
         </Box>
       </Stack>
-
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={tab} onChange={handleChange} aria-label="basic tabs example">
+          {TabList.map((item) => (
+            <Tab label={item.label} {...a11yProps(item.id)} />
+          ))}
+        </Tabs>
+      </Box>
       <Stack>
         {Array.isArray(classByStudentList) && classByStudentList.length > 0 ? (
           <Stack>

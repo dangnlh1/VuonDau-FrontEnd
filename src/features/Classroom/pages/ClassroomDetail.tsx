@@ -8,7 +8,8 @@ import { Action } from '@/models/common'
 import ClassroomTopBar from '@/features/Classroom/components/classroom/ClassroomTopBar'
 
 const actionList: Action[] = [
-  { label: 'Bài tập (Bài Học)', value: '/tai-nguyen', variant: 'outlined' },
+  { label: 'Bài Học', value: '/tai-nguyen', variant: 'outlined' },
+  { label: 'Bài Tập', value: '/bai-tap', variant: 'outlined' },
   { label: 'Giáo viên', value: '/giao-vien', variant: 'outlined' },
   { label: 'Điểm danh/ Thời Khóa Biểu', value: '/diem-danh', variant: 'outlined' },
 ]

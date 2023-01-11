@@ -6,8 +6,8 @@ import { getTableRows, ScheduleRow } from '@/utils/table'
 import { useState } from 'react'
 import { currentDate } from '@/utils/dateFormatting'
 import { Dayjs } from 'dayjs'
-import CustomDay from '@/components/common/CustomDay'
 import ScheduleTable from '@/components/common/ScheduleTable'
+import WeekPickerField from '@/components/FormFields/WeekPickerField'
 
 const title = 'Thời Khóa Biểu'
 
@@ -38,7 +38,7 @@ export default function StudentSchedule() {
         }}
       >
         <Box sx={{ paddingBottom: 1 }}>
-          <CustomDay value={date} onChangeDate={handleChangeDate} />
+          <WeekPickerField label="Chọn tuần học" value={date} onChangeDate={handleChangeDate} />
         </Box>
         <Stack sx={{ flexGrow: 1 }}>
           {daysOfWeek.dayList && rows && schedule.data && (

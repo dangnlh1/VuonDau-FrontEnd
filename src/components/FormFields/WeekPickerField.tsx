@@ -5,11 +5,10 @@ import { styled } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker'
 import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay'
 import { DatePicker } from '@mui/x-date-pickers'
 import { checkDayInWeek } from '@/utils/dateFormatting'
-import { Stack, Typography } from '@mui/material'
+import { InputLabel } from '@mui/material'
 
 dayjs.extend(isBetweenPlugin)
 
@@ -19,7 +18,7 @@ interface CustomPickerDayProps extends PickersDayProps<Dayjs> {
   isLastDay: boolean
 }
 
-const CustomPickersDay = styled(PickersDay, {
+const CustomPickerDay = styled(PickersDay, {
   shouldForwardProp: (prop) =>
     prop !== 'dayIsBetween' && prop !== 'isFirstDay' && prop !== 'isLastDay',
 })<CustomPickerDayProps>(({ theme, dayIsBetween, isFirstDay, isLastDay }) => ({
@@ -41,12 +40,13 @@ const CustomPickersDay = styled(PickersDay, {
   }),
 })) as React.ComponentType<CustomPickerDayProps>
 
-interface CustomDayProps {
+interface WeekPickerFieldProps {
+  label: string
   value: Dayjs
   onChangeDate: (date: Dayjs | null) => void
 }
 
-export default function CustomDay({ onChangeDate, value }: CustomDayProps) {
+export default function WeekPickerField({ label, onChangeDate, value }: WeekPickerFieldProps) {
   const renderWeekPickerDay = (
     date: Dayjs,
     selectedDates: Array<Dayjs | null>,
@@ -59,7 +59,7 @@ export default function CustomDay({ onChangeDate, value }: CustomDayProps) {
     const { dayIsBetween, isFirstDay, isLastDay } = checkDayInWeek(value, date)
 
     return (
-      <CustomPickersDay
+      <CustomPickerDay
         {...pickersDayProps}
         disableMargin
         dayIsBetween={dayIsBetween}
@@ -71,19 +71,13 @@ export default function CustomDay({ onChangeDate, value }: CustomDayProps) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      {/* <Stack>
-        <Typography variant="h6" textAlign={'center'}>
-          Chọn tuần học
-        </Typography>
-      </Stack> */}
+      <InputLabel sx={{ fontWeight: 900, fontSize: 14 }}>{label}</InputLabel>
       <DatePicker
-        // displayStaticWrapperAs="desktop"
-        label="Chọn tuần học"
         value={value}
         onChange={onChangeDate}
         renderDay={renderWeekPickerDay}
-        renderInput={(params) => <TextField {...params} />}
-        inputFormat="Tuần trong ngày DD/MM/YYYY"
+        renderInput={(params) => <TextField size="small" sx={{ width: '300px' }} {...params} />}
+        inputFormat="Tuần của ngày DD/MM/YYYY"
       />
     </LocalizationProvider>
   )

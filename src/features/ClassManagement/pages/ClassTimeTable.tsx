@@ -5,11 +5,11 @@ import { getTableRows, ScheduleCell, ScheduleRow } from '@/utils/table'
 import { useEffect, useState } from 'react'
 import { checkDayInWeek, currentDate, dateFormatting } from '@/utils/dateFormatting'
 import dayjs, { Dayjs } from 'dayjs'
-import CustomDay from '@/components/common/CustomDay'
 import { AttendanceSlot } from '@/models/timetables'
 import ScheduleTable from '@/components/common/ScheduleTable'
 import { useAttendance } from '@/hooks/attendance'
 import { useParams } from 'react-router-dom'
+import WeekPickerField from '@/components/FormFields/WeekPickerField'
 
 const title = 'Thời Khóa Biểu'
 
@@ -43,7 +43,7 @@ export default function ClassTimeTable() {
         }}
       >
         <Box sx={{ paddingBottom: 1 }}>
-          <CustomDay value={date} onChangeDate={handleChangeDate} />
+          <WeekPickerField label="Chọn tuần học" value={date} onChangeDate={handleChangeDate} />
         </Box>
         <Stack sx={{ flexGrow: 1 }}>
           {daysOfWeek.dayList && rows && schedule.data && (
