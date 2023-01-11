@@ -118,29 +118,6 @@ export function Classes() {
             />
           </Stack>
         )}
-
-        {/* <TabPanel value={tab} index={1}>
-          {Array.isArray(classByAccountList) && classByAccountList.length > 0 && (
-            <Stack>
-              <Typography variant="body1" fontStyle="italic">
-                Tổng số: {classByAccountList?.length} / {classByAccountPagination.total} lớp
-              </Typography>
-              <ClassList classList={classByAccountList} onCardClick={handleCardClick} />
-            </Stack>
-          )}
-
-          {classByTeacherList && (
-            <Stack alignItems="center" sx={{ py: 2 }}>
-              <Pagination
-                variant="outlined"
-                shape="rounded"
-                page={(classByAccountParams?.page || 0) + 1}
-                count={classByAccountPagination?.totalPages}
-                onChange={handlePageOfClassByAccountChange}
-              />
-            </Stack>
-          )}
-        </TabPanel> */}
       </Box>
     </Stack>
   )
